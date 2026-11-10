@@ -8,7 +8,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import common  # noqa: E402,F401  (creates outputs/{tables,figures,stats})
 
-for script in ["fig1_mechanism.py", "figS1_units.py", "main_tests.py", "hier_bootstrap.py", "tables.py", "exploratory_tests.py"]:
+for script in ["fig1_mechanism.py", "figS1_units.py", "main_tests.py", "hier_bootstrap.py", "tables.py", "exploratory_tests.py",
+               "uncertainty_tests.py"]:
     t = time.time()
     print(f"== {script}", flush=True)
     runpy.run_path(str(HERE / script), run_name="__main__")

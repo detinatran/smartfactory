@@ -1,0 +1,15 @@
+\begin{tabular}{lcccc}
+\toprule
+Score & C-MAPSS & N-CMAPSS & Bearings & Battery \\
+\midrule
+Ensemble spread (between-model) & 11.16 & 19.51 & 24.08 & 5.52 \\
+MC dropout (within-model) & 11.50 & 19.84 & 24.28 & 6.14 \\
+MC-dropout ensemble (total epistemic) & 11.12 & 19.49 & 24.05 & 5.54 \\
+Learned error scale $\sqrt{v(x)}$ & 12.33 & 16.74 & 25.29 & 5.50 \\
+Gaussian, variance only & 12.33 & 17.71 & 25.16 & 5.45 \\
+Learned bias $b(x)$ & 10.60 & \textbf{12.16} & 23.57 & \textbf{3.48} \\
+Gaussian, bias-aware & 10.24 & 12.18 & 23.47 & 3.56 \\
+One-sided classifier (ours) & \textbf{9.37} & 12.49 & \textbf{23.29} & 4.47 \\
+Ours + MC-dropout features & 9.42 & 12.50 & 23.34 & 4.49 \\
+\bottomrule
+\end{tabular}

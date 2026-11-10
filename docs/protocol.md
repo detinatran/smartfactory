@@ -18,7 +18,8 @@ The following were added later.
   - the fault detectors;
   - the lightweight score variants;
   - the unit-level mechanism analysis (Fig. S1);
-  - the hierarchical bootstrap.
+  - the hierarchical bootstrap;
+  - the uncertainty decomposition (MC dropout, learned bias and variance, Gaussian scores).
 
 No backbone, selector or hyperparameter was changed after results were seen. The official C-MAPSS test set was used once, for the single frozen-threshold run quoted in the paper; it is not part of any table.
 
@@ -84,3 +85,42 @@ Fig. 1 shows an N-CMAPSS test unit chosen after inspection: it ranks 3rd of 39 b
 - the one-sided score rises in all 16 units whose prediction is pushed upward (median +0.53);
 - it barely moves in the 23 units pushed downward (median −0.04);
 - the spread rises in both groups (median +0.055 and +0.068).
+
+## Uncertainty decomposition (exploratory)
+
+[`scripts/uncertainty_v1.py`](../scripts/uncertainty_v1.py) replays the same checkpoints, splits, windows and faults on CPU (all 240 GRU/TCN runs). Every score is fitted on selector units × {clean, dropout, drift} with the fixed gradient-boosting settings, and evaluated on clean data and the six unseen faults.
+
+| Score | Definition |
+|---|---|
+| `ensemble_std` | between-model epistemic uncertainty: std of the 3 member predictions (the ensemble spread) |
+| `mc_dropout` | within-model epistemic uncertainty: MC dropout, T = 10 passes per member with dropout active; mean over members of the std |
+| `mc_ensemble` | total epistemic uncertainty: std over all 3 × 10 stochastic predictions |
+| `resid_sigma` | learned error scale √v(x), with v(x) = E[(e − b(x))² \| x] (Poisson-loss regressor on out-of-fold residuals, 2 folds by unit) |
+| `gauss_unbiased` | 1 − Φ(δ / s), s² = v(x) + `mc_ensemble`²: Gaussian predictive distribution, variance only |
+| `bias_only` | learned conditional bias b(x) = E[ŷ − y \| x] |
+| `gauss_bias_aware` | 1 − Φ((δ − b(x)) / s): Gaussian predictive distribution with bias (Prop. 2) |
+| `full` | the one-sided classifier of the paper |
+| `full_plus_unc` | the same classifier with `mc_dropout` and `mc_ensemble` as extra features |
+
+[`paper/uncertainty_tests.py`](../paper/uncertainty_tests.py) aggregates as in the main analysis and compares 20 (backbone, seed) pairs per dataset with unadjusted Wilcoxon tests and a seed bootstrap (5 000 replicates).
+
+Risk (%) at 90% matched coverage, mean over the six unseen faults:
+
+| Score | C-MAPSS | N-CMAPSS | Bearings | Battery |
+|---|---|---|---|---|
+| Ensemble spread | 11.16 | 19.51 | 24.08 | 5.52 |
+| MC dropout | 11.50 | 19.84 | 24.28 | 6.14 |
+| MC-dropout ensemble | 11.12 | 19.49 | 24.05 | 5.54 |
+| Learned error scale | 12.33 | 16.74 | 25.29 | 5.50 |
+| Gaussian, variance only | 12.33 | 17.71 | 25.16 | 5.45 |
+| Learned bias | 10.60 | 12.16 | 23.57 | 3.48 |
+| Gaussian, bias-aware | 10.24 | 12.18 | 23.47 | 3.56 |
+| One-sided classifier | 9.37 | 12.49 | 23.29 | 4.47 |
+| Classifier + MC-dropout features | 9.42 | 12.50 | 23.34 | 4.49 |
+
+Findings:
+- Other epistemic estimates do not improve on the spread. MC dropout is 0.2–0.6 points worse, and the MC-dropout ensemble is within 0.04 points.
+- Adding MC-dropout features to the classifier changes risk by less than 0.1 points.
+- On C-MAPSS, all three epistemic scores decrease as the fault raises the prediction: Spearman ρ between shift and score change is −0.31 to −0.44.
+- Adding the learned bias b(x) to the Gaussian lowers risk by 1.7–5.5 points (18–20 of 20 pairs).
+- The bias-aware Gaussian is close to the classifier. Its differences are −0.31 on N-CMAPSS, −0.91 on batteries, +0.87 on C-MAPSS and +0.18 (not significant) on bearings.

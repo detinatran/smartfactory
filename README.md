@@ -28,6 +28,7 @@ The regenerated tables are byte-identical to the paper's.
 │   ├── hier_bootstrap.py  seed × unit bootstrap
 │   ├── tables.py          Tables 1–4
 │   ├── exploratory_tests.py
+│   ├── uncertainty_tests.py  uncertainty decomposition (MC dropout, bias-aware Gaussian)
 │   ├── host/              scripts that exported run_records/ and splits/unit_map.csv from the training runs
 │   └── outputs/           generated tables (.tex), figures and statistics
 │
@@ -57,6 +58,7 @@ uv run pytest                      # 63 unit tests
 | Table 4: paired differences | `main_tests.py`, `hier_bootstrap.py`, `tables.py` | `outputs/tables/paired_hier.tex` |
 | Main test family (100 tests) | `main_tests.py` | `outputs/stats/main_family.csv`, `main_family_differences.csv` |
 | Exploratory tests quoted in the text | `exploratory_tests.py` | `outputs/stats/exploratory.csv`, `exploratory_differences.csv`, `selectivity.csv` |
+| Uncertainty decomposition (Sec. 4, exploratory) | `uncertainty_tests.py` | `outputs/tables/uncertainty.tex`, `outputs/stats/uncertainty_summary.csv`, `uncertainty_tests.csv`, `uncertainty_differences.csv` |
 | Fig. S1: all 39 units of the Fig. 1 run | `figS1_units.py` | `outputs/figures/figS1_unit_distribution.pdf`, `outputs/stats/figS1_unit_mechanism.csv` |
 
 Every test row records:
@@ -79,6 +81,7 @@ Every test row records:
 | `results/frozen_per_seed.csv.gz` | risk and achieved coverage with thresholds frozen on clean calibration units |
 | `results/replay_scores_per_fold.csv.gz` | CPU replay per run and fold: all Table 2 scores, risk, coverage, decision flips, rejection of fault-induced errors |
 | `results/unit_masses.csv.gz` | accepted and optimistic mass per unit (input of the hierarchical bootstrap) |
+| `results/uncertainty_per_fold.csv.gz` | uncertainty decomposition per run, fold, scenario and score: risk (matched, frozen), coverage, rejection of fault-induced errors, shift–score correlation |
 | `results/mechanism_summary.csv` | prediction shift vs. spread on identical clean/faulty windows (Table 1) |
 
 `split_checks.json` verifies, over all 240 backbone runs, that:
@@ -99,6 +102,7 @@ Every test row records:
 | 4. Unseen faults | `fault_study.py`, `fault_mechanism.py`, `unit_masses.py` | six faults, fault augmentation, clean/faulty mechanism, per-unit masses |
 | 5. CPU replay | `ablation_v5.py --runs runs/… --device cpu` | Table 2 scores, including both fault detectors |
 | 6. Summaries | `summarize_extension.py`, `summarize_external.py` | per-seed tables in `results/` |
+| 7. Uncertainty decomposition | `uncertainty_v1.py --runs runs/… --passes 10 --device cpu` | MC dropout, MC-dropout ensemble, learned bias and variance, Gaussian scores (exploratory) |
 | Simulation | `sim_common_shift.py` | common vs. member-specific shift |
 
 Fault injection is described in `src/selective_rul/faults.py` and in [docs/hyperparameters.md](docs/hyperparameters.md):
