@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+# raw datasets and trained runs are not versioned
+data/raw/
+data/external/
+runs/
+*.pt
+*.joblib

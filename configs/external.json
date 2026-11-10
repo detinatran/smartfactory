@@ -1,0 +1,48 @@
+{
+  "device": "cuda",
+  "threads": 8,
+  "window": {
+    "ncmapss": 10,
+    "bearings": 30,
+    "battery": 30
+  },
+  "stride": {
+    "ncmapss": 1,
+    "bearings": 5,
+    "battery": 10
+  },
+  "baseline_k": 10,
+  "hidden": 64,
+  "layers": 2,
+  "dropout": 0.1,
+  "ensemble_size": 3,
+  "epochs": 40,
+  "patience": 8,
+  "batch_size": 128,
+  "learning_rate": 0.001,
+  "selector_iterations": 100,
+  "risk_delta": 0.16,
+  "critical_rul": 0.24,
+  "critical_weight": 3.0,
+  "coverages": [
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    0.95,
+    1.0
+  ],
+  "selector_scenarios": [
+    "clean",
+    "dropout",
+    "drift"
+  ],
+  "eval_scenarios": [
+    "clean",
+    "dropout",
+    "drift",
+    "dropout_strong",
+    "drift_strong"
+  ]
+}
