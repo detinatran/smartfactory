@@ -36,7 +36,8 @@ The regenerated tables are byte-identical to the paper's.
 ├── splits/                exact unit IDs of every split, unit-name map, consistency checks
 ├── run_records/           config and checkpoint hashes of every run
 ├── data/fig1/             per-window predictions of the run shown in Fig. 1
-└── docs/                  hyperparameters, evaluation protocol and statistics
+├── docs/                  hyperparameters, evaluation protocol and statistics
+└── extensions/            exploratory follow-up experiments, not used in the paper
 ```
 
 ## Quick start: reproduce the paper's tables and tests
@@ -114,3 +115,4 @@ Fault injection is described in `src/selective_rul/faults.py` and in [docs/hyper
 
 - [docs/hyperparameters.md](docs/hyperparameters.md): data, splits, backbones, selectors, baselines, faults.
 - [docs/protocol.md](docs/protocol.md): what was pre-specified, metric and thresholds, aggregation, CPU replay, statistics.
+- [extensions/README.md](extensions/README.md): exploratory follow-up experiments not used in the paper (post-hoc uncertainty, conformal variants, FiLM-Ensemble, LipschitzRNN), with protocols, raw results and summaries.

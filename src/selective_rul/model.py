@@ -19,7 +19,7 @@ from .backbones import (
 )
 from .data import engine_weights
 
-MODEL_NAMES = ("tcn", "gru", "lstm", "patch_transformer", "mamba_ref")
+MODEL_NAMES = ("tcn", "gru", "lstm", "patch_transformer", "mamba_ref", "lipschitz_rnn")
 HEAD_NAMES = ("point", "quantile")
 
 
@@ -84,6 +84,11 @@ def build_model(input_dim, cfg):
             patch_length=cfg.get("patch_length", 10),
             patch_stride=cfg.get("patch_stride", 5),
         )
+    elif name == "lipschitz_rnn":
+        from .ext_backbones import LipschitzRNNRUL
+
+        model = LipschitzRNNRUL(**common, beta=cfg.get("lip_beta", 0.75), gamma=cfg.get("lip_gamma", 0.001),
+                                eps=cfg.get("lip_eps", 0.1))
     elif name == "mamba_ref":
         model = MambaReferenceRUL(
             **common, layers=cfg.get("layers", 2), state_size=cfg.get("state_size", 8)
