@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccc}
+\hline
+Score & C-MAPSS & N-CMAPSS & Bearings & Battery\\
+\hline
+Ensemble spread & 11.2 (23) & 19.5 (19) & 24.1 (20) & 5.5 (40)\\
+Fault detector, window statistics & 11.4 (17) & 19.1 (19) & 24.6 (15) & 6.2 (27)\\
+Fault detector, all features & 11.1 (21) & 18.7 (26) & 24.7 (15) & 6.2 (33)\\
+One-sided, prediction only & 11.1 (18) & 15.8 (44) & 24.9 (13) & 5.9 (26)\\
+One-sided, prediction + elapsed time & 10.0 (29) & 11.9 (47) & 22.8 (21) & 4.4 (72)\\
+One-sided, all features & 9.4 (33) & 12.5 (45) & 23.3 (20) & 4.5 (67)\\
+\quad + fault-detector output & 9.4 (33) & 12.5 (44) & 23.3 (21) & 4.5 (61)\\
+\hline
+\end{tabular}
+\caption{Risk (\%) at 90\% matched coverage on unseen faults (brackets: \% of fault-induced optimistic errors rejected). Scores re-fitted on selector units (fixed hyperparameters) on CPU-replayed predictions of the same checkpoints.}
+\label{tab:uses}
+\end{table}

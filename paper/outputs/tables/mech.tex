@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lcccccc}
+\hline
+ & $|\Delta|/$ & $\rho(\Delta,$ & $\rho(\Delta,$ & \multicolumn{3}{c}{Fault-induced errors rejected}\\
+Data & spread & $\Delta$spread) & $\Delta$one-sided) & one-sided & spread & MC dropout\\
+\hline
+C-MAPSS & 1.3 & -0.31 & +0.24 & 33\% & 23\% & 20\%\\
+N-CMAPSS & 1.7 & -0.02 & +0.69 & 45\% & 19\% & 11\%\\
+Bearings & 0.2 & +0.06 & +0.11 & 20\% & 19\% & 15\%\\
+Battery & 2.2 & +0.18 & +0.45 & 67\% & 40\% & 19\%\\
+\hline
+\end{tabular}
+\caption{Six unseen faults on identical windows with and without the fault. $\Delta$: prediction change; $\rho$: Spearman correlation with the change of spread or one-sided score; last columns: share of fault-induced optimistic errors rejected at 90\% coverage (random: 10\%). GRU/TCN, 10 seeds.}
+\label{tab:mech}
+\end{table}

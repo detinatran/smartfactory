@@ -1,0 +1,17 @@
+dataset,score,G1_accept_fault_ok,G3_reject_fault_lowspread_severe
+battery,full,80.2,63.5
+bearings,full,89.2,13.2
+cmapss,full,87.2,34.3
+ncmapss,full,97.2,67.4
+battery,ensemble_std,79.7,0.0
+bearings,ensemble_std,88.2,0.0
+cmapss,ensemble_std,84.0,0.0
+ncmapss,ensemble_std,78.9,0.0
+battery,fault_detector,76.8,22.7
+bearings,fault_detector,89.1,15.3
+cmapss,fault_detector,82.9,17.8
+ncmapss,fault_detector,84.8,22.4
+battery,fault_detector_full,75.2,4.8
+bearings,fault_detector_full,89.0,9.9
+cmapss,fault_detector_full,80.7,18.3
+ncmapss,fault_detector_full,82.3,21.6
