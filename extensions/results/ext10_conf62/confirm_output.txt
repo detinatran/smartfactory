@@ -1,0 +1,105 @@
+runs per dataset: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'ncmapss': 20}
+
+== risk_matched (unseen faults, %, seeds 62-71)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+blend               8.74    12.31     26.30     3.65
+ensemble_std       10.48    19.59     27.05     5.25
+full                9.05    12.42     25.80     3.79
+full_recon          8.81    12.56     25.69     3.83
+full_recon_rpt      8.52    12.28     25.26     3.47
+full_rpt            8.80    12.21     25.23     3.38
+gauss_bias_aware    9.55    12.30     25.82     3.47
+gba_recon           9.20    12.43     25.92     3.55
+impact              8.82    15.85     27.22     4.63
+rank_recon          8.80    12.36     25.55     3.59
+repair_full         8.77    13.77     21.75     3.42
+select_cv           8.86    12.31     25.67     3.60
+stack               8.47    12.36     26.47     3.63
+stack_cv            8.82    12.42     25.87     3.74
+stack_plus          8.43    12.28     26.31     3.53
+
+== pess_matched (unseen faults, %, seeds 62-71)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+blend              33.82    23.13     33.28    22.85
+ensemble_std       32.79    20.89     32.26    20.89
+full               33.62    23.13     33.48    22.65
+full_recon         33.80    23.13     33.57    22.68
+full_recon_rpt     33.97    23.13     33.80    23.06
+full_rpt           33.78    23.13     33.83    23.03
+gauss_bias_aware   33.31    23.13     33.54    23.00
+gba_recon          33.54    23.13     33.53    22.91
+impact             33.82    22.83     33.81    21.62
+rank_recon         33.79    23.13     33.68    22.86
+repair_full        33.10    26.92     40.41    25.74
+select_cv          33.78    23.13     33.56    22.87
+stack              33.93    23.13     32.98    22.80
+stack_cv           33.73    23.13     33.29    22.67
+stack_plus         33.92    23.13     33.14    22.92
+
+== risk_frozen (unseen faults, %, seeds 62-71)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+blend               8.55     8.88     24.82     2.54
+ensemble_std        9.80    17.19     25.46     4.80
+full                8.95     9.56     24.24     2.90
+full_recon          8.30     8.67     23.95     2.96
+full_recon_rpt      7.83     7.65     23.42     2.73
+full_rpt            8.40     8.38     23.61     2.49
+gauss_bias_aware    9.46     8.71     24.97     1.56
+gba_recon           8.88     8.12     24.99     1.82
+impact              7.27    13.51     24.92     4.43
+rank_recon          8.52     8.38     24.17     2.29
+repair_full         8.68     7.52     19.91     2.18
+select_cv           8.42     8.67     24.02     1.90
+stack               7.62     7.92     24.35     2.38
+stack_cv            8.35     8.91     24.11     2.74
+stack_plus          7.61     8.36     24.46     2.13
+
+== coverage_frozen (unseen faults, %, seeds 62-71)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+blend              89.43    85.68     83.42    76.32
+ensemble_std       82.37    72.17     80.94    72.90
+full               89.81    86.47     82.46    77.68
+full_recon         87.97    84.59     82.02    75.72
+full_recon_rpt     87.28    84.24     82.75    77.79
+full_rpt           88.71    85.53     83.09    80.00
+gauss_bias_aware   90.07    84.89     84.12    77.94
+gba_recon          88.88    83.17     83.54    74.59
+impact             72.81    68.07     65.40    78.99
+rank_recon         89.19    84.45     83.34    74.76
+repair_full        89.41    82.49     80.44    76.50
+select_cv          88.25    85.00     82.73    78.14
+stack              86.54    83.97     80.92    75.72
+stack_cv           88.29    85.60     81.98    77.48
+stack_plus         86.83    85.04     82.11    74.87
+
+== clean risk_matched (%)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+blend               8.20     7.79     26.54     2.31
+ensemble_std        9.24    13.68     26.96     3.27
+full                8.25     8.00     25.93     2.51
+full_recon          8.29     8.05     25.72     2.48
+full_recon_rpt      8.28     7.67     25.43     2.24
+full_rpt            8.25     7.60     25.44     2.24
+gauss_bias_aware    8.44     7.70     25.99     2.10
+gba_recon           8.46     7.72     26.15     2.16
+impact             10.36    14.20     27.82     3.50
+rank_recon          8.16     7.66     25.62     2.23
+repair_full         8.30     7.47     25.77     2.47
+select_cv           8.28     7.80     25.81     2.30
+stack               8.19     7.69     26.92     2.20
+stack_cv            8.21     7.90     26.03     2.47
+stack_plus          8.12     7.71     26.62     2.19
+
+== CONFIRMATORY: full_recon_rpt - full, seeds 62-71, Holm over 4 at alpha = 0.025
+ dataset  n  mean_pts  wins       p  pess_pts  p_holm
+  cmapss 20  -0.52428    20 0.00000   0.34918 0.00001
+ ncmapss 20  -0.14124    17 0.00032   0.00128 0.00064
+bearings 20  -0.54507    17 0.00010   0.32140 0.00031
+ battery 20  -0.31916    18 0.00315   0.40284 0.00315
+
+CONFIRMED: True  (better=True, worse=False, max_mean=-0.141, max_pess=0.403)

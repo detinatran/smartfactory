@@ -115,4 +115,4 @@ Fault injection is described in `src/selective_rul/faults.py` and in [docs/hyper
 
 - [docs/hyperparameters.md](docs/hyperparameters.md): data, splits, backbones, selectors, baselines, faults.
 - [docs/protocol.md](docs/protocol.md): what was pre-specified, metric and thresholds, aggregation, CPU replay, statistics.
-- [extensions/README.md](extensions/README.md): exploratory follow-up experiments not used in the paper (post-hoc uncertainty, conformal variants, FiLM-Ensemble, LipschitzRNN), with protocols, raw results and summaries.
+- [extensions/README.md](extensions/README.md): follow-up experiments not used in the paper, with protocols, raw results and summaries. Headline: randomized-perturbation training of the selector (EXT10) beats the paper's selector on all four data families on fresh seeds. Earlier rounds cover post-hoc uncertainty, conformal variants, FiLM-Ensemble, LipschitzRNN, channel reconstruction and stacking.

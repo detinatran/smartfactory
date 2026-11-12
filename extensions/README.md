@@ -1,7 +1,47 @@
-# Extensions: post-hoc uncertainty, FiLM-Ensemble and LipschitzRNN (exploratory)
+# Extensions beyond the paper
 
 These experiments go beyond the paper. They are **not** used in the paper's tables, and the paper's results are unchanged.
-The goal was to test:
+
+## Headline: randomized-perturbation training of the selector (EXT10), confirmed on fresh seeds
+
+The paper's selector (`full`) learns when a prediction is optimistic by more than δ from two specific seen shifts (dropout,
+drift). `full_recon_rpt` changes two things:
+- it adds one copy of the clean selector windows perturbed by a **generic random family**: random smooth 3-term cosine
+  functions, amplitude 0.5–4 SD, on 1 to 20% of the channels, with a random onset half of the time;
+- it adds the three channel-reconstruction features from EXT6.
+
+This is domain randomization for selective prediction under unseen sensor faults. The HGB settings are unchanged.
+
+**Confirmatory test.**
+- Data: fresh seeds 62–71, never used before (240 newly trained backbones, 20 backbone–seed pairs per dataset).
+- Freezing: the method was frozen after development on seeds 42–61 and before any evaluation on the fresh seeds.
+- Test: two-sided Wilcoxon, Holm over 4 datasets at α = 0.025.
+- The α = 0.025 is the first round of an alpha-spending rule for the search loop (`protocols/EXT9_PROTOCOL.md`,
+  `protocols/SEARCH_LOG.md`).
+
+| `full_recon_rpt` − `full` | C-MAPSS | N-CMAPSS | Bearings | Batteries |
+|---|---|---|---|---|
+| Risk at 90% coverage (%) | 8.52 vs 9.05 | 12.28 vs 12.42 | 25.26 vs 25.80 | 3.47 vs 3.79 |
+| Difference (points) | **−0.52** | **−0.14** | **−0.55** | **−0.32** |
+| Pairs improved | 20/20 | 17/20 | 17/20 | 18/20 |
+| Holm-adjusted p | 1e-5 | 6e-4 | 3e-4 | 0.003 |
+| Pessimistic-rate change | +0.35 | 0.00 | +0.32 | +0.40 |
+
+This is the first variant, across all extension rounds, that is significantly better than the paper's selector on **all
+four** data families. Clean-data risk is not worse (8.28 / 7.67 / 25.43 / 2.24 vs 8.25 / 8.00 / 25.93 / 2.51).
+
+**Caveats.**
+- The random family is generic and does not use any evaluation-fault generator, but it partly overlaps some of them: its
+  constant term resembles a bias, and its onset resembles a step. The largest gains are on bias faults (C-MAPSS −1.02,
+  batteries −1.44); on batteries most of the gain comes from bias. Excluding bias, the mean over the other five faults is
+  still negative on all four families (about −0.42 / −0.14 / −0.53 / −0.09). See `results/ext10_conf62/FINDINGS.md`.
+- Ablations have **not** been run yet: an extra clean copy without perturbation, the family without its constant term, and
+  sensitivity to the amplitude and the number of channels.
+- The gain on N-CMAPSS is small.
+
+## Earlier rounds
+
+The goal of the earlier rounds was to test:
 - whether post-hoc, statistically grounded uncertainty methods detect fault-induced optimistic RUL errors;
 - whether blocks from two external architectures help:
   - FiLM-Ensemble (Turkoglu et al., 2022; github.com/prs-eth/FILM-Ensemble);
@@ -26,8 +66,23 @@ Vietnamese.
 | EXT2 extension | Same comparison on bearings (FEMTO, XJTU-SY) and batteries, seeds 42–46 | 35 runs, 5 880 rows | `EXT2_CONFIRM_PROTOCOL.md` (B) | `results/ext2_ext/` |
 | EXT3 | Conformal variants and a combined score, on all 240 paper runs. Variants: weighted conformal under covariate shift, Mondrian, evidence-tuned Laplace, rank average | 240 runs, 13 440 rows | `EXT3_PROTOCOL.md` | `results/ext3_v1/` |
 | EXT4 | Per-run choice between the paper's classifier and the bias-aware Gaussian, using calibration data only | 240 runs, 9 600 rows | `EXT4_PROTOCOL.md` | `results/ext4_v1/` |
+| EXT5 | Leave-one-channel-out prediction change (LOCO) as selector features | 240 runs | `EXT5_PROTOCOL.md` | `results/ext5_v1/`: ties everywhere, not met |
+| EXT6 | Analytic-redundancy repair: per-channel Ridge reconstruction, `full_recon` (+ impact features), `repair_full` | 240 runs | `EXT6_PROTOCOL.md` | `results/ext6_v1/`: C-MAPSS −0.25 only; repair fails the pessimism guard |
+| EXT6-C | `full_recon` on new C-MAPSS seeds 52–56 | 40 new runs | `EXT6C_PROTOCOL.md` | `results/ext6c_v1/`: confirmed on C-MAPSS (−0.31, 10/10) |
+| EXT7 | Calibration-fitted logistic stacker `stack`; primary test on new seeds 52–56 | 359 runs (80 newly trained) | `EXT7_PROTOCOL.md` | `results/ext7_v1/`: C-MAPSS −0.56, but bearings +0.85 |
+| EXT8 | Safeguarded stacking (`stack_plus`, `blend`, `stack_cv`, `select_cv`); holdout seeds 57–61 | 360 + 120 runs | `EXT8_PROTOCOL.md` | `results/ext8_v1/`, `results/ext8_hold/`: `rank_recon` not confirmed |
+| EXT9 | Redundancy-gated selector | none | `EXT9_PROTOCOL.md` | refuted on training data (redundancy is lowest on C-MAPSS); no α spent |
+| **EXT10** | **Randomized-perturbation training (`full_rpt`, `full_recon_rpt`)**: development on seeds 42–61, confirmation on fresh seeds 62–71 | 480 + 240 runs | `EXT10_PROTOCOL.md` | `results/ext10_v1/`, `results/ext10_conf62/`: **confirmed on all four families** |
 
-No run failed in any round. Every round ran on CPU, replaying the paper's trained backbones; FiLM-GRU and LipschitzRNN were
+From EXT9 on, the search loop follows fixed rules (`EXT9_PROTOCOL.md`, `SEARCH_LOG.md`):
+- development on seeds 42–61;
+- one primary method per round, confirmed on 10 never-used seeds;
+- α_j = 0.05 / 2^j for round j, so the family-wise error across rounds is at most 0.05.
+
+EXT10 was confirmation round 1.
+
+No run failed in any round, except one EXT7 bearings run, where the calibration set had a single class; EXT8 added a
+fallback for that case. Every round ran on CPU, replaying the paper's trained backbones; FiLM-GRU and LipschitzRNN were
 trained on each run's own fit and validation units.
 
 ## Scores compared
@@ -55,7 +110,7 @@ The metric is the optimistic-error rate among accepted windows (ŷ − y > δ):
 - it is measured at 90% matched coverage and averaged over the six unseen faults;
 - aggregation is the same as in the paper.
 
-## Main results
+## Main results of EXT2–EXT4
 
 Optimistic-error rate (%) at 90% matched coverage, mean over six unseen faults, all 240 paper runs (EXT3, EXT4):
 
@@ -77,7 +132,7 @@ Paired differences against the paper's selector (20 backbone–seed pairs, Wilco
 | rank_avg − full (EXT3) | +0.22, p_H = 0.0005 | −0.32, p_H < 1e-4 | −0.01, n.s. | −0.45, p_H < 1e-4 |
 | select_cal − full (EXT4) | +0.17, p_H = 0.0075 | −0.29, p_H = 0.030 | +0.07, n.s. | −0.64, p_H = 0.023 |
 
-## Conclusions
+## Conclusions of EXT2–EXT4
 
 1. **Variance-type uncertainty fails under sensor faults.** This holds for:
    - explicit ensembles, the implicit FiLM-Ensemble, MC dropout and post-hoc Laplace (including the evidence-tuned prior);
@@ -91,7 +146,8 @@ Paired differences against the paper's selector (20 backbone–seed pairs, Wilco
    - 7.0–7.3 points on N-CMAPSS;
    - 1.1–2.0 points on batteries;
    - 0.6–0.8 points on bearings.
-3. **No variant beats the paper's selector on all four families.** The pattern is the same in every round, and the
+3. **In EXT2–EXT4, no variant beats the paper's selector on all four families** (EXT10 later does; see the top). The
+   pattern is the same in every one of these rounds, and the
    differences between bias-aware scores are below 1 point:
    - the classifier is best on C-MAPSS;
    - the bias-aware Gaussian (or a combination with it) is best on N-CMAPSS and batteries;
@@ -127,6 +183,16 @@ python scripts/ext2_pilot.py --runs runs/<external> runs/<battery> --out runs/ex
 # EXT3 and EXT4 (all 240 GRU/TCN runs)
 python scripts/ext3_conformal.py --runs runs/<all> --out runs/ext3_v1 --device cpu --passes 10
 python scripts/ext4_select.py   --runs runs/<all> --out runs/ext4_v1 --device cpu --passes 10
+# EXT5-EXT10 (same interface; add --data-dir and --ext-data-dir, and --shard i/n to split)
+python scripts/ext5_loco.py   --runs runs/<all> --out runs/ext5_v1 --device cpu --passes 10
+python scripts/ext6_repair.py --runs runs/<all> --out runs/ext6_v1 --device cpu --passes 10
+python scripts/ext7_stack.py  --runs runs/<all> runs/<seeds 52-56> --out runs/ext7_v1 --device cpu --passes 10
+python scripts/ext8_select.py --runs runs/<all> runs/<seeds 52-56> --out runs/ext8_v1 --device cpu --passes 10
+python scripts/ext10_rpt.py   --runs runs/<seeds 42-61> --out runs/ext10_v1 --device cpu --passes 10
+python scripts/ext10_rpt.py   --runs runs/<seeds 62-71> --out runs/conf62_v1 --device cpu --passes 10
+# new-seed backbones use the paper's configs unchanged, e.g.
+python scripts/run_matrix.py --config configs/ext_capped.json --models gru --heads point --subsets FD001 --seeds 62 63 --device cpu
+python scripts/run_external.py --config configs/external.json --datasets bearings --models gru --seeds 62 63 --device cpu
 ```
 
 Summaries and tests are regenerated from the stored results without a GPU or raw data, and are byte-identical to the stored
@@ -137,6 +203,10 @@ python scripts/ext2_summary.py extensions/results/ext2_v1/all_ext2_v1.csv.gz    
 python scripts/ext2_confirm_tests.py extensions/results/ext2_confirm/all_ext2_confirm.csv.gz extensions/results/ext2_v1/all_ext2_v1.csv.gz
 python scripts/ext3_summary.py extensions/results/ext3_v1/all_ext3_v1.csv.gz
 python scripts/ext4_summary.py extensions/results/ext4_v1/all_ext4_v1.csv.gz
+python scripts/ext7_summary.py extensions/results/ext7_v1/all_ext7_v1.csv.gz
+python scripts/ext8_holdout.py extensions/results/ext8_hold/all_ext8_hold.csv.gz
+python scripts/dev_summary.py  extensions/results/ext10_v1/all_ext10_v1.csv.gz full_rpt,full_recon_rpt,full_recon,stack,stack_plus,rank_recon full_rpt,full_recon_rpt
+python scripts/conf_test.py    extensions/results/ext10_conf62/all_conf62.csv.gz full_recon_rpt 0.025 62 71   # the confirmatory test
 ```
 
 ## Files
@@ -146,6 +216,9 @@ python scripts/ext4_summary.py extensions/results/ext4_v1/all_ext4_v1.csv.gz
 | `src/selective_rul/ext_backbones.py` | `LipschitzRNNRUL`; `FiLMEnsembleGRU` (shared 2-layer GRU, LayerNorm, per-member FiLM after each layer) |
 | `scripts/ext2_pilot.py`, `ext3_conformal.py`, `ext4_select.py` | experiment scripts, one CSV per run |
 | `scripts/ext2_summary.py`, `ext2_confirm_tests.py`, `ext3_summary.py`, `ext4_summary.py` | aggregation and paired tests |
+| `scripts/ext5_loco.py`, `ext6_repair.py`, `ext7_stack.py`, `ext8_select.py`, `ext9_gate.py`, `ext10_rpt.py` | EXT5–EXT10 experiment scripts; each later script keeps the earlier scores and adds new ones |
+| `scripts/ext9_r2.py` | per-run analytic redundancy (median channel R²) |
+| `scripts/ext5_summary.py`, `ext6_summary.py`, `ext6c_test.py`, `ext7_summary.py`, `ext8_summary.py`, `ext8_holdout.py`, `dev_summary.py`, `conf_test.py` | EXT5–EXT10 aggregation and tests |
 | `results/<round>/all_*.csv.gz` | raw per-run, per-scenario, per-score results |
 | `results/<round>/summary_*.csv`, `paired_*.csv`, `main_family_*.csv`, `secondary_*.csv`, `confirm_*.csv`, `bounds_*.csv` | generated summaries and tests |
 | `results/<round>/FINDINGS.md` | findings of each round (Vietnamese) |

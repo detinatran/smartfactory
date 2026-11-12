@@ -1,0 +1,172 @@
+dataset  battery  bearings  cmapss  ncmapss
+era                                        
+new           10        60      40       10
+old           20       119      80       20 
+
+== [new seeds] risk_matched (unseen faults, %)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.87    18.24     26.52     5.86
+impact              8.99    14.23     26.87     5.86
+gauss_bias_aware   10.10    10.92     25.30     4.51
+gba_recon           9.65    10.96     25.36     4.42
+full                9.38    10.89     25.16     4.66
+full_recon          9.07    11.09     25.39     4.77
+rank_recon          9.15    10.90     25.20     4.46
+stack               8.82    10.98     26.02     4.67 
+
+== [new seeds] pess_matched (unseen faults, %)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       32.22    20.37     31.67    15.91
+impact             33.27    22.24     33.13    15.85
+gauss_bias_aware   32.25    22.49     32.74    17.39
+gba_recon          32.56    22.49     32.81    17.32
+full               32.70    22.49     32.62    17.12
+full_recon         32.88    22.49     32.55    17.00
+rank_recon         32.89    22.49     32.80    17.19
+stack              33.06    22.49     32.65    17.21 
+
+== [new seeds] risk_frozen (unseen faults, %)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.06    16.33     25.27     4.72
+impact              7.42    11.18     26.16     5.62
+gauss_bias_aware   10.07     8.15     24.64     1.48
+gba_recon           9.43     7.65     24.79     1.56
+full                9.23     8.17     25.14     3.08
+full_recon          8.57     7.21     24.72     3.62
+rank_recon          8.91     7.42     24.51     1.71
+stack               7.97     7.81     24.43     3.00 
+
+== [new seeds] coverage_frozen (unseen faults, %)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       81.91    74.40     78.79    63.91
+impact             72.90    66.30     63.10    78.93
+gauss_bias_aware   90.63    85.23     84.71    70.92
+gba_recon          89.41    82.39     84.55    68.71
+full               89.56    85.51     86.56    78.34
+full_recon         88.02    82.95     85.16    76.99
+rank_recon         89.42    83.07     85.54    69.89
+stack              86.63    83.53     79.96    71.60 
+
+== [new seeds] clean risk_matched (%)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std        9.78    13.54     26.48     3.31
+impact             10.79    14.00     27.00     4.46
+gauss_bias_aware    9.00     6.89     25.45     3.21
+gba_recon           9.06     6.78     25.54     2.69
+full                8.59     6.86     25.17     3.25
+full_recon          8.55     6.94     25.47     3.20
+rank_recon          8.64     6.72     25.20     2.84
+stack               8.55     6.77     25.97     3.04 
+
+== [old seeds] risk_matched (unseen faults, %)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       11.16    19.51     24.30     5.52
+impact              9.45    16.02     25.44     5.49
+gauss_bias_aware   10.24    12.19     23.70     3.56
+gba_recon           9.83    12.23     23.70     3.78
+full                9.37    12.49     23.49     4.47
+full_recon          9.12    12.53     23.45     4.41
+rank_recon          9.27    12.19     23.44     4.11
+stack               8.96    12.18     24.45     4.08 
+
+== [old seeds] pess_matched (unseen faults, %)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       31.86    19.91     34.17    17.68
+impact             32.93    21.68     35.24    18.36
+gauss_bias_aware   32.72    21.94     35.18    19.97
+gba_recon          32.91    21.94     35.22    19.90
+full               33.03    21.93     35.12    19.53
+full_recon         33.17    21.93     35.07    19.58
+rank_recon         33.15    21.94     35.33    19.82
+stack              33.24    21.94     34.82    19.79 
+
+== [old seeds] risk_frozen (unseen faults, %)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.39    16.60     23.28     4.76
+impact              7.82    13.54     24.01     5.45
+gauss_bias_aware   10.10     7.83     22.86     1.50
+gba_recon           9.48     7.48     22.90     1.17
+full                9.09     8.92     21.82     2.64
+full_recon          8.46     8.17     21.72     2.58
+rank_recon          8.84     7.76     22.32     1.49
+stack               7.91     7.17     22.86     1.06 
+
+== [old seeds] coverage_frozen (unseen faults, %)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       81.52    70.87     81.99    67.63
+impact             72.60    65.73     62.59    81.02
+gauss_bias_aware   89.51    83.50     85.48    71.44
+gba_recon          88.32    82.79     85.23    64.12
+full               88.57    84.36     82.50    71.67
+full_recon         86.81    83.01     82.81    68.61
+rank_recon         88.07    83.29     85.35    63.52
+stack              85.24    82.51     82.23    62.66 
+
+== [old seeds] clean risk_matched (%)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.06    14.06     24.01     3.20
+impact             11.13    14.89     24.97     4.24
+gauss_bias_aware    9.32     8.12     23.78     2.03
+gba_recon           9.34     8.15     23.73     2.11
+full                8.78     8.59     23.61     3.31
+full_recon          8.79     8.58     23.48     3.17
+rank_recon          8.77     8.16     23.61     2.72
+stack               8.84     8.12     24.43     2.51 
+
+== stacker coefficients (standardised inputs), new seeds
+           coef_full_recon  coef_gba_recon  coef_impact
+dataset                                               
+cmapss               0.81            0.87         0.28
+ncmapss              1.88            2.73        -0.17
+bearings             0.15            0.71         0.25
+battery              1.43            2.08        -0.04 
+
+== PRIMARY FAMILY (new seeds 52-56): stack - full, risk at 90% matched coverage (points), Holm over 4
+era     a    b  dataset  n  mean_pts  wins_a      p  pess_diff_pts  p_holm
+new stack full   cmapss 10   -0.5572      10 0.0020         0.3655  0.0078
+new stack full  ncmapss 10    0.0855       4 0.1934        -0.0018  0.3867
+new stack full bearings 10    0.8540       2 0.1055         0.0307  0.3164
+new stack full  battery 10    0.0119       7 0.3750         0.0959  0.3867
+
+criterion 'better than ESANN': True
+
+== secondary (unadjusted)
+era          a                b  dataset  n  mean_pts  wins_a      p  pess_diff_pts
+new rank_recon             full   cmapss 10   -0.2356       9 0.0273         0.1868
+new rank_recon             full  ncmapss 10    0.0133       5 0.9219        -0.0008
+new rank_recon             full bearings 10    0.0351       6 0.8457         0.1826
+new rank_recon             full  battery 10   -0.1972       7 0.2754         0.0693
+new  gba_recon gauss_bias_aware   cmapss 10   -0.4555      10 0.0020         0.3082
+new  gba_recon gauss_bias_aware  ncmapss 10    0.0474       4 0.4316        -0.0036
+new  gba_recon gauss_bias_aware bearings 10    0.0670       2 0.2754         0.0638
+new  gba_recon gauss_bias_aware  battery 10   -0.0886       6 1.0000        -0.0710
+new full_recon             full   cmapss 10   -0.3102      10 0.0020         0.1826
+new full_recon             full  ncmapss 10    0.2029       1 0.0039        -0.0010
+new full_recon             full bearings 10    0.2253       4 0.1602        -0.0687
+new full_recon             full  battery 10    0.1166       2 0.1602        -0.1163
+old      stack             full   cmapss 20   -0.4126      18 0.0000         0.2123
+old      stack             full  ncmapss 20   -0.3162      17 0.0002         0.0120
+old      stack             full bearings 20    0.9528       4 0.0010        -0.3031
+old      stack             full  battery 20   -0.3895      14 0.0136         0.2632
+old rank_recon             full   cmapss 20   -0.0971      15 0.0266         0.1228
+old rank_recon             full  ncmapss 20   -0.3067      20 0.0000         0.0094
+old rank_recon             full bearings 20   -0.0573      10 0.7012         0.2094
+old rank_recon             full  battery 20   -0.3507      16 0.0014         0.2889
+old  gba_recon gauss_bias_aware   cmapss 20   -0.4072      20 0.0000         0.1865
+old  gba_recon gauss_bias_aware  ncmapss 20    0.0482      10 0.5217        -0.0009
+old  gba_recon gauss_bias_aware bearings 20   -0.0067      11 0.5958         0.0362
+old  gba_recon gauss_bias_aware  battery 20    0.2117       5 0.0215        -0.0687
+old full_recon             full   cmapss 20   -0.2503      20 0.0000         0.1379
+old full_recon             full  ncmapss 20    0.0315      10 0.9563        -0.0008
+old full_recon             full bearings 20   -0.0471      11 0.7841        -0.0474
+old full_recon             full  battery 20   -0.0530      12 0.3118         0.0518
