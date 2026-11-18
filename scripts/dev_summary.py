@@ -28,7 +28,7 @@ pd.set_option("display.width", 250)
 
 def pool(sub, cols, keys=("dataset", "score", "model", "seed")):
     g = sub.groupby(list(keys) + ["fold"])[cols].mean().reset_index()
-    g["_w"] = np.where(g.dataset == "bearings", g.fold.map(BW), 1.0)
+    g["_w"] = np.where(g.dataset.str.startswith("bearings"), g.fold.map(BW), 1.0)
     res = {}
     for col in cols:
         gg = g[g[col].notna()].assign(_v=lambda t: t[col] * t._w)

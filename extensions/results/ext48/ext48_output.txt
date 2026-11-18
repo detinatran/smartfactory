@@ -1,0 +1,63 @@
+complete seeds per family: {'battery_cv': 30, 'bearings': 30, 'cmapss': 30, 'hdd': 30, 'ncmapss_cv': 30}
+
+== CONFIRMATORY round 9: delta excess_A, rpt_auto_d - full (seed level, Holm over 5, alpha_9=9.765625e-05)
+   dataset      mean  better  worse  n        p   p_holm    sig
+    cmapss -1.095134      30      0 30 0.000000 0.000000 better
+ncmapss_cv -0.705045      30      0 30 0.000000 0.000000 better
+  bearings -0.038653      19     11 30 0.124134 0.248269       
+battery_cv -2.038581      30      0 30 0.000000 0.000000 better
+       hdd  0.000000       0      0 30 1.000000 1.000000       
+CONFIRMED: True
+
+== excess_A (%), mean over seeds
+score       ensemble_std   eq90  err_reg  err_reg_rptL   full  gauss_bias_aware  gauss_rptL  pca_spe  pca_t2  rpt_L  rpt_auto  rpt_auto_d
+dataset                                                                                                                                  
+cmapss              3.09   1.50     2.25          0.66   1.50              2.33        0.54     2.54    1.78   0.40      0.90        0.40
+ncmapss_cv         12.49   7.07     7.33          7.24   7.64              7.49        7.35    10.56   10.93   6.93      7.11        6.93
+bearings           -0.26  -0.48    -0.49         -0.47  -0.43             -0.49       -0.52     0.09   -0.10  -0.49     -0.45       -0.47
+battery_cv         10.94   6.50     5.82          4.05   6.00              5.90        3.94    10.60   10.86   3.96      3.99        3.96
+hdd                -4.17 -10.43   -11.39         -9.70 -10.88            -10.81       -9.43    -5.49   -6.91  -9.57    -10.53      -10.88
+
+== (a) whole-test risk, rpt_auto_d - full (Holm over 5, alpha 0.05)
+   dataset      mean  better  worse  n   p  p_holm    sig
+    cmapss -0.583289      30      0 30 0.0     0.0 better
+ncmapss_cv -0.277391      30      0 30 0.0     0.0 better
+  bearings -0.568720      29      1 30 0.0     0.0 better
+battery_cv -1.043388      30      0 30 0.0     0.0 better
+       hdd  0.000000       0      0 30 1.0     1.0       
+
+== (b) mask-fault excess_A, rpt_auto_d - full (Holm over 5)
+   dataset      mean  better  worse  n        p   p_holm    sig
+    cmapss -2.301908      30      0 30 0.000000 0.000000 better
+ncmapss_cv -0.255991      24      6 30 0.000137 0.000550 better
+  bearings  0.146274      11     19 30 0.080327 0.160655       
+battery_cv -0.579050      19     11 30 0.004032 0.012095 better
+       hdd  0.000000       0      0 30 1.000000 1.000000       
+
+== (c) risk, rpt_auto_d - perturbation-trained directional estimators (Holm over 10)
+          vs    dataset     mean  better  n       p  p_holm
+err_reg_rptL     cmapss -0.54044      29 30 0.00000 0.00000
+err_reg_rptL ncmapss_cv  0.09552       0 30 0.00000 0.00000
+err_reg_rptL   bearings  0.90407       3 30 0.00000 0.00000
+err_reg_rptL battery_cv  0.05403      12 30 0.01130 0.01130
+err_reg_rptL        hdd -0.39248      30 30 0.00000 0.00000
+  gauss_rptL     cmapss -0.24225      26 30 0.00000 0.00000
+  gauss_rptL ncmapss_cv  0.08236       2 30 0.00000 0.00000
+  gauss_rptL   bearings  0.73003       6 30 0.00003 0.00008
+  gauss_rptL battery_cv  0.05305       6 30 0.00277 0.00553
+  gauss_rptL        hdd -0.42163      30 30 0.00000 0.00000
+
+== (d) maintenance simulation, six faults, frozen thresholds (mean over seeds)
+              fail_rate                                                                           insp_per_unit                                                                                     waste                                                                          
+score      ensemble_std err_reg err_reg_rptL    full gauss_bias_aware   rpt_L rpt_auto rpt_auto_d  ensemble_std  err_reg err_reg_rptL     full gauss_bias_aware    rpt_L rpt_auto rpt_auto_d ensemble_std err_reg err_reg_rptL    full gauss_bias_aware   rpt_L rpt_auto rpt_auto_d
+dataset                                                                                                                                                                                                                                                                            
+cmapss           0.0001  0.0003       0.0000  0.0003           0.0002  0.0000   0.0002     0.0000        6.3077   3.5036       4.0092   4.4204           3.9361   4.9700   4.7354     4.9700       0.0473  0.0544       0.0565  0.0566           0.0552  0.0567   0.0566     0.0567
+ncmapss_cv       0.0093  0.0020       0.0020  0.0027           0.0022  0.0022   0.0023     0.0022       13.5020   7.0016       7.0028   6.9007           7.2290   7.2913   7.1796     7.2913       0.1418  0.1794       0.1794  0.1792           0.1792  0.1794   0.1794     0.1794
+bearings         0.0788  0.1028       0.0983  0.0940           0.1040  0.0852   0.0873     0.0865       25.3237  23.4215      27.0523  25.2536          22.3872  24.4485  25.2498    25.8387       0.1302  0.1355       0.1417  0.1378           0.1357  0.1412   0.1405     0.1386
+battery_cv       0.0000  0.0000       0.0000  0.0000           0.0000  0.0000   0.0000     0.0000       15.7458  10.4207      11.2711  13.5083          11.8726  13.7390  13.7211    13.7390       0.0587  0.0892       0.0900  0.0860           0.0869  0.0898   0.0898     0.0898
+hdd              0.4462  0.1457       0.2256  0.1250           0.1473  0.1994   0.1435     0.1250        8.4364   8.8267       7.1262   9.0573           8.7939   7.1893   8.6071     9.0573       0.0671  0.0758       0.0770  0.0741           0.0759  0.0767   0.0745     0.0741
+  fail_rate: rpt_auto_d - full by family: {'cmapss': -0.0003, 'ncmapss_cv': -0.0005, 'bearings': -0.0075, 'battery_cv': 0.0, 'hdd': 0.0}
+  insp_per_unit: rpt_auto_d - full by family: {'cmapss': 0.5496, 'ncmapss_cv': 0.3906, 'bearings': 0.5851, 'battery_cv': 0.2307, 'hdd': 0.0}
+  waste: rpt_auto_d - full by family: {'cmapss': 0.0001, 'ncmapss_cv': 0.0002, 'bearings': 0.0009, 'battery_cv': 0.0039, 'hdd': 0.0}
+
+switch share (rpt_auto_d chose rpt_L): {'battery_cv': 1.0, 'bearings': 0.42, 'cmapss': 1.0, 'hdd': 0.0, 'ncmapss_cv': 1.0}

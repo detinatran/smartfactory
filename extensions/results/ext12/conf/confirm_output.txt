@@ -1,0 +1,100 @@
+runs per dataset: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'ncmapss': 20}
+
+== CONFIRMATORY round 2: rpt_L vs full / directional (Holm over 12, alpha = 0.0125)
+dataset                                 cmapss                  ncmapss                 bearings                 battery
+a     b                                                                                                                 
+rpt_L err_reg           -1.79 (20/20, p=2e-05)  -0.25 (17/20, p=0.0003)  -1.03 (17/20, p=0.0005)  -0.55 (17/20, p=0.004)
+      full              -0.55 (19/20, p=4e-05)   -0.40 (18/20, p=7e-05)   -1.06 (19/20, p=4e-05)  -0.90 (19/20, p=4e-05)
+      gauss_bias_aware  -1.15 (20/20, p=2e-05)   -0.25 (17/20, p=0.001)   -1.48 (19/20, p=8e-05)  -0.54 (16/20, p=0.004)
+
+CONFIRMED (vs full, EXT9 rule): True  better=True worse=False max_mean=-0.400 max_pess=0.649
+secondary: datasets where rpt_L is significantly better than BOTH directional estimators: ['cmapss', 'ncmapss', 'bearings', 'battery']
+
+== risk_matched (%, six unseen faults, seeds 72-81, descriptive)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.96    17.51     24.80     5.35
+full                9.52    10.21     23.04     4.29
+gauss_bias_aware   10.12    10.06     23.46     3.93
+err_reg            10.77    10.06     23.01     3.94
+rptw                9.25     9.95     22.79     3.72
+full_rpt            9.24     9.94     22.85     3.53
+rptw_L              9.06     9.82     22.10     3.28
+rpt_L               8.97     9.81     21.98     3.39
+err_reg_rpt        10.30     9.83     22.59     3.24
+gba_rpt             9.71     9.82     22.83     3.29
+full_recon_rpt      8.87    10.00     22.83     3.68
+recon_rpt_L         8.74     9.87     21.95     3.60
+
+== pess_matched (%, six unseen faults, seeds 72-81, descriptive)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       32.89    19.61     34.63    17.49
+full               33.69    21.56     36.05    18.91
+gauss_bias_aware   33.32    21.59     36.05    19.27
+err_reg            34.36    21.59     36.34    19.46
+rptw               33.91    21.59     36.39    19.34
+full_rpt           33.88    21.59     36.30    19.36
+rptw_L             34.07    21.59     36.58    19.49
+rpt_L              34.02    21.59     36.70    19.53
+err_reg_rpt        34.33    21.59     36.54    19.69
+gba_rpt            33.49    21.59     36.41    19.61
+full_recon_rpt     34.02    21.59     36.29    19.42
+recon_rpt_L        34.08    21.59     36.73    19.64
+
+== risk_frozen (%, six unseen faults, seeds 72-81, descriptive)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.33    15.03     24.40     5.27
+full                9.39     8.98     21.38     2.33
+gauss_bias_aware   10.00     8.60     22.40     1.52
+err_reg            10.83     8.40     21.83     1.42
+rptw                8.90     8.32     21.17     1.62
+full_rpt            8.72     8.21     20.80     1.53
+rptw_L              8.34     7.63     20.29     0.77
+rpt_L               8.17     7.51     19.46     1.39
+err_reg_rpt        10.32     7.81     20.98     0.92
+gba_rpt             9.44     8.01     21.41     1.21
+full_recon_rpt      8.05     7.08     20.60     1.22
+recon_rpt_L         7.56     6.62     19.66     1.68
+
+== coverage_frozen (%, six unseen faults, seeds 72-81, descriptive)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       83.10    70.83     85.05    72.27
+full               89.43    87.05     83.57    66.99
+gauss_bias_aware   89.65    86.64     81.14    67.72
+err_reg            89.28    86.90     80.37    66.81
+rptw               88.71    86.64     83.02    69.11
+full_rpt           88.18    86.55     83.48    69.83
+rptw_L             87.70    86.00     82.80    64.86
+rpt_L              87.35    85.89     82.25    68.29
+err_reg_rpt        89.75    86.49     81.05    71.41
+gba_rpt            88.78    86.28     82.07    74.18
+full_recon_rpt     86.67    84.74     83.28    65.01
+recon_rpt_L        85.77    84.43     82.27    64.34
+
+== clean risk_matched (%)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std        9.89    13.12     24.68     3.13
+full                8.83     6.77     23.22     2.84
+gauss_bias_aware    9.30     6.63     23.60     2.27
+err_reg             9.90     6.59     23.14     2.41
+rptw                8.74     6.57     22.98     2.50
+full_rpt            8.81     6.60     23.04     2.33
+rptw_L              8.83     6.46     22.28     1.90
+rpt_L               8.78     6.44     22.16     2.08
+err_reg_rpt         9.60     6.46     22.67     2.23
+gba_rpt             9.12     6.51     22.96     2.02
+full_recon_rpt      8.78     6.53     22.91     2.27
+recon_rpt_L         8.84     6.47     22.17     2.23
+
+== per fault: rpt_L - full (points)
+              cmapss  ncmapss  bearings  battery
+stuck          -1.00    -0.46     -1.08    -0.87
+bias           -0.95    -0.42     -1.51    -3.17
+noise          -0.63    -0.48     -0.95    -0.37
+intermittent   -0.06    -0.30     -1.08    -0.14
+spike          -0.52    -0.45     -1.06    -0.21
+gain           -0.13    -0.30     -1.09    -0.63

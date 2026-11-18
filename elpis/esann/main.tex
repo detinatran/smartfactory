@@ -1,0 +1,216 @@
+\documentclass{esannV2}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,array,booktabs}
+\usepackage{url}
+\usepackage[numbers,sort&compress]{natbib}\setlength{\bibsep}{0pt plus 0.3pt}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+
+%***********************************************************************
+% Margin settings from the official ESANN template (esannV2.tex).
+%***********************************************************************
+\voffset 0 cm \hoffset -0.14 cm \addtolength{\textwidth}{0cm}
+\addtolength{\textheight}{0cm}\addtolength{\leftmargin}{0cm}
+
+% DRAFT (2026-11-18, ELPIS version) -- not ready to submit: authors/funding are placeholders.
+% Condensed from the ELPIS conference/full drafts (paper-acm-rpt/v3). Rounds 1-10 are the
+% pre-registered confirmatory rounds; ELPIS-JG results are exploratory. The base selector OSC
+% comes from the authors' earlier study; how to cite it (anonymised or not) is for the authors to decide.
+
+\newtheorem{proposition}{Proposition}
+\emergencystretch=1em
+\setcounter{topnumber}{3}\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.93}\renewcommand{\textfraction}{0.06}\renewcommand{\floatpagefraction}{0.85}
+\newcommand{\OSC}{\textsc{osc}}
+\newcommand{\RPT}{\textsc{elpis}}
+\newcommand{\AUTOD}{\textsc{elpis-g}}
+\newcommand{\EJ}{\textsc{elpis-j}}
+\newcommand{\EJG}{\textsc{elpis-jg}}
+\newcommand{\s}{$^{\ast}$}
+
+\begin{document}
+
+\title{Error-Labelled Perturbation Training for Selective RUL Prediction under Sensor Faults}
+
+%***********************************************************************
+% AUTHORS INFORMATION AREA -- placeholders, to be filled by the authors
+%***********************************************************************
+\author{AUTHOR-1$^1$ and AUTHOR-2$^2$
+%
+\thanks{FUNDING ACKNOWLEDGEMENT -- TO BE PROVIDED OR REMOVED.}
+%
+% DO NOT MODIFY THE FOLLOWING '\vspace' ARGUMENT
+\vspace{.3cm}\\
+%
+1- INSTITUTION-1 - DEPARTMENT \\
+ADDRESS - COUNTRY
+%
+\vspace{.1cm}\\
+2- INSTITUTION-2 - DEPARTMENT \\
+ADDRESS - COUNTRY\\
+}
+%***********************************************************************
+% END OF AUTHORS INFORMATION AREA
+%***********************************************************************
+
+\maketitle
+
+\begin{abstract}
+Under sensor faults, dispersion-based abstention misses optimistic remaining-useful-life (RUL) errors, because a fault shifts all ensemble members together. We train a one-sided selector, which estimates $P(\hat y-y>\delta\mid x)$, on windows whose random channel subsets are strongly perturbed, each labelled by whether the fixed predictor becomes optimistic on it (\RPT), and gate it per deployment with a calibration-only diagnostic (\AUTOD). In pre-registered rounds on 30 fresh seeds each, \AUTOD{} lowered the optimistic-error rate at 90\% coverage under six unseen faults on four benchmark families (by 0.29--1.04 points, 27--30 of 30 seeds), left real hard-drive failures unchanged; \RPT{} was significantly better than 16 external baselines on all four families. Outlier labels on the same windows are clearly worse.
+\end{abstract}
+
+%=======================================================================
+\begin{figure}[t]
+\centering
+\resizebox{\textwidth}{!}{\input{fig_pipeline_esann_tikz}}
+\caption{Pipeline. Perturbed copies are labelled by whether the \emph{same} predictor becomes optimistic, not by whether they were perturbed; \OSC{} is the classifier without the copies. Dashed (exploratory): pooling with the JEPA-pretrained \EJ{} and the gate \EJG. No test data are used.}
+\label{fig:method}
+\end{figure}
+
+\section{Introduction}
+An optimistic RUL prediction can let an asset run past its safe window. Selective prediction~\cite{chow1970optimum} lets the model abstain on doubtful inputs, usually those with high ensemble spread~\cite{lakshminarayanan2017simple} or MC-dropout variance~\cite{gal2016dropout}, or those flagged as novel~\cite{lee2018simple}. Both fail under sensor faults: a biased or stuck sensor moves every ensemble member the same way, so the members agree while the prediction turns optimistic, and novelty scores flag inputs that may be harmless. A \emph{one-sided} selector that estimates $\eta(x)=P(\hat y-y>\delta\mid x)$ directly targets the costly event~\cite{corbiere2019addressing,kamath2020selective}, but has to extrapolate to faults it never saw.
+
+We label perturbed data by the predictor's \emph{own error} rather than as anomalous: random channel subsets of selector windows receive large smooth perturbations, and each copy is labelled by whether the fixed predictor becomes optimistic on it (\RPT: Error-Labelled Perturbations for Inspection-aware Selection); unlike outlier exposure~\cite{hendrycks2019deep}, the target is the predictor's one-sided error. We contribute the scheme with a calibration-only gate (\AUTOD), a transfer bound with evidence that \RPT{} reduces estimation error (so it helps when selector data are scarce and hurts on real hard drives), and ten pre-registered confirmatory rounds.
+
+%=======================================================================
+\section{Method}
+\emph{Setting.} A fixed predictor $f$ (mean of a 3-member ensemble) maps a window $x\in\mathbb R^{T\times d}$ to a RUL estimate, with signed error $E=f(X)-Y$. A score $s$ induces a selector $g_s$ that accepts the lowest scores up to coverage $c$ (ties randomised). Its risk $R(g)=\mathbb E[g\eta]/c$ is the optimistic-error rate among accepted windows, and $g_\eta$ minimises it at every $c$; for any estimate $\hat\eta$, $R(g_{\hat\eta})-R(g_\eta)\le\frac1c\mathbb E|\hat\eta-\eta|$~\cite{chow1970optimum}.
+
+\begin{proposition}[dispersion under faults]\label{prop:gauss}
+Let $E\mid X\sim\mathcal N(\mu(X),\sigma^2(X))$. If $\mu\equiv\mu_0<\delta$, ranking by $\sigma$ is optimal; otherwise it has positive excess risk iff $P(\eta>t_c,\sigma<q_c)>0$, where $t_c,q_c$ are the $c$-quantiles of $\eta$ and $\sigma$.
+\end{proposition}
+\noindent A fault that moves all members together changes $\mu$ far more than $\sigma$, creating such windows: on fault-altered windows the ensemble mean shifts 1.4--25 times more than the spread (medians).
+
+\begin{proposition}[transfer]\label{prop:transfer}
+Let $P$ be the selector's training distribution of observed windows and $Q$ an unseen fault, with $\eta_P=\eta_Q=\eta$ on the common support and $Q\ll P$. Then
+$R_Q(g_{\hat\eta})-R_Q(g_\eta)\le\frac1c\sqrt{1+\chi^2(Q\|P)}\,\|\hat\eta-\eta\|_{L_2(P)}$.
+\end{proposition}
+\noindent (Proof: the bound above under $Q$ and Cauchy--Schwarz with $w=dQ/dP$; Suppl.~S13.) It separates \emph{estimation} error on $P$ from \emph{coverage} of the fault by $P$ (vacuous for singular faults; motivation only).
+
+
+
+\emph{Selector (\OSC).} A histogram gradient-boosting classifier estimates $\eta$ from the prediction, the ensemble spread, the elapsed time and per-channel window statistics. It is trained on \emph{selector} units, disjoint from fit, calibration and evaluation units, under clean data, channel dropout and drift, with hyperparameters fixed a priori (7 leaves, 25 samples per leaf, $L_2=2$).
+
+\emph{\RPT{}} (Fig.~\ref{fig:method}) adds $K=2$ copies $x+\Delta$ of each clean selector window. $k\sim\mathcal U\{1,\dots,\lceil d/2\rfloor\}$ random channels receive $\Delta_{t}=A\varphi(t)$ in normalised units, with $A\sim\mathrm{LogUniform}(1,8)$, a random smooth waveform $\varphi\propto\sum_{m=0}^2a_m\cos(\pi mt/T+b_m)$ and, with probability 0.5, a random onset. Each copy is labelled $\mathbf 1\{f(x+\Delta)-y>\delta\}$; all else is as in \OSC. The generator never uses the evaluation faults.
+
+\emph{Gate (\AUTOD).} \RPT{} learns only from perturbations that make the predictor optimistic, so \AUTOD{} perturbs the deployment's clean calibration windows with the same generator and computes $D$, the rise of the predictor's optimistic rate; it uses \RPT{} if $D>0$ and \OSC{} otherwise. $D$ has no tuned threshold and uses no test data.
+
+%=======================================================================
+\section{Data and protocol}
+\emph{Data.} C-MAPSS FD001--4~\cite{saxena2008damage} (held-out development engines; the official test set is not reused); N-CMAPSS~\cite{arias2021ncmapss} (99 engines, official test units); 32 FEMTO~\cite{nectoux2012pronostia} and XJTU-SY~\cite{wang2020xjtusy} bearings (leave one operating condition out); 124 battery cells~\cite{severson2019battery}; real hard-drive failures (Backblaze~\cite{backblaze}, 17 SMART attributes, 2\,091 drives). Splits are by unit; $\delta=20$ cycles on C-MAPSS; elsewhere the target is the remaining-life fraction and $\delta=0.16$.
+\emph{Faults.} Six faults never used in training are injected on three random channels over one interval per unit: stuck-at, bias ($3\sigma$), noise ($2\sigma$), intermittent loss (50\%), spikes ($\pm6\sigma$, 10\%) and gain ($\times1.5$).
+\emph{Models.} Three-member GRU~\cite{cho2014learning} and TCN~\cite{bai2018empirical} ensembles are retrained per seed; all selectors rank the same predictions.
+\emph{Metric.} Unit-weighted optimistic-error rate at 90\% matched coverage, averaged over the six faults; ``points'' are percentage points.
+\emph{Confirmation.} Methods were developed on seeds 42--61. Each confirmatory round $j$ tested one method fixed in a written protocol on never-used seeds, with two-sided Wilcoxon tests, Holm correction across families and $\alpha_j=0.05/2^j$, so the family-wise error over all rounds is below 0.05. Other analyses are exploratory.
+
+%=======================================================================
+\section{Results}
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}rrrr@{}}
+\toprule
+ & C-MAPSS & N-CMAPSS & Bearings & Batteries\\
+\midrule
+\multicolumn{5}{@{}l}{\makebox[0pt][l]{\emph{Round 8: 30 fresh seeds 162--191, rotated test units, $\alpha_8=0.0002$}}}\\
+Risk, \OSC & 8.78 & 8.14 & 24.39 & 3.31\\
+Risk, \AUTOD & \textbf{8.14} & \textbf{7.86} & \textbf{23.77} & \textbf{2.27}\\
+\AUTOD{} $-$ \OSC & $-0.64$ (30, 9e-9) & $-0.29$ (30, 9e-9) & $-0.62$ (27, 2e-7) & $-1.04$ (30, 9e-9)\\
+\midrule
+\multicolumn{5}{@{}l}{\makebox[0pt][l]{\emph{Round 9: fault-induced excess on fault-changed windows, seeds 192--221, $\alpha_9=0.0001$}}}\\
+$\Delta$excess, \AUTOD{} $-$ \OSC & $-1.10$ (30, 9e-9) & $-0.71$ (30, 9e-9) & $-0.04$ (19, 0.25) & $-2.04$ (30, 9e-9)\\
+\midrule
+\multicolumn{5}{@{}l}{\makebox[0pt][l]{\emph{Round 10: JEPA-pretrained predictor \EJ~\cite{assran2023ijepa}, seeds 222--251, $\alpha_{10}=0.00005$}}}\\
+\AUTOD{} $-$ \OSC & $-0.81$ (30, 6e-9) & -- & $-1.03$ (29, 6e-9) & $-1.14$ (30, 6e-9)\\
+\bottomrule
+\end{tabular*}
+\caption{Pre-registered confirmatory rounds 8--10. Risk: optimistic-error rate (\%) at 90\% matched coverage under six unseen faults; differences in points (seeds improved out of 30, Holm-adjusted $p$) (GRU and TCN averaged per seed). Earlier rounds 1--7 (10 seeds each) confirmed \RPT{} on all four families twice ($-0.34$ to $-1.56$ points); round 6, a stricter switching rule, failed.}
+\label{tab:confirm}
+\end{table}
+
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular*}{\textwidth}{@{}ll@{\extracolsep{\fill}}rrrr@{}}
+\toprule
+ & Selector & C-MAPSS & N-CMAPSS & Bearings & Batteries\\
+\midrule
+Disp. & Ensemble spread~\cite{lakshminarayanan2017simple} & 10.96\s & 17.51\s & 24.80\s & 5.35\s\\
+ & MC dropout~\cite{gal2016dropout} & 11.42\s & 17.95\s & 24.61\s & 5.78\s\\
+ & Deep ens., Gaussian NLL~\cite{lakshminarayanan2017simple} & 11.00\s & 16.12\s & 26.15\s & 4.97\s\\
+ & Deep evidential regression~\cite{amini2020deep} & 11.29\s & 16.06\s & 26.28\s & 5.08\s\\
+ & Last-layer Laplace~\cite{daxberger2021laplace} & 11.75\s & 18.09\s & 24.92\s & 5.82\s\\
+ & Test-time augmentation~\cite{wang2019aleatoric} & 11.19\s & 17.96\s & 25.43\s & 6.51\s\\
+OOD & Mahalanobis distance~\cite{lee2018simple} & 11.67\s & 16.85\s & 25.68\s & 4.99\s\\
+ & $k$-NN feature distance~\cite{sun2022out} & 11.99\s & 17.97\s & 25.47\s & 5.62\s\\
+ & Isolation forest~\cite{liu2008isolation} & 12.94\s & 17.97\s & 24.82\s & 5.77\s\\
+ & Analytic-redund.\ residual~\cite{chow1984analytical} & 11.10\s & 17.31\s & 27.09\s & 5.66\s\\
+Sel. & SelectiveNet~\cite{geifman2019selectivenet} & 12.54\s & 17.37\s & 26.52\s & 5.48\s\\
+ & CQR lower bound~\cite{romano2019cqr} & 9.91\s & 15.43\s & 23.79\s & 4.98\s\\
+Error & Symmetric classif.\ $|E|>\delta$~\cite{corbiere2019addressing,kamath2020selective} & 12.47\s & 14.54\s & 26.07\s & 4.88\s\\
+ & Perturbation detector~\cite{isermann2005model} & 11.07\s & 17.39\s & 26.08\s & 5.74\s\\
+ & Signed-error regression~\cite{yoo2019learning} & 10.77\s & 10.06\s & 23.01\s & 3.94\s\\
+ & Gaussian with learned bias~\cite{nix1994estimating} & 10.12\s & 10.06\s & 23.46\s & 3.93\s\\
+Ours & \OSC{} (no perturbed copies) & 9.52\s & 10.21\s & 23.04\s & 4.29\s\\
+ & \RPT & \textbf{8.97} & \textbf{9.81} & \textbf{21.98} & \textbf{3.39}\\
+ & \AUTOD{} (gated) & 8.98 & 9.81 & 22.55 & 3.37\\
+\bottomrule
+\end{tabular*}
+\caption{Comparison on fresh seeds 72--81 (round 2; 20 backbone--seed pairs, same ensemble predictions). Risk (\%) at 90\% matched coverage under six unseen faults. \s: \RPT{} significantly lower (Wilcoxon, Holm over a pre-registered family of 68 tests).}
+\label{tab:sota}
+\end{table}
+
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}rrrr@{}}
+\toprule
+Variant (reference) & C-MAPSS & N-CMAPSS & Bearings & Batteries\\
+\midrule
+\multicolumn{5}{@{}l}{\makebox[0pt][l]{\emph{Ablation: variant $-$ \RPT{} (positive: variant worse)}}}\\
+Two unperturbed copies & $+0.62$\s & $+0.42$\s & $+1.12$\s & $+1.00$\s\\
+Sensitivity features, no copies & $+0.53$\s & $+0.69$\s & $+0.74$\s & $+0.53$\s\\
+Outlier-exposure labels~\cite{hendrycks2019deep} & $+1.63$\s & $+5.18$\s & $+2.33$\s & $+2.00$\s\\
+Symmetric target $|E|>\delta$ & $+3.54$\s & $+4.52$\s & $+4.09$\s & $+1.17$\s\\
+Oracle: train on the six test faults & $+0.15$ & $+0.09$ & $+1.04$ & $+0.16$\\
+Small amplitude$^\dagger$ & $+0.21$\s & $+0.07$ & $+0.47$ & $+0.27$\s\\
+Dense noise on all channels$^\dagger$ & $+0.23$\s & $+0.07$ & $+0.12$ & $+0.34$\s\\
+Logistic-regression selector$^\ddagger$ & $+1.10$\s & $+2.45$\s & $+0.87$\s & $+0.15$\\
+MLP selector$^\ddagger$ & $+1.65$\s & $+2.54$\s & $+1.23$\s & $+0.81$\s\\
+\midrule
+\multicolumn{5}{@{}l}{\makebox[0pt][l]{\emph{Robustness: \RPT{} $-$ \OSC{} (negative: \RPT{} better)}}}\\
+Four fault types designed after freezing & $-0.47$\s & $-0.33$\s & $-1.05$\s & $-1.00$\s\\
+Faults on all channels & $-0.60$\s & $-0.32$\s & $-1.13$\s & $-0.83$\s\\
+Five-member ensembles & $-0.55$\s & $-0.44$\s & $-1.29$\s & $-1.02$\s\\
+Patch-Transformer backbone~\cite{nie2023time} & $-0.51$\s & $-0.49$\s & $-1.69$\s & $-0.84$\s\\
+\bottomrule
+\end{tabular*}
+\caption{Ablation and robustness (exploratory; points of risk at 90\% matched coverage, six unseen faults; 20 pairs). $^\dagger$vs.\ the round-1 variant; $^\ddagger$vs.\ gradient boosting. \s: significant after Holm within its block.}
+\label{tab:abl}
+\end{table}
+
+\emph{Confirmatory results (Table~\ref{tab:confirm}).} \AUTOD{} beats \OSC{} on every family in rounds 8 and 10 and never switched on hard drives. On the windows a fault actually changes, it removes 0.71--2.04 points of fault-induced excess risk on C-MAPSS, N-CMAPSS and batteries (round 9); on bearings faults make the predictor \emph{less} optimistic, so there is no fault-specific risk to remove. On natural, physically implausible jumps in the raw battery data, the optimistic rate among accepted jump windows was 0.71\% against 2.51\% for \OSC{} (pre-registered secondary in round 9). Clean-data risk does not increase.
+
+
+
+\emph{Baselines (Table~\ref{tab:sota}).} \RPT{} is significantly better in 67 of 68 pre-registered comparisons and never worse; the only non-significant one is sparse white-noise training on C-MAPSS ($+0.05$, not shown), itself a variant of our approach. Against the 14 uncertainty, selective and anomaly baselines it lowers risk by 0.9--8.3 points. Anomaly scores do no better than the spread.
+
+
+
+\emph{Ablation and robustness (Table~\ref{tab:abl}).} The labels are the method: outlier labels on the same windows are 1.6--5.2 points worse, and extra unperturbed data or per-channel sensitivity features leave risk at \OSC's level. Amplitude matters and gradient boosting is the best selector model. Training on the six test faults (oracle) is not better than \RPT, consistent with Prop.~\ref{prop:transfer}: post hoc, \RPT{} lowers the Brier score of $\hat\eta$ by 16--36\% on held-out windows under seen shifts, whereas a domain-classifier estimate of coverage shows no consistent change.
+
+\emph{When it hurts: real hard drives.} On 612 test drives, plain \RPT{} is worse than \OSC{} ($+0.36$ points, 0 of 20 pairs; $+0.62$ on four unseen drive models). The cause is the amount of selector data: with 15 instead of 296 drive selector units \RPT{} helps ($-0.6$ to $-1.0$), and shrinking the benchmark selector sets enlarges its gain (batteries: $-0.93$, $-1.79$, $-2.37$ with all, half and a quarter of the units). \RPT{} thus regularises scarce selector data.
+
+\emph{Predictor choice (exploratory).} \EJG{} lowered risk further on C-MAPSS and batteries ($-0.58$, $-0.54$ points; 29 and 30 of 30 fresh seeds) and tied on bearings (mean $-0.56$ on 60 further fresh seeds, 28 of 60 improved, $p=0.11$).
+
+%=======================================================================
+\section{Conclusion}
+Error-labelled perturbations give a better one-sided RUL selector when selector data are scarce; a calibration-only gate avoids their harm otherwise. Limitations: apart from battery glitches the faults are injected; Prop.~\ref{prop:transfer} motivates rather than guarantees.
+
+\begin{scriptsize}
+\bibliographystyle{unsrtnat}
+\bibliography{refs_esann}
+\end{scriptsize}
+
+\end{document}

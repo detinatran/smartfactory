@@ -1,0 +1,19 @@
+choice2:
+ choice2   full  rpt_L
+dataset              
+cmapss    77.0   83.0
+ncmapss    9.0   31.0
+bearings  65.0  175.0
+battery    0.0   40.0
+hdd       17.0    3.0
+score      full  rpt_L  rpt_auto  auto3  gauss_bias_aware  err_reg
+dataset                                                           
+cmapss     9.25   8.66      8.93   8.97              9.95    10.39
+ncmapss   11.83  11.36     11.42  11.30             11.60    11.59
+bearings  23.16  22.30     22.51  22.24             23.46    23.49
+battery    4.35   3.73      3.73   3.64              3.89     3.85
+hdd       15.44  15.80     15.51  15.51             15.28    15.26
+rpt_auto - full: {'cmapss': -0.315, 'ncmapss': -0.407, 'bearings': -0.643, 'battery': -0.623, 'hdd': 0.069} sum -1.918
+pess rise: {'cmapss': 0.23, 'ncmapss': 0.01, 'bearings': 0.55, 'battery': 0.49, 'hdd': -0.03}
+RULE (open round 4): True
+auto3 - full (exploratory): {'cmapss': -0.281, 'ncmapss': -0.53, 'bearings': -0.919, 'battery': -0.711, 'hdd': 0.069} sum -2.371

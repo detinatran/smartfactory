@@ -1,0 +1,16 @@
+runs per dataset: {'battery': 5, 'bearings': 30, 'cmapss': 20, 'ncmapss': 5}
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       14.14    15.03     31.16     4.02
+full               11.49     7.37     29.81     2.56
+gauss_bias_aware   12.18     7.18     29.11     2.60
+err_reg            12.65     7.16     29.13     2.62
+full_recon_rpt     11.15     7.13     29.19     2.17
+rpt_L              10.79     6.91     28.01     1.90
+
+== B: transformer backbone, rpt_L vs baselines (Holm over 12, alpha = 0.05)
+dataset                             cmapss             ncmapss            bearings             battery
+a     b                                                                                               
+rpt_L err_reg           -1.85 (5/5, p=0.8)  -0.25 (4/5, p=0.8)  -1.13 (4/5, p=0.8)  -0.73 (5/5, p=0.8)
+      full              -0.70 (5/5, p=0.8)  -0.46 (4/5, p=0.8)  -1.80 (5/5, p=0.8)  -0.66 (5/5, p=0.8)
+      gauss_bias_aware  -1.39 (5/5, p=0.8)  -0.27 (4/5, p=0.8)  -1.10 (4/5, p=0.8)  -0.70 (5/5, p=0.8)

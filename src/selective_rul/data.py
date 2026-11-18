@@ -119,15 +119,45 @@ def corrupt(df, normalizer, scenario, seed):
     """
     if scenario == "clean":
         return df.copy()
-    from .faults import apply_fault, parse_fault
+    from .faults import apply_fault, mask_values, parse_fault
 
+    if scenario.startswith("tbias:"):  # EXT33 targeted bias: given channels and signs, 3 scale, fault interval as `bias`
+        _, chs, sg = scenario.split(":")
+        chans, signs = [int(c) for c in chs.split(".")], [float(x) for x in sg.split(".")]
+        out = df.copy()
+        for unit, group in out.groupby("unit", sort=True):
+            rng = np.random.default_rng(np.random.SeedSequence([seed, int(unit)]))
+            rng.choice(len(SENSORS), size=3, replace=False)  # keep the onset draw identical to the library faults
+            onset = int(rng.integers(40, 81))
+            cycles = group.cycle.to_numpy()
+            hit = (cycles >= onset) & (cycles < onset + 60)
+            regimes = normalizer.regimes(group)
+            for j, sgn in zip(chans, signs):
+                v = group[SENSORS[j]].to_numpy(float).copy()
+                v[hit] += sgn * 3.0 * normalizer.scales[regimes, j][hit]
+                out.loc[group.index, SENSORS[j]] = v
+        return out
+    if scenario == "mask":  # EXT29 health masking, in normalised units per regime
+        out = df.copy()
+        for unit, group in out.groupby("unit", sort=True):
+            rng = np.random.default_rng(np.random.SeedSequence([seed, int(unit), 99]))
+            channels = rng.choice(len(SENSORS), size=3, replace=False)
+            pos = group.cycle.to_numpy() / group.cycle.max()
+            hit = pos >= rng.uniform(0.60, 0.75)
+            regimes = normalizer.regimes(group)
+            for j in channels:
+                mu, sc = normalizer.means[regimes, j], normalizer.scales[regimes, j]
+                z = (group[SENSORS[j]].to_numpy(float) - mu) / sc
+                ref = np.nanmean(z[pos <= 0.30]) if (pos <= 0.30).any() else np.nanmean(z)
+                out.loc[group.index, SENSORS[j]] = mu + mask_values(z, hit, ref) * sc
+        return out
     fault = parse_fault(scenario)
     if fault:  # unseen-fault library; v1 scenarios below are unchanged
         kind, magnitude, n_channels = fault
         out = df.copy()
         for unit, group in out.groupby("unit", sort=True):
             rng = np.random.default_rng(np.random.SeedSequence([seed, int(unit)]))
-            channels = rng.choice(len(SENSORS), size=n_channels, replace=False)
+            channels = rng.choice(len(SENSORS), size=min(n_channels, len(SENSORS)), replace=False)
             onset = int(rng.integers(40, 81))
             extra = np.random.default_rng(np.random.SeedSequence([seed, int(unit), 77]))
             cycles = group.cycle.to_numpy()

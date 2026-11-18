@@ -1,0 +1,7 @@
+runs 60; D -2.40; D_opt 3.56 (share>0 1.00)
+n=15   risk_rpt-full: -0.724 points, better 29/30 seeds, p=1.9e-08
+n=15   risk_opt-full: -0.654 points, better 28/30 seeds, p=1.9e-08
+n=60   risk_rpt-full: +0.157 points, better 9/30 seeds, p=0.00061
+n=60   risk_opt-full: +0.164 points, better 8/30 seeds, p=0.00015
+n=all  risk_rpt-full: +0.414 points, better 0/30 seeds, p=1.9e-09
+n=all  risk_opt-full: +0.421 points, better 0/30 seeds, p=1.9e-09

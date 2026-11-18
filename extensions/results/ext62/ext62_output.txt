@@ -1,0 +1,18 @@
+complete seeds: {'hybrid': {'battery_cv': 30, 'bearings': 30, 'cmapss': 30}, 'default': {'battery_cv': 30, 'bearings': 30, 'cmapss': 30}, 'ramp': {'battery_cv': 30, 'bearings': 30, 'cmapss': 30}}
+
+== ELPIS-G risk under faults: hybrid vs default (seed level)
+   dataset  hybrid     ref    diff  ci90_hi  better  n     p  pess_diff  pess_better  rmse_h  rmse_ref  p_holm  noninf_0.3
+    cmapss  8.2890  8.9464 -0.6574  -0.5493      28 30 0.000    -0.7172           30 14.5787   15.8529   0.000        True
+battery_cv  1.6827  2.3518 -0.6691  -0.5650      30 30 0.000    -0.8482           29  0.0829    0.0918   0.000        True
+  bearings 22.8564 22.5020  0.3544   1.2064      15 30 0.612    -3.5386           26  0.2584    0.2753   0.612       False
+
+== ELPIS-G risk under faults: hybrid vs ramp (seed level)
+   dataset  hybrid     ref    diff  ci90_hi  better  n      p  pess_diff  pess_better  rmse_h  rmse_ref  p_holm
+    cmapss  8.2890  8.3517 -0.0627   0.0644      17 30 0.5978    -0.3423           25 14.5787   14.4422  0.5978
+battery_cv  1.6827  1.8996 -0.2168  -0.1118      22 30 0.0035    -1.0120           28  0.0829    0.0846  0.0104
+  bearings 22.8564 24.4898 -1.6333  -0.7373      22 30 0.0128     2.3532            8  0.2584    0.2654  0.0257
+
+== ELPIS-G - OSC on the hybrid predictor
+  cmapss     -0.649 (better 30/30, p=1.9e-09)
+  battery_cv -1.079 (better 30/30, p=1.9e-09)
+  bearings   -0.963 (better 28/30, p=3.5e-08)

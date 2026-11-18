@@ -12,6 +12,19 @@ The repository contains:
 
 The regenerated tables are byte-identical to the paper's.
 
+## Follow-up: ELPIS (error-labelled perturbation training)
+
+[`elpis/`](elpis/README.md) contains the follow-up method **ELPIS** and its gated version **ELPIS-G**: the selector is
+additionally trained on randomly perturbed copies of its windows, each labelled by whether the fixed predictor becomes
+optimistic on it, and a calibration-only diagnostic decides per deployment whether to use it. It was confirmed in ten
+pre-registered rounds with α-spending; the 6-page ESANN paper, its supplement and LaTeX sources are in
+[`elpis/esann/`](elpis/esann/).
+
+![ELPIS pipeline](elpis/figures/pipeline.png)
+
+Code: `scripts/ext11_*.py` … `scripts/ext64_summary.py` (main entry points `scripts/ext38.py` for OSC/ELPIS/ELPIS-G and `scripts/ext50.py` for ELPIS-J);
+protocols and results of every round: [`extensions/`](extensions/README.md).
+
 ## Repository layout
 
 ```
@@ -37,7 +50,8 @@ The regenerated tables are byte-identical to the paper's.
 ├── run_records/           config and checkpoint hashes of every run
 ├── data/fig1/             per-window predictions of the run shown in Fig. 1
 ├── docs/                  hyperparameters, evaluation protocol and statistics
-└── extensions/            exploratory follow-up experiments, not used in the paper
+├── extensions/            follow-up experiments (EXT2–EXT65): protocols, raw results, findings
+└── elpis/                 ELPIS follow-up: README, pipeline figure, ESANN paper (PDF + LaTeX)
 ```
 
 ## Quick start: reproduce the paper's tables and tests
@@ -115,4 +129,4 @@ Fault injection is described in `src/selective_rul/faults.py` and in [docs/hyper
 
 - [docs/hyperparameters.md](docs/hyperparameters.md): data, splits, backbones, selectors, baselines, faults.
 - [docs/protocol.md](docs/protocol.md): what was pre-specified, metric and thresholds, aggregation, CPU replay, statistics.
-- [extensions/README.md](extensions/README.md): follow-up experiments not used in the paper, with protocols, raw results and summaries. Headline: randomized-perturbation training of the selector (EXT10) beats the paper's selector on all four data families on fresh seeds. Earlier rounds cover post-hoc uncertainty, conformal variants, FiLM-Ensemble, LipschitzRNN, channel reconstruction and stacking.
+- [extensions/README.md](extensions/README.md): follow-up experiments not used in the paper, with protocols, raw results and summaries. Headline: randomized-perturbation training of the selector (EXT10, developed into ELPIS in EXT11–EXT65) beats the paper's selector on all four data families on fresh seeds. Earlier rounds cover post-hoc uncertainty, conformal variants, FiLM-Ensemble, LipschitzRNN, channel reconstruction and stacking.

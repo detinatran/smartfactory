@@ -1,0 +1,59 @@
+runs: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'hdd': 20, 'ncmapss': 20}
+
+== targeted fault: affected share / predictor optimistic rate on A, clean -> fault (%)
+          share_A  pred_opt_A_clean  pred_opt_A
+dataset                                        
+cmapss      47.30             17.07       34.68
+ncmapss     47.80             18.39       98.74
+bearings    43.67             21.76       58.40
+battery     33.60              0.46       95.54
+hdd         25.04             78.20       89.64
+
+== excess_A (%)
+score     ensemble_std  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                  
+cmapss           20.46             17.65    17.45  14.47  12.61     13.33
+ncmapss          81.23             89.56    89.53  89.70  90.05     89.90
+bearings         39.05             35.69    35.65  36.28  35.19     35.25
+battery          96.31             93.58    93.71  94.75  94.04     94.02
+hdd              13.21             12.57    12.08  11.74  12.61     12.04
+
+== risk_matched under the targeted fault (%)
+score     ensemble_std  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                  
+cmapss           18.90             16.95    17.52  14.99  13.93     14.27
+ncmapss          55.03             48.57    48.57  48.59  48.57     48.59
+bearings         41.77             40.19    40.11  40.10  38.95     39.16
+battery          37.53             28.35    28.38  29.16  28.44     28.45
+hdd              24.40             19.26    19.22  19.31  19.53     19.36
+
+== T1: delta excess_A (Holm over 10)
+       a    b  dataset     mean  n  better       p  p_holm
+rpt_auto full   cmapss -1.13861 20      17 0.00143 0.01289
+rpt_auto full  ncmapss  0.19642 20       4 0.17285 0.34570
+rpt_auto full bearings -1.03099 20      16 0.00143 0.01289
+rpt_auto full  battery -0.73467 20      14 0.04862 0.19450
+rpt_auto full      hdd  0.29734 20       0 0.17971 0.34570
+   rpt_L full   cmapss -1.86207 20      18 0.00002 0.00019
+   rpt_L full  ncmapss  0.34714 20       4 0.02958 0.14788
+   rpt_L full bearings -1.09615 20      15 0.01362 0.08170
+   rpt_L full  battery -0.71309 20      14 0.08255 0.24765
+   rpt_L full      hdd  0.86717 20       4 0.01069 0.07482
+
+== T2: risk_matched, rpt_auto - baseline (Holm over 15)
+       a                b  dataset     mean  n  better       p  p_holm
+rpt_auto             full   cmapss -0.72216 20      18 0.00010 0.00126
+rpt_auto             full  ncmapss -0.00288 20       8 0.46030 1.00000
+rpt_auto             full bearings -0.94610 20      19 0.00002 0.00025
+rpt_auto             full  battery -0.70794 20      14 0.00485 0.04363
+rpt_auto             full      hdd  0.05579 20       0 0.17971 0.89856
+rpt_auto gauss_bias_aware   cmapss -2.68660 20      20 0.00000 0.00003
+rpt_auto gauss_bias_aware  ncmapss  0.01333 20       9 0.64766 1.00000
+rpt_auto gauss_bias_aware bearings -1.03860 20      16 0.00102 0.01118
+rpt_auto gauss_bias_aware  battery  0.10188 20       4 0.00233 0.02325
+rpt_auto gauss_bias_aware      hdd  0.10211 20       9 0.54588 1.00000
+rpt_auto          err_reg   cmapss -3.25537 20      20 0.00000 0.00003
+rpt_auto          err_reg  ncmapss  0.01614 20       8 0.36828 1.00000
+rpt_auto          err_reg bearings -0.95512 20      13 0.00558 0.04465
+rpt_auto          err_reg  battery  0.06251 20       6 0.04844 0.30838
+rpt_auto          err_reg      hdd  0.14040 20       6 0.04405 0.30838

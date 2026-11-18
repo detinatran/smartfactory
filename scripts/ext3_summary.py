@@ -25,7 +25,7 @@ print("runs:", d.groupby("dataset").apply(lambda g: g[["model", "seed", "fold"]]
 
 def pool(sub):
     g = sub.groupby(["dataset", "score", "model", "seed", "fold"])[M].mean().reset_index()
-    g["_w"] = np.where(g.dataset == "bearings", g.fold.map(BW), 1.0)
+    g["_w"] = np.where(g.dataset.str.startswith("bearings"), g.fold.map(BW), 1.0)
     res = {}
     for m in M:
         ok = np.isfinite(g[m])

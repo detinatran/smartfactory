@@ -1,0 +1,1 @@
+# EXT65 (thăm dò, 60 seed mới 282–341, vòng bi): ELPIS-JG − ELPIS-G = −0.56, CI 90% [−0.97, −0.14], 28/60 seed tốt hơn, Wilcoxon p = 0.11. Đạt 'hòa', không đạt 'thắng'. Gộp 90 seed: −0.55, p = 0.036 (phụ). Chi tiết ở EXT65_PROTOCOL.md.

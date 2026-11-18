@@ -1,0 +1,6 @@
+cost = r*optimistic + pessimistic at 90% matched coverage, six faults; ELPIS-G - OSC (points), seeds lower
+r=1: cmapss -0.17 (23/30); ncmapss_cv -0.28 (30/30); bearings -0.37 (27/30); battery_cv -0.81 (30/30)
+r=2: cmapss -0.81 (30/30); ncmapss_cv -0.57 (30/30); bearings -0.99 (27/30); battery_cv -1.85 (30/30)
+r=3: cmapss -1.45 (30/30); ncmapss_cv -0.85 (30/30); bearings -1.62 (27/30); battery_cv -2.89 (30/30)
+r=5: cmapss -2.73 (30/30); ncmapss_cv -1.42 (30/30); bearings -2.87 (27/30); battery_cv -4.98 (30/30)
+r=10: cmapss -5.92 (30/30); ncmapss_cv -2.85 (30/30); bearings -5.99 (27/30); battery_cv -10.18 (30/30)

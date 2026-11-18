@@ -1,0 +1,44 @@
+== system-level risk @90% matched (%, six unseen faults)
+dataset              cmapss  ncmapss  bearings  battery
+score                                                  
+orig:rpt_L             8.97     9.81     21.98     3.39
+orig:full              9.52    10.21     23.04     4.29
+orig:ensemble_std     10.96    17.51     24.80     5.35
+robust:ensemble_std   12.23    17.06     28.12     4.05
+robust:full           10.84     9.18     26.38     3.10
+robust:rpt_L          10.41     8.94     25.10     2.28
+
+== pessimistic (%)
+dataset              cmapss  ncmapss  bearings  battery
+score                                                  
+orig:rpt_L            34.02    21.59     36.70    19.53
+orig:full             33.69    21.56     36.05    18.91
+orig:ensemble_std     32.89    19.61     34.63    17.49
+robust:ensemble_std   32.92    17.74     30.99    14.57
+robust:full           33.77    19.63     32.69    15.64
+robust:rpt_L          33.92    19.63     33.24    16.16
+
+== R: original predictor + FINAL vs robust-predictor systems (Holm over 12, alpha = 0.05)
+dataset                                         cmapss                 ncmapss                bearings               battery
+a          b                                                                                                                
+orig:rpt_L robust:ensemble_std  -3.26 (20/20, p=2e-05)  -7.25 (20/20, p=2e-05)  -6.14 (19/20, p=3e-05)  -0.67 (14/20, p=0.5)
+           robust:full          -1.86 (20/20, p=2e-05)     +0.63 (9/20, p=0.8)  -4.40 (20/20, p=2e-05)    +0.29 (11/20, p=1)
+           robust:rpt_L         -1.43 (20/20, p=2e-05)     +0.87 (7/20, p=0.5)  -3.12 (19/20, p=3e-05)   +1.11 (8/20, p=0.5)
+
+== predictor alone on clean: RMSE / optimistic rate at full coverage
+         rmse_full         opt_full        
+score         orig  robust     orig  robust
+dataset                                    
+cmapss      16.146  17.273   11.061  12.666
+ncmapss      0.162   0.165   14.735  16.141
+bearings     0.276   0.296   25.715  29.313
+battery      0.124   0.118    3.692   3.034
+
+== predictor alone on six faults: RMSE / optimistic rate at full coverage
+         rmse_full         opt_full        
+score         orig  robust     orig  robust
+dataset                                    
+cmapss      20.428  20.392   12.045  13.575
+ncmapss      0.206   0.183   18.317  17.300
+bearings     0.277   0.296   25.566  28.965
+battery      0.148   0.134    6.086   4.951

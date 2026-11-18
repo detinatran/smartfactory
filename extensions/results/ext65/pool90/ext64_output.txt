@@ -1,0 +1,5 @@
+seeds 252-341; complete seeds per family: {'bearings': 90}
+
+== predictor gate vs ELPIS-G on the default predictor (risk under faults @90%, seed level)
+ dataset  n    gate  default    diff  ci90_lo  ci90_hi  better  worse      p  pess_diff  share_pooled  gate_vs_pooled  rmse_gate  rmse_default  p_holm  tie_(ci90hi<=0.3)  win_(mean<0,p<.05)
+bearings 90 22.5593  23.1098 -0.5505   -0.865  -0.2485      46     44 0.0359    -0.4019        0.4324         -0.9343     0.2688         0.275  0.0359               True                True

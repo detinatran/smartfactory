@@ -1,0 +1,59 @@
+== risk (%), six faults
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+copy2               9.59    10.23     23.10     4.39
+ensemble_std       10.96    17.51     24.80     5.35
+err_reg            10.77    10.06     23.01     3.94
+full                9.52    10.21     23.04     4.29
+gauss_bias_aware   10.12    10.06     23.46     3.93
+oracle_f            9.12     9.90     23.02     3.55
+oracle_rpt          8.97     9.81     21.99     3.39
+repair_osc          9.30    11.94     19.82     4.20
+repair_rpt          9.03    11.74     18.80     3.74
+repair_spread      10.61    19.50     23.19     6.18
+rpt_L               8.97     9.81     21.98     3.39
+tiny2               9.54    10.23     23.21     4.40
+== clean risk (%)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+copy2               8.86     6.82     23.23     2.96
+ensemble_std        9.89    13.12     24.68     3.13
+err_reg             9.90     6.59     23.14     2.41
+full                8.83     6.77     23.22     2.84
+gauss_bias_aware    9.30     6.63     23.60     2.27
+oracle_f            8.78     6.60     23.19     2.71
+oracle_rpt          8.81     6.49     22.15     2.44
+repair_osc          8.82     6.80     22.59     2.33
+repair_rpt          8.96     6.58     22.23     2.16
+repair_spread       9.93    13.16     24.52     3.08
+rpt_L               8.78     6.44     22.16     2.08
+tiny2               8.87     6.79     23.33     2.96
+== excess
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+copy2               0.74     3.40     -0.13     1.43
+ensemble_std        1.07     4.39      0.13     2.22
+err_reg             0.87     3.47     -0.12     1.52
+full                0.69     3.44     -0.18     1.44
+gauss_bias_aware    0.83     3.43     -0.14     1.66
+oracle_f            0.34     3.30     -0.17     0.84
+oracle_rpt          0.17     3.32     -0.16     0.95
+repair_osc          0.48     5.14     -2.77     1.87
+repair_rpt          0.08     5.16     -3.43     1.59
+repair_spread       0.68     6.34     -1.32     3.10
+rpt_L               0.19     3.37     -0.17     1.31
+tiny2               0.67     3.44     -0.12     1.44
+== A volume-matched rpt_L - b (Holm over 8)
+ds                  cmapss              ncmapss             bearings              battery
+b                                                                                        
+copy2  -0.62 (20, p=2e-05)  -0.42 (19, p=2e-05)  -1.12 (20, p=2e-05)  -1.00 (20, p=2e-05)
+tiny2  -0.57 (19, p=2e-05)  -0.42 (18, p=2e-05)  -1.23 (20, p=2e-05)  -1.01 (20, p=2e-05)
+== B FDI+imputation systems rpt_L - b (Holm over 8)
+ds                          cmapss              ncmapss           bearings              battery
+b                                                                                              
+repair_spread  -1.64 (20, p=2e-05)  -9.69 (20, p=2e-05)  -1.21 (13, p=0.2)  -2.79 (20, p=2e-05)
+repair_osc     -0.33 (16, p=0.006)   -2.13 (15, p=0.02)  +2.16 (6, p=0.05)  -0.81 (17, p=0.004)
+descriptive: rpt_L - oracle_f, oracle_rpt, repair_rpt:
+  oracle_f: {'cmapss': -0.15, 'ncmapss': -0.09, 'bearings': -1.04, 'battery': -0.16}
+  oracle_rpt: {'cmapss': 0.0, 'ncmapss': -0.01, 'bearings': -0.01, 'battery': -0.0}
+  repair_rpt: {'cmapss': -0.06, 'ncmapss': -1.93, 'bearings': 3.18, 'battery': -0.36}

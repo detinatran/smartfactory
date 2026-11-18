@@ -1,0 +1,16 @@
+== rpt_L - full (points) by fraction of selector units; mean over seeds (n = mean selector units per run)
+   dataset   f  n_units    mean  better  seeds      p
+battery_cv 1/4   5.0000 -2.3701      10     10 0.0020
+battery_cv 1/2  10.0000 -1.7859      10     10 0.0020
+battery_cv   1  20.0000 -0.9287      10     10 0.0020
+  bearings 1/4   2.0000 -1.3235       9     10 0.0098
+  bearings 1/2   3.0000 -3.0547       9     10 0.0059
+  bearings   1   5.0938 -1.1074       9     10 0.0273
+    cmapss 1/4   6.7500 -0.8022      10     10 0.0020
+    cmapss 1/2  13.5000 -0.7780      10     10 0.0020
+    cmapss   1  26.5000 -0.6136      10     10 0.0020
+ncmapss_cv 1/4   4.0000 -1.6239      10     10 0.0020
+ncmapss_cv 1/2   8.0000 -0.6276      10     10 0.0020
+ncmapss_cv   1  15.6000 -0.3170      10     10 0.0020
+
+D by family (points): {'battery_cv': 17.38, 'bearings': -1.87, 'cmapss': 7.35, 'ncmapss_cv': 15.62}

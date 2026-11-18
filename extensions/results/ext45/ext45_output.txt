@@ -1,0 +1,18 @@
+
+######## offset = 1.0 x delta  (runs 210)
+   dataset      D  share_Dpos  risk_osc  rpt_osc  rptd_osc   acc  gain_if_Dpos  n_pos  gain_if_Dneg  n_neg
+battery_cv  9.301       1.000     0.727   -0.488    -0.488 0.960        -0.488     50           NaN      0
+  bearings -0.878       0.483     9.183   -1.196    -0.606 0.483        -1.157     29        -1.081     31
+    cmapss  6.641       0.975     2.175   -0.559    -0.542 0.925        -0.556     39        -0.690      1
+       hdd -1.991       0.000    10.132    0.624     0.000 1.000           NaN      0         0.624     10
+ncmapss_cv 13.189       1.000     2.210   -0.541    -0.541 0.920        -0.541     50           NaN      0
+pooled over families: RPT-OSC when D>0: -0.635 (n=168, share helped 0.92); when D<=0: -0.666 (n=42, share helped 0.62); Mann-Whitney p=0.42
+
+######## offset = 2.0 x delta  (runs 210)
+   dataset      D  share_Dpos  risk_osc  rpt_osc  rptd_osc   acc  gain_if_Dpos  n_pos  gain_if_Dneg  n_neg
+battery_cv  4.054       1.000     0.257   -0.239    -0.239 0.980        -0.239     50           NaN      0
+  bearings -0.116       0.633     2.419   -0.346    -0.185 0.467        -0.275     38        -0.195     22
+    cmapss  3.154       1.000     0.576   -0.360    -0.360 0.950        -0.360     40           NaN      0
+       hdd -1.208       0.000     6.196    0.464     0.000 1.000           NaN      0         0.464     10
+ncmapss_cv  8.212       1.000     0.678   -0.416    -0.416 0.880        -0.416     50           NaN      0
+pooled over families: RPT-OSC when D>0: -0.324 (n=178, share helped 0.83); when D<=0: +0.011 (n=32, share helped 0.34); Mann-Whitney p=0.00075

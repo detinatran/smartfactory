@@ -1,0 +1,13 @@
+HARSH set (all larger-severity / six-channel variants of S2, exploratory, post hoc): ['bias@6', 'noise@4', 'spike@12', 'gain@2', 'stuck#6', 'bias#6', 'noise#6']
+predictor optimistic rate @100%: harsh {'cmapss': 12.76, 'ncmapss': 20.2, 'bearings': 25.36, 'battery': 8.65} clean {'cmapss': 11.06, 'ncmapss': 14.74, 'bearings': 25.72, 'battery': 3.69}
+ensemble_std       risk {'cmapss': 11.88, 'ncmapss': 19.84, 'bearings': 24.96, 'battery': 7.69} excess {'cmapss': 1.99, 'ncmapss': 6.71, 'bearings': 0.28, 'battery': 4.56}
+gauss_bias_aware   risk {'cmapss': 10.83, 'ncmapss': 11.93, 'bearings': 23.22, 'battery': 5.37} excess {'cmapss': 1.53, 'ncmapss': 5.3, 'bearings': -0.38, 'battery': 3.1}
+err_reg            risk {'cmapss': 11.44, 'ncmapss': 11.94, 'bearings': 22.8, 'battery': 5.31} excess {'cmapss': 1.55, 'ncmapss': 5.35, 'bearings': -0.33, 'battery': 2.89}
+full               risk {'cmapss': 10.06, 'ncmapss': 12.11, 'bearings': 22.85, 'battery': 5.7} excess {'cmapss': 1.23, 'ncmapss': 5.34, 'bearings': -0.38, 'battery': 2.86}
+rpt_L              risk {'cmapss': 9.15, 'ncmapss': 11.66, 'bearings': 21.64, 'battery': 4.25} excess {'cmapss': 0.37, 'ncmapss': 5.22, 'bearings': -0.51, 'battery': 2.17}
+excess(rpt_L) - excess(b), Holm over 12:
+ds                                  cmapss                ncmapss                bearings                  battery
+b                                                                                                                 
+err_reg           -1.18 (20/20, p=2.3e-05)  -0.14 (13/20, p=0.69)  -0.18 (15/20, p=0.051)   -0.72 (17/20, p=0.082)
+full              -0.86 (20/20, p=2.3e-05)  -0.13 (11/20, p=0.82)  -0.14 (15/20, p=0.082)   -0.69 (15/20, p=0.058)
+gauss_bias_aware  -1.16 (20/20, p=2.3e-05)  -0.08 (12/20, p=0.82)   -0.13 (14/20, p=0.18)  -0.93 (16/20, p=0.0091)

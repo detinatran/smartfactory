@@ -1,0 +1,7 @@
+seeds 252-281; complete seeds per family: {'battery_cv': 30, 'bearings': 30, 'cmapss': 30}
+
+== predictor gate vs ELPIS-G on the default predictor (risk under faults @90%, seed level)
+   dataset  n    gate  default    diff  ci90_lo  ci90_hi  better  worse      p  pess_diff  share_pooled  gate_vs_pooled  rmse_gate  rmse_default  p_holm  tie_(ci90hi<=0.3)  win_(mean<0,p<.05)
+  bearings 30 23.0516  23.5923 -0.5406  -0.9734  -0.1251      18     12 0.1347    -0.5793        0.4333         -1.1320     0.2724        0.2790  0.1347               True               False
+    cmapss 30  8.1262   8.7041 -0.5779  -0.7019  -0.4576      29      1 0.0000    -0.4345        0.7417          0.0065    14.8137       15.7176  0.0000               True                True
+battery_cv 30  1.6557   2.1965 -0.5408  -0.6207  -0.4632      30      0 0.0000    -0.4373        0.7733          0.0605     0.0845        0.0913  0.0000               True                True

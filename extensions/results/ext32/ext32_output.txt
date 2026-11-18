@@ -1,0 +1,30 @@
+runs: 100; folds: ['cv0', 'cv1', 'cv2', 'cv3', 'cv4']
+
+== risk (%), six faults / clean
+                  faults  clean
+score                          
+ensemble_std       15.90  10.17
+gauss_bias_aware    8.64   4.28
+err_reg             8.62   4.27
+full                8.77   4.48
+rpt_L               8.53   4.26
+rpt_auto            8.59   4.28
+
+== PRIMARY: minus full (points), Holm over 2
+       a     mean  better  n   p  seeds_better  p_signflip  p_holm
+   rpt_L -0.24813      20 20 0.0            10     0.00195     0.0
+rpt_auto -0.18583      20 20 0.0            10     0.00195     0.0
+
+== descriptive: rpt_L minus directional estimators
+rpt_L - gauss_bias_aware: -0.11 (16/20, p=0.00143)
+rpt_L - err_reg: -0.09 (16/20, p=0.00558)
+
+== per fold: rpt_L - full (points)
+fold
+cv0   -0.23
+cv1   -0.23
+cv2   -0.24
+cv3   -0.24
+cv4   -0.31
+
+rpt_auto chose rpt_L: 75/100

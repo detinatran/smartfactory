@@ -1,0 +1,21 @@
+risk (%) at 90% matched coverage, six faults; all = accept-all; oracle = hindsight selector
+            auto3  ensemble_std  err_reg  err_reg_rptL   full  gauss_bias_aware  rpt_L  rpt_auto  rpt_auto_d  rpt_auto_m    all  oracle
+dataset                                                                                                                                
+battery_cv   2.22          5.94     3.24          2.20   3.31              3.27   2.27      2.29        2.27        2.85   7.43    1.08
+bearings    23.20         25.72    24.50         22.75  24.39             24.58  22.96     23.49       23.77       23.66  26.35   18.72
+cmapss       8.35         10.12     9.67          8.62   8.78              9.22   8.14      8.32        8.14        8.70  11.16    2.35
+hdd         15.61         21.36    15.44         16.00  15.56             15.45  15.98     15.60       15.56       15.56  22.61   14.01
+ncmapss_cv   7.83         15.29     8.00          7.79   8.14              8.01   7.86      7.92        7.86        8.13  16.07    6.99
+
+share of the accept-all -> oracle gap closed (%) = (all - score)/(all - oracle)
+            auto3  ensemble_std  err_reg  err_reg_rptL  full  gauss_bias_aware  rpt_L  rpt_auto  rpt_auto_d  rpt_auto_m
+dataset                                                                                                                
+battery_cv   82.1          23.4     66.0          82.4  64.8              65.5   81.2      81.0        81.2        72.1
+bearings     41.3           8.2     24.3          47.2  25.7              23.2   44.4      37.5        33.9        35.2
+cmapss       31.9          11.8     16.9          28.9  27.0              22.0   34.3      32.2        34.3        28.0
+hdd          81.4          14.5     83.4          76.9  81.9              83.3   77.1      81.6        81.9        81.9
+ncmapss_cv   90.7           8.5     88.9          91.3  87.4              88.8   90.5      89.8        90.5        87.5
+
+remaining gap OSC->oracle closed by rpt_auto_d (%): {'battery_cv': 46.6, 'bearings': 11.0, 'cmapss': 9.9, 'hdd': 0.0, 'ncmapss_cv': 24.9}
+
+remaining gap OSC->oracle closed by rpt_L (%): {'battery_cv': 46.6, 'bearings': 25.2, 'cmapss': 9.9, 'hdd': -26.7, 'ncmapss_cv': 24.9}

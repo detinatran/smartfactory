@@ -45,7 +45,7 @@ M = ["risk_matched", "risk_frozen", "coverage_frozen"]
 
 def pool(sub):
     g = sub.groupby(["dataset", "score", "model", "seed", "fold"])[M].mean().reset_index()
-    g["_w"] = np.where(g.dataset == "bearings", g.fold.map(BW), 1.0)
+    g["_w"] = np.where(g.dataset.str.startswith("bearings"), g.fold.map(BW), 1.0)
     res = {}
     for col in M:
         gg = g.assign(_v=g[col] * g._w)

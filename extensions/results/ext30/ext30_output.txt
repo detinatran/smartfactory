@@ -1,0 +1,248 @@
+runs: {'hdd (112-121)': 20, 'hdd (92-101)': 20, 'hdd2 (102-111)': 20}
+calibration units: {'min': {'hdd (112-121)': 222, 'hdd (92-101)': 222, 'hdd2 (102-111)': 120}, 'max': {'hdd (112-121)': 222, 'hdd (92-101)': 222, 'hdd2 (102-111)': 120}}
+
+== hdd (112-121), CLEAN test: certified% / mean level / coverage% / risk% / violation% (of all runs)
+                                  cert  level    cov   risk  viol  r_star
+bound     f    score                                                     
+bernstein 0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   16.93
+               err_reg             0.0    NaN   0.00    NaN   0.0   16.93
+               full                0.0    NaN   0.00    NaN   0.0   16.93
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   16.93
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   16.93
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   20.56
+               err_reg             0.0    NaN   0.00    NaN   0.0   20.56
+               full                0.0    NaN   0.00    NaN   0.0   20.56
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   20.56
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   20.56
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.18
+               err_reg             0.0    NaN   0.00    NaN   0.0   24.18
+               full                0.0    NaN   0.00    NaN   0.0   24.18
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   24.18
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   24.18
+hoeffding 0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   16.93
+               err_reg             0.0    NaN   0.00    NaN   0.0   16.93
+               full                0.0    NaN   0.00    NaN   0.0   16.93
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   16.93
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   16.93
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   20.56
+               err_reg             0.0    NaN   0.00    NaN   0.0   20.56
+               full                0.0    NaN   0.00    NaN   0.0   20.56
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   20.56
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   20.56
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.18
+               err_reg             0.0    NaN   0.00    NaN   0.0   24.18
+               full                0.0    NaN   0.00    NaN   0.0   24.18
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   24.18
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   24.18
+plugin    0.70 ensemble_std       25.0   0.12   3.17  20.52  20.0   16.93
+               err_reg           100.0   0.79  79.44  16.40  25.0   16.93
+               full              100.0   0.83  83.47  16.72  45.0   16.93
+               gauss_bias_aware  100.0   0.81  81.69  16.47  30.0   16.93
+               rpt_auto          100.0   0.83  83.50  16.71  45.0   16.93
+          0.85 ensemble_std       50.0   0.34  17.24  21.47  40.0   20.56
+               err_reg           100.0   0.92  92.67  19.34  30.0   20.56
+               full              100.0   0.94  94.02  19.80  45.0   20.56
+               gauss_bias_aware  100.0   0.94  93.77  19.73  50.0   20.56
+               rpt_auto          100.0   0.94  94.25  19.89  45.0   20.56
+          1.00 ensemble_std       80.0   0.74  59.52  23.47  40.0   24.18
+               err_reg           100.0   0.98  98.03  22.66  25.0   24.18
+               full              100.0   0.98  98.00  22.57  25.0   24.18
+               gauss_bias_aware  100.0   0.98  98.02  22.60  25.0   24.18
+               rpt_auto          100.0   0.98  98.00  22.57  25.0   24.18
+wsr       0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   16.93
+               err_reg             0.0    NaN   0.00    NaN   0.0   16.93
+               full                0.0    NaN   0.00    NaN   0.0   16.93
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   16.93
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   16.93
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   20.56
+               err_reg             0.0    NaN   0.00    NaN   0.0   20.56
+               full               10.0   0.90   9.04  18.79   0.0   20.56
+               gauss_bias_aware    5.0   0.90   4.50  18.56   0.0   20.56
+               rpt_auto           10.0   0.90   9.00  18.66   0.0   20.56
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.18
+               err_reg            10.0   0.95   9.52  21.20   0.0   24.18
+               full              100.0   0.95  95.02  20.26   0.0   24.18
+               gauss_bias_aware  100.0   0.95  95.10  20.33   0.0   24.18
+               rpt_auto          100.0   0.95  95.01  20.24   0.0   24.18
+
+== hdd (92-101), CLEAN test: certified% / mean level / coverage% / risk% / violation% (of all runs)
+                                  cert  level    cov   risk  viol  r_star
+bound     f    score                                                     
+bernstein 0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   17.25
+               err_reg             0.0    NaN   0.00    NaN   0.0   17.25
+               full                0.0    NaN   0.00    NaN   0.0   17.25
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   17.25
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   17.25
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   20.95
+               err_reg             0.0    NaN   0.00    NaN   0.0   20.95
+               full                0.0    NaN   0.00    NaN   0.0   20.95
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   20.95
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   20.95
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.65
+               err_reg             0.0    NaN   0.00    NaN   0.0   24.65
+               full                0.0    NaN   0.00    NaN   0.0   24.65
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   24.65
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   24.65
+hoeffding 0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   17.25
+               err_reg             0.0    NaN   0.00    NaN   0.0   17.25
+               full                0.0    NaN   0.00    NaN   0.0   17.25
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   17.25
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   17.25
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   20.95
+               err_reg             0.0    NaN   0.00    NaN   0.0   20.95
+               full                0.0    NaN   0.00    NaN   0.0   20.95
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   20.95
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   20.95
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.65
+               err_reg             0.0    NaN   0.00    NaN   0.0   24.65
+               full                0.0    NaN   0.00    NaN   0.0   24.65
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   24.65
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   24.65
+plugin    0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   17.25
+               err_reg           100.0   0.80  80.34  16.48  25.0   17.25
+               full              100.0   0.82  82.73  16.54  20.0   17.25
+               gauss_bias_aware  100.0   0.82  81.78  16.47  20.0   17.25
+               rpt_auto          100.0   0.83  83.57  16.62  25.0   17.25
+          0.85 ensemble_std       15.0   0.43   6.55  21.37   5.0   20.95
+               err_reg           100.0   0.92  91.70  19.08  20.0   20.95
+               full              100.0   0.93  93.19  19.65  30.0   20.95
+               gauss_bias_aware  100.0   0.93  93.19  19.68  30.0   20.95
+               rpt_auto          100.0   0.93  93.39  19.69  20.0   20.95
+          1.00 ensemble_std       55.0   0.81  44.72  23.73  15.0   24.65
+               err_reg           100.0   0.98  97.82  22.71  35.0   24.65
+               full              100.0   0.98  97.82  22.63  30.0   24.65
+               gauss_bias_aware  100.0   0.98  97.77  22.59  30.0   24.65
+               rpt_auto          100.0   0.98  97.78  22.58  30.0   24.65
+wsr       0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   17.25
+               err_reg             0.0    NaN   0.00    NaN   0.0   17.25
+               full                0.0    NaN   0.00    NaN   0.0   17.25
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   17.25
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   17.25
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   20.95
+               err_reg             0.0    NaN   0.00    NaN   0.0   20.95
+               full               10.0   0.90   9.06  18.72   0.0   20.95
+               gauss_bias_aware   10.0   0.90   9.04  18.39   0.0   20.95
+               rpt_auto           10.0   0.90   9.06  18.72   0.0   20.95
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.65
+               err_reg             5.0   0.95   4.75  20.78   0.0   24.65
+               full              100.0   0.95  95.17  20.57   0.0   24.65
+               gauss_bias_aware  100.0   0.95  95.12  20.56   0.0   24.65
+               rpt_auto          100.0   0.95  95.12  20.49   0.0   24.65
+
+== hdd2 (102-111), CLEAN test: certified% / mean level / coverage% / risk% / violation% (of all runs)
+                                  cert  level    cov   risk  viol  r_star
+bound     f    score                                                     
+bernstein 0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   17.45
+               err_reg             0.0    NaN   0.00    NaN   0.0   17.45
+               full                0.0    NaN   0.00    NaN   0.0   17.45
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   17.45
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   17.45
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   21.19
+               err_reg             0.0    NaN   0.00    NaN   0.0   21.19
+               full                0.0    NaN   0.00    NaN   0.0   21.19
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   21.19
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   21.19
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.93
+               err_reg             0.0    NaN   0.00    NaN   0.0   24.93
+               full                0.0    NaN   0.00    NaN   0.0   24.93
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   24.93
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   24.93
+hoeffding 0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   17.45
+               err_reg             0.0    NaN   0.00    NaN   0.0   17.45
+               full                0.0    NaN   0.00    NaN   0.0   17.45
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   17.45
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   17.45
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   21.19
+               err_reg             0.0    NaN   0.00    NaN   0.0   21.19
+               full                0.0    NaN   0.00    NaN   0.0   21.19
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   21.19
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   21.19
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.93
+               err_reg             0.0    NaN   0.00    NaN   0.0   24.93
+               full                0.0    NaN   0.00    NaN   0.0   24.93
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   24.93
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   24.93
+plugin    0.70 ensemble_std       40.0   0.21   8.05  18.36  25.0   17.45
+               err_reg           100.0   0.77  77.87  15.39  15.0   17.45
+               full              100.0   0.78  77.55  14.95  10.0   17.45
+               gauss_bias_aware  100.0   0.78  78.36  15.23  15.0   17.45
+               rpt_auto          100.0   0.78  77.81  14.99  10.0   17.45
+          0.85 ensemble_std       55.0   0.45  23.36  20.05  10.0   21.19
+               err_reg           100.0   0.90  90.90  18.23   5.0   21.19
+               full              100.0   0.91  91.02  18.26  10.0   21.19
+               gauss_bias_aware  100.0   0.90  91.47  18.36  10.0   21.19
+               rpt_auto          100.0   0.91  91.00  18.21  10.0   21.19
+          1.00 ensemble_std       60.0   0.97  57.88  22.92   5.0   24.93
+               err_reg           100.0   0.97  97.79  21.45   5.0   24.93
+               full              100.0   0.97  97.47  21.17   5.0   24.93
+               gauss_bias_aware  100.0   0.97  97.66  21.21   5.0   24.93
+               rpt_auto          100.0   0.97  97.46  21.14   5.0   24.93
+wsr       0.70 ensemble_std        0.0    NaN   0.00    NaN   0.0   17.45
+               err_reg             0.0    NaN   0.00    NaN   0.0   17.45
+               full                0.0    NaN   0.00    NaN   0.0   17.45
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   17.45
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   17.45
+          0.85 ensemble_std        0.0    NaN   0.00    NaN   0.0   21.19
+               err_reg             0.0    NaN   0.00    NaN   0.0   21.19
+               full                0.0    NaN   0.00    NaN   0.0   21.19
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   21.19
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   21.19
+          1.00 ensemble_std        0.0    NaN   0.00    NaN   0.0   24.93
+               err_reg             0.0    NaN   0.00    NaN   0.0   24.93
+               full                0.0    NaN   0.00    NaN   0.0   24.93
+               gauss_bias_aware    0.0    NaN   0.00    NaN   0.0   24.93
+               rpt_auto            0.0    NaN   0.00    NaN   0.0   24.93
+
+== under the six faults (no guarantee): violation% / coverage% / risk%, wsr bound
+                                      viol    cov   risk
+set            f    score                               
+hdd (112-121)  0.70 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   0.00    NaN
+                    full               0.0   0.00    NaN
+                    gauss_bias_aware   0.0   0.00    NaN
+                    rpt_auto           0.0   0.00    NaN
+               0.85 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   0.00    NaN
+                    full               0.0   8.28  11.46
+                    gauss_bias_aware   0.0   4.21  11.84
+                    rpt_auto           0.0   8.53  13.14
+               1.00 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   9.10  16.18
+                    full               0.0  91.27  16.05
+                    gauss_bias_aware   0.0  92.63  16.88
+                    rpt_auto           0.0  91.58  16.24
+hdd (92-101)   0.70 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   0.00    NaN
+                    full               0.0   0.00    NaN
+                    gauss_bias_aware   0.0   0.00    NaN
+                    rpt_auto           0.0   0.00    NaN
+               0.85 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   0.00    NaN
+                    full               0.0   8.36  11.96
+                    gauss_bias_aware   0.0   8.50  12.72
+                    rpt_auto           0.0   8.36  11.96
+               1.00 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   4.53  16.07
+                    full               0.0  91.81  16.57
+                    gauss_bias_aware   0.0  92.70  17.13
+                    rpt_auto           0.0  92.61  17.10
+hdd2 (102-111) 0.70 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   0.00    NaN
+                    full               0.0   0.00    NaN
+                    gauss_bias_aware   0.0   0.00    NaN
+                    rpt_auto           0.0   0.00    NaN
+               0.85 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   0.00    NaN
+                    full               0.0   0.00    NaN
+                    gauss_bias_aware   0.0   0.00    NaN
+                    rpt_auto           0.0   0.00    NaN
+               1.00 ensemble_std       0.0   0.00    NaN
+                    err_reg            0.0   0.00    NaN
+                    full               0.0   0.00    NaN
+                    gauss_bias_aware   0.0   0.00    NaN
+                    rpt_auto           0.0   0.00    NaN
+
+== exploratory: certified coverage, rpt_auto - full (clean, wsr, f=1.0), Wilcoxon over pairs
+hdd (112-121): -0.00 points (better 1/20), p=0.655
+hdd (92-101): -0.05 points (better 3/20), p=0.575
+hdd2 (102-111): +0.00 points (better 0/20), p=1

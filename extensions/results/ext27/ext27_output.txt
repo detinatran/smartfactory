@@ -1,0 +1,42 @@
+runs per dataset: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'ncmapss': 20}
+seeds: [np.int64(72), np.int64(73), np.int64(74), np.int64(75), np.int64(76), np.int64(77), np.int64(78), np.int64(79), np.int64(80), np.int64(81), np.int64(82), np.int64(83), np.int64(84), np.int64(85), np.int64(86), np.int64(87), np.int64(88), np.int64(89), np.int64(90), np.int64(91)]
+
+== risk (%) six faults, Patch-Transformer, seeds 72-91
+score     ensemble_std  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                  
+cmapss           14.08             12.08    12.50  11.57  11.06     11.15
+ncmapss          15.35              7.60     7.60   7.93   7.45      7.53
+bearings         30.54             28.26    28.00  28.36  26.67     27.02
+battery           4.53              2.97     2.97   3.15   2.31      2.31
+
+== clean risk (%)
+score     ensemble_std  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                  
+cmapss           14.20             12.45    12.93  12.01  11.69     11.74
+ncmapss          14.19              7.06     7.05   7.49   7.10      7.19
+bearings         30.93             28.58    28.32  28.76  27.17     27.54
+battery           2.58              1.99     2.04   2.06   1.48      1.48
+
+rpt_auto chose rpt_L: {'battery': 20, 'bearings': 96, 'cmapss': 59, 'ncmapss': 15}
+
+== clean RMSE of the predictor (Patch-Transformer seeds 72-91 vs GRU/TCN seeds 92-101)
+model     patch_transformer     gru     tcn
+dataset                                    
+cmapss               19.976  15.914  15.862
+ncmapss               0.161   0.167   0.162
+bearings              0.307   0.268   0.283
+battery               0.122   0.144   0.131
+
+== B1: rpt_L - baseline (Holm over 12)
+dataset                             cmapss                   ncmapss                  bearings                   battery
+b                                                                                                                       
+full              -0.51 (19/20, p=0.00033)  -0.49 (19/20, p=5.7e-05)  -1.69 (20/20, p=2.3e-05)  -0.84 (20/20, p=2.3e-05)
+gauss_bias_aware  -1.01 (20/20, p=2.3e-05)    -0.15 (14/20, p=0.072)    -1.59 (19/20, p=4e-05)  -0.65 (19/20, p=6.7e-05)
+err_reg           -1.43 (20/20, p=2.3e-05)    -0.15 (13/20, p=0.072)  -1.33 (18/20, p=0.00033)  -0.66 (19/20, p=3.1e-05)
+
+== B2: rpt_auto - full (Holm over 4)
+dataset                    cmapss                   ncmapss                  bearings                   battery
+b                                                                                                              
+full     -0.42 (17/20, p=5.3e-05)  -0.40 (15/20, p=0.00065)  -1.34 (19/20, p=1.1e-05)  -0.84 (20/20, p=7.6e-06)
+
+== excess (faults - clean), rpt_L - full: {'cmapss': np.float64(-0.19), 'ncmapss': np.float64(-0.09), 'bearings': np.float64(-0.1), 'battery': np.float64(-0.25)}

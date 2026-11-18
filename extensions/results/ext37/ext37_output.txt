@@ -1,0 +1,57 @@
+diag runs: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'hdd (112-121)': 20, 'hdd (92-101)': 20, 'hdd2': 20, 'hdd3': 20, 'ncmapss': 20}
+
+== diagnostic D (points) and gain rpt_L - full (points), mean per family
+                    D  share_D>0   gain
+family                                 
+battery        18.715      1.000 -0.720
+bearings       -1.432      0.425 -1.017
+cmapss          7.220      1.000 -0.742
+hdd (112-121)  -2.406      0.000  0.456
+hdd (92-101)   -2.291      0.000  0.291
+hdd2           -1.961      0.000  0.593
+hdd3           -1.873      0.000  0.196
+ncmapss        16.817      0.950 -0.353
+
+Spearman(D, gain) over all runs: rho=-0.270, p=9.6e-07 (negative = larger D, larger RPT benefit)
+  battery: rho=-0.057, p=0.81
+  bearings: rho=0.015, p=0.87
+  cmapss: rho=-0.179, p=0.11
+  hdd (112-121): rho=-0.301, p=0.2
+  hdd (92-101): rho=-0.214, p=0.37
+  hdd2: rho=0.111, p=0.64
+  hdd3: rho=-0.451, p=0.046
+  ncmapss: rho=0.789, p=3.5e-05
+
+== rule 'use RPT iff D > 0': gain vs full per family (points)
+               rule_gain  always_rpt
+family                              
+battery           -0.720      -0.720
+bearings          -0.426      -1.017
+cmapss            -0.742      -0.742
+hdd (112-121)      0.000       0.456
+hdd (92-101)       0.000       0.291
+hdd2               0.000       0.593
+hdd3               0.000       0.196
+ncmapss           -0.319      -0.353
+
+== learning curve on hard drives: rpt_L - full (points) by number of selector units
+       family   n    mean  better  N      p
+hdd (112-121) 120  0.3690       1 20 0.0000
+hdd (112-121)  15 -0.9925      20 20 0.0000
+hdd (112-121)  30 -0.2815      17 20 0.0001
+hdd (112-121)  60  0.0998       8 20 0.1054
+hdd (112-121) all  0.4563       0 20 0.0000
+ hdd (92-101) 120  0.2545       3 20 0.0002
+ hdd (92-101)  15 -0.5796      19 20 0.0000
+ hdd (92-101)  30 -0.0862      14 20 0.1140
+ hdd (92-101)  60  0.0664       9 20 0.2305
+ hdd (92-101) all  0.2907       3 20 0.0001
+         hdd2 120  0.4095       0 20 0.0000
+         hdd2  15 -1.0172      20 20 0.0000
+         hdd2  30 -0.2265      15 20 0.0153
+         hdd2  60  0.1280       6 20 0.0826
+         hdd2 all  0.5927       0 20 0.0000
+         hdd3  15 -0.6090      20 20 0.0000
+         hdd3  30 -0.1863      16 20 0.0027
+         hdd3  60 -0.0092      15 20 0.3884
+         hdd3  96  0.1959       1 20 0.0001

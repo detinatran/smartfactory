@@ -1,0 +1,19 @@
+           default     V13     v17     v18     v19
+rmse         0.280   0.265   0.261   0.266   0.277
+opt         26.327  28.028  26.378  27.439  26.661
+pess        33.913  28.288  30.788  29.530  31.455
+osc         24.261  25.596  24.457  25.537  24.611
+rptd        23.763  24.841  23.902  24.976  24.123
+rptd_pess   35.891  30.604  32.743  31.515  33.543
+V13      rptd      vs default: +1.077 (lower 4/10, p=0.62)
+V13      rptd_pess vs default: -5.287 (lower 8/10, p=0.02)
+V13      ELPIS-G - OSC (same predictor): -0.755 (lower 10/10)
+v17      rptd      vs default: +0.138 (lower 5/10, p=1)
+v17      rptd_pess vs default: -3.147 (lower 9/10, p=0.0039)
+v17      ELPIS-G - OSC (same predictor): -0.555 (lower 10/10)
+v18      rptd      vs default: +1.213 (lower 3/10, p=0.23)
+v18      rptd_pess vs default: -4.375 (lower 10/10, p=0.002)
+v18      ELPIS-G - OSC (same predictor): -0.561 (lower 9/10)
+v19      rptd      vs default: +0.360 (lower 4/10, p=0.7)
+v19      rptd_pess vs default: -2.347 (lower 8/10, p=0.037)
+v19      ELPIS-G - OSC (same predictor): -0.488 (lower 9/10)

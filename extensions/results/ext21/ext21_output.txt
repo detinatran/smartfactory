@@ -1,0 +1,11 @@
+HDD (EXT21b, 2091 failed drives, 20 pairs) risk@90 six faults: {'ensemble_std': 21.35, 'full': 15.44, 'gauss_bias_aware': 15.28, 'err_reg': 15.26, 'rpt_L': 15.8}
+clean: {'ensemble_std': 23.25, 'full': 17.93, 'gauss_bias_aware': 17.96, 'err_reg': 17.98, 'rpt_L': 17.82}
+held-out faults: {'ensemble_std': 23.48, 'full': 17.84, 'gauss_bias_aware': 17.85, 'err_reg': 17.88, 'rpt_L': 17.95}
+predictor opt@100 clean 24.02, six faults 22.45
+== pre-registered: rpt_L - baseline (Holm over 4, alpha 0.05)
+  full             +0.36 (0/20, pH=7.6e-06)
+  gauss_bias_aware +0.52 (1/20, pH=7.6e-06)
+  err_reg          +0.54 (0/20, pH=7.6e-06)
+  ensemble_std     -5.55 (20/20, pH=7.6e-06)
+pessimistic rise rpt_L - full: -0.13
+excess (faults-clean): {'ensemble_std': -1.9, 'full': -2.49, 'gauss_bias_aware': -2.68, 'err_reg': -2.73, 'rpt_L': -2.02}

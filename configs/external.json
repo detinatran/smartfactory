@@ -4,12 +4,14 @@
   "window": {
     "ncmapss": 10,
     "bearings": 30,
-    "battery": 30
+    "battery": 30,
+    "hdd": 30
   },
   "stride": {
     "ncmapss": 1,
     "bearings": 5,
-    "battery": 10
+    "battery": 10,
+    "hdd": 2
   },
   "baseline_k": 10,
   "hidden": 64,

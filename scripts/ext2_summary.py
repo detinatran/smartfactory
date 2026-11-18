@@ -27,7 +27,7 @@ BW = {"femto_c1": 7, "femto_c2": 7, "femto_c3": 3, "xjtu_sy_c1": 5, "xjtu_sy_c2"
 
 def fold_pool(g, cols):
     g = g.reset_index()
-    g["_w"] = np.where(g.dataset == "bearings", g.fold.map(BW), 1.0)
+    g["_w"] = np.where(g.dataset.str.startswith("bearings"), g.fold.map(BW), 1.0)
     return g.groupby(["dataset", "backbone", "score", "seed"]).apply(
         lambda h: pd.Series({c: np.average(h[c][np.isfinite(h[c])], weights=h._w[np.isfinite(h[c])])
                              if np.isfinite(h[c]).any() else np.nan for c in cols}))

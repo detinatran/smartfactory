@@ -1,0 +1,23 @@
+runs: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'hdd': 20, 'ncmapss': 20}
+choice2:
+ choice2   full  rpt_L
+dataset              
+cmapss      30     50
+ncmapss      5     15
+bearings    32     88
+battery      2     18
+hdd         16      4
+score     ensemble_std   full  gauss_bias_aware  err_reg  rpt_L  rpt_auto  auto3
+dataset                                                                         
+cmapss           10.75   9.17              9.53     9.97   8.40      8.68   8.70
+ncmapss          20.14  12.82             12.72    12.76  12.48     12.54  12.40
+bearings         25.76  24.03             24.66    24.31  22.98     22.98  23.02
+battery           3.56   2.52              2.29     2.12   1.78      1.85   1.81
+hdd              21.65  15.78             15.68    15.65  16.09     15.81  15.84
+== CONFIRMATORY round 4: rpt_auto - baseline (Holm over 15, alpha 0.003125)
+ds                                  cmapss                  ncmapss                  bearings                  battery                     hdd
+b                                                                                                                                             
+err_reg           -1.29 (20/20, p=2.9e-05)   -0.22 (13/20, p=0.064)   -1.33 (18/20, p=0.0004)    -0.27 (14/20, p=0.12)  +0.16 (3/20, p=0.0032)
+full              -0.49 (20/20, p=2.9e-05)  -0.27 (15/20, p=0.0046)   -1.05 (17/20, p=0.0024)  -0.67 (17/20, p=0.0023)    +0.03 (2/20, p=0.47)
+gauss_bias_aware  -0.85 (20/20, p=2.9e-05)   -0.17 (14/20, p=0.043)  -1.68 (19/20, p=6.9e-05)  -0.44 (17/20, p=0.0061)   +0.13 (4/20, p=0.016)
+CONFIRMED (EXT9 rule vs full): True better=True worse=False max_mean=0.027 max_pess=0.718

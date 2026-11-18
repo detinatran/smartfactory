@@ -1,0 +1,5 @@
+ dataset       D  share_Dpos  rpt_minus_osc  p_rpt  rptd_minus_osc  p_rptd  decision_acc
+ battery 10.8778      1.0000        -0.8918  0.002         -0.8918  0.0020        1.0000
+bearings -0.3555      0.4583        -1.2976  0.002         -0.5513  0.0059        0.4333
+  cmapss  5.9451      0.9875        -0.4478  0.002         -0.4472  0.0020        0.7625
+ ncmapss  8.1459      0.9500        -0.2722  0.002         -0.2744  0.0020        0.9500

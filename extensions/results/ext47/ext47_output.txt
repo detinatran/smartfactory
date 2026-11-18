@@ -1,0 +1,19 @@
+predictor RMSE (clean, all eval windows): default 15.55, strong 15.39; strong lower in 8/10 seeds
+
+== risk (%), six faults, C-MAPSS, mean over 10 seeds
+                  default  strong
+score                            
+ensemble_std         9.79    9.59
+gauss_bias_aware     8.90    8.73
+err_reg              9.31    9.06
+full                 8.48    8.26
+rpt_L                7.86    7.64
+rpt_auto_d           7.86    7.64
+default  rpt_auto_d - full: -0.614 points, better 10/10, p=0.002
+strong   rpt_auto_d - full: -0.620 points, better 10/10, p=0.002
+default  rpt_L - full: -0.614 points, better 10/10, p=0.002
+strong   rpt_L - full: -0.620 points, better 10/10, p=0.002
+default  rpt_auto_d - gauss_bias_aware: -1.035 points, better 10/10, p=0.002
+strong   rpt_auto_d - gauss_bias_aware: -1.086 points, better 10/10, p=0.002
+default  rpt_auto_d - err_reg: -1.449 points, better 10/10, p=0.002
+strong   rpt_auto_d - err_reg: -1.418 points, better 10/10, p=0.002

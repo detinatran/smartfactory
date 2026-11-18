@@ -1,0 +1,16 @@
+== M=5 ensembles: risk (%), six faults, seeds 72-81
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.77    17.42     24.56     5.07
+full                9.45    10.12     23.02     4.28
+gauss_bias_aware   10.09     9.90     23.27     3.72
+err_reg            10.68     9.93     22.89     3.80
+rpt_L               8.90     9.68     21.73     3.27
+
+== B. M=5 (rpt_L - baseline, points; Holm over 16)
+dataset                           cmapss                 ncmapss                bearings                 battery
+b                                                                                                               
+ensemble_std      -1.86 (20/20, p=3e-05)  -7.74 (20/20, p=3e-05)  -2.83 (19/20, p=3e-05)  -1.81 (20/20, p=3e-05)
+full              -0.55 (19/20, p=7e-05)  -0.44 (19/20, p=7e-05)  -1.29 (20/20, p=3e-05)  -1.02 (19/20, p=3e-05)
+gauss_bias_aware  -1.18 (20/20, p=3e-05)  -0.22 (17/20, p=0.005)  -1.54 (20/20, p=3e-05)  -0.46 (16/20, p=0.009)
+err_reg           -1.78 (20/20, p=3e-05)  -0.26 (15/20, p=0.005)  -1.16 (18/20, p=7e-05)  -0.53 (16/20, p=0.007)

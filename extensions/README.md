@@ -2,6 +2,50 @@
 
 These experiments go beyond the paper. They are **not** used in the paper's tables, and the paper's results are unchanged.
 
+## ELPIS rounds (EXT11–EXT65)
+
+These rounds develop EXT10 into **ELPIS** and test it; see [`../elpis/README.md`](../elpis/README.md) for the method,
+the pipeline figure, the ESANN paper and the mapping between code names and paper names. Ten rounds were confirmatory
+(α-spending, `protocols/SEARCH_LOG.md`); all other rounds are exploratory. Protocols: `protocols/EXT*_PROTOCOL.md`;
+results: `results/ext*/` (`FINDINGS.md`, summaries, raw per-run CSVs). EXT42, EXT54, EXT55 and EXT57 have no separate
+protocol (EXT42 is a post-hoc cost analysis; EXT57 results are in `results/ext57/`).
+
+| Round | Content |
+|---|---|
+| EXT11 | Ablation, selector models and SOTA comparison for `full_recon_rpt` |
+| EXT12 | Final-method candidates; **round 2**: `rpt_L` (ELPIS) confirmed on seeds 72–81 |
+| EXT13–EXT14 | More baselines; full comparison of ELPIS with 16 external baselines (68 Holm-corrected tests) |
+| EXT15–EXT16, EXT19 | Answers to simulated reviews: error regressions, head baselines, 5-member ensembles, thresholds |
+| EXT17 | Physical sensor faults on raw bearing vibration signals |
+| EXT18 | Unit-history reference features (not adopted) |
+| EXT20 | **Round 3**: unchanged ELPIS replicated on seeds 82–91 |
+| EXT21, EXT26 | Real hard-drive failures (Backblaze SMART), incl. unseen drive models |
+| EXT22 | **Round 4**: `rpt_auto` (ELPIS-CAL) on seeds 92–101, five families |
+| EXT23 | Class-reweighting control |
+| EXT24 | Deployment with thresholds fixed in advance; offset vs abstention |
+| EXT25 | Risk on the windows a fault actually changes; missing baselines |
+| EXT27 | Third backbone (Patch-Transformer) |
+| EXT28 | Hierarchical bootstrap (pair → unit) intervals |
+| EXT29 | **Round 5**: fault-induced excess as primary endpoint; health-masking faults; maintenance simulation |
+| EXT30 | Learn-then-Test certification on hard drives |
+| EXT31–EXT32 | Rotated test units (batteries, N-CMAPSS) |
+| EXT33 | Targeted bias faults on the most sensitive channel |
+| EXT34–EXT35 | Stricter switching rule; **round 6** (not confirmed) |
+| EXT36–EXT37 | Terms of the transfer bound; when perturbation helps; learning curves |
+| EXT38 | **Round 7**: `rpt_auto_d` (ELPIS-G, diagnostic gate) on seeds 152–161 and unseen drive models |
+| EXT39 | Per-channel sensitivity features vs perturbed copies |
+| EXT40 | **Round 8**: ELPIS-G on 30 fresh seeds 162–191, rotated units, seed-level test |
+| EXT41 | Natural glitches in raw battery data |
+| EXT43–EXT45, EXT47, EXT49 | Learning curves, robust/conservative predictors, larger C-MAPSS predictor, selector-set size vs sign of D |
+| EXT46 | Channel repair + local conformal baseline (after RobustUQ) |
+| EXT48 | **Round 9**: fault-specific gain of ELPIS-G at seed level, seeds 192–221 |
+| EXT50–EXT58 | JEPA-pretrained predictor (ELPIS-J) and its controls and bearing fixes |
+| EXT59 | **Round 10**: ELPIS-G vs OSC on ELPIS-J, seeds 222–251 |
+| EXT60 | ELPIS-G row for the SOTA table |
+| EXT61–EXT63 | Pooled predictor (default + ELPIS-J); more JEPA pretraining data (not helpful) |
+| EXT64 | ELPIS-JG gate on fresh seeds 252–281: wins on C-MAPSS and batteries, ties on bearings |
+| EXT65 | Independent bearing replication of ELPIS-JG on 60 fresh seeds 282–341: tie (mean −0.56, p = 0.11) |
+
 ## Headline: randomized-perturbation training of the selector (EXT10), confirmed on fresh seeds
 
 The paper's selector (`full`) learns when a prediction is optimistic by more than δ from two specific seen shifts (dropout,

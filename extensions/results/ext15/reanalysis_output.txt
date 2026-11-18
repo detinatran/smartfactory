@@ -1,0 +1,53 @@
+== (a) seed-level (n = 10 seeds, GRU/TCN averaged): rpt_L - baseline, points, 95% t-CI, wins/10, Holm-adjusted paired t p (over the table), Wilcoxon p (unadjusted)
+dataset                                                 cmapss                                       ncmapss                                      bearings                                       battery
+b                                                                                                                                                                                                       
+full               -0.55 [-0.74,-0.36] 10/10 pH=0.001 pW=0.002    -0.40 [-0.74,-0.06] 10/10 pH=0.05 pW=0.002   -1.06 [-1.55,-0.57] 10/10 pH=0.005 pW=0.002  -0.90 [-1.18,-0.62] 10/10 pH=0.0007 pW=0.002
+gauss_bias_aware  -1.15 [-1.44,-0.86] 10/10 pH=0.0002 pW=0.002      -0.25 [-0.46,-0.05] 8/10 pH=0.05 pW=0.01   -1.48 [-2.07,-0.89] 10/10 pH=0.003 pW=0.002      -0.54 [-0.94,-0.14] 8/10 pH=0.05 pW=0.01
+err_reg            -1.79 [-2.06,-1.53] 10/10 pH=3e-06 pW=0.002     -0.25 [-0.43,-0.07] 9/10 pH=0.05 pW=0.004   -1.03 [-1.46,-0.61] 10/10 pH=0.003 pW=0.002      -0.55 [-0.93,-0.17] 8/10 pH=0.05 pW=0.02
+ensemble_std       -1.99 [-2.27,-1.71] 10/10 pH=2e-06 pW=0.002   -7.70 [-7.96,-7.43] 10/10 pH=9e-12 pW=0.002  -2.82 [-3.72,-1.92] 10/10 pH=0.0008 pW=0.002   -1.97 [-2.30,-1.64] 10/10 pH=7e-06 pW=0.002
+cqr_lower         -0.94 [-1.23,-0.65] 10/10 pH=0.0008 pW=0.002   -5.62 [-6.21,-5.03] 10/10 pH=1e-07 pW=0.002   -1.81 [-2.49,-1.13] 10/10 pH=0.002 pW=0.002  -1.59 [-2.07,-1.12] 10/10 pH=0.0006 pW=0.002
+deep_ens_nll       -2.02 [-2.31,-1.74] 10/10 pH=2e-06 pW=0.002   -6.31 [-6.77,-5.85] 10/10 pH=7e-09 pW=0.002   -4.17 [-4.98,-3.36] 10/10 pH=2e-05 pW=0.002   -1.58 [-2.23,-0.94] 10/10 pH=0.003 pW=0.002
+selectivenet       -3.56 [-3.91,-3.22] 10/10 pH=8e-08 pW=0.002   -7.56 [-8.14,-6.97] 10/10 pH=1e-08 pW=0.002   -4.54 [-5.53,-3.55] 10/10 pH=6e-05 pW=0.002   -2.09 [-2.79,-1.39] 10/10 pH=0.001 pW=0.002
+mahalanobis        -2.70 [-3.04,-2.36] 10/10 pH=7e-07 pW=0.002   -7.05 [-7.56,-6.53] 10/10 pH=7e-09 pW=0.002   -3.70 [-4.38,-3.02] 10/10 pH=2e-05 pW=0.002  -1.60 [-2.13,-1.07] 10/10 pH=0.0009 pW=0.002
+ar_residual        -2.13 [-2.57,-1.68] 10/10 pH=4e-05 pW=0.002   -7.50 [-7.79,-7.21] 10/10 pH=2e-11 pW=0.002   -5.11 [-5.94,-4.28] 10/10 pH=6e-06 pW=0.002  -2.27 [-2.80,-1.74] 10/10 pH=0.0001 pW=0.002
+symmetric          -3.50 [-3.86,-3.14] 10/10 pH=1e-07 pW=0.002  -4.73 [-6.21,-3.25] 10/10 pH=0.0008 pW=0.002  -4.09 [-5.12,-3.05] 10/10 pH=0.0002 pW=0.002  -1.49 [-1.95,-1.04] 10/10 pH=0.0007 pW=0.002
+
+== (b) fault-induced excess risk = risk(6 faults) - risk(clean), points
+dataset                  cmapss  ncmapss  bearings  battery
+       score                                               
+fault  rpt_L               8.97     9.81     21.98     3.39
+       full                9.52    10.21     23.04     4.29
+       gauss_bias_aware   10.12    10.06     23.46     3.93
+       err_reg            10.77    10.06     23.01     3.94
+       ensemble_std       10.96    17.51     24.80     5.35
+clean  rpt_L               8.78     6.44     22.16     2.08
+       full                8.83     6.77     23.22     2.84
+       gauss_bias_aware    9.30     6.63     23.60     2.27
+       err_reg             9.90     6.59     23.14     2.41
+       ensemble_std        9.89    13.12     24.68     3.13
+excess rpt_L               0.19     3.37     -0.17     1.31
+       full                0.69     3.44     -0.18     1.44
+       gauss_bias_aware    0.83     3.43     -0.14     1.66
+       err_reg             0.87     3.47     -0.12     1.52
+       ensemble_std        1.07     4.39      0.13     2.22
+excess(rpt_L) - excess(full), per pair:  dataset    mean  wins  n      p
+  cmapss -0.4974    20 20 0.0000
+ ncmapss -0.0718    10 20 0.8124
+bearings  0.0079    12 20 0.5958
+ battery -0.1312    13 20 0.2943
+
+-- per-fault excess, rpt_L minus full (points)
+              cmapss  ncmapss  bearings  battery
+stuck          -0.95    -0.13     -0.02    -0.11
+bias           -0.90    -0.09     -0.44    -2.40
+noise          -0.58    -0.15      0.12     0.39
+intermittent   -0.01     0.03     -0.01     0.63
+spike          -0.47    -0.12      0.01     0.56
+gain           -0.08     0.03     -0.02     0.13
+-- clean-risk difference rpt_L - full: {'cmapss': -0.05, 'ncmapss': -0.33, 'bearings': -1.07, 'battery': -0.77}
+
+== (c) cost = r * optimistic + pessimistic at 90% coverage (r = cost ratio optimistic:pessimistic); rpt_L minus best EXTERNAL baseline (own variants excluded), and which baseline
+  r= 1: cmapss: +1.07 (best other symmetric)  ncmapss: -0.25 (best other err_reg)  bearings: +0.30 (best other selectivenet)  battery: +0.49 (best other symmetric)
+  r= 2: cmapss: -0.77 (best other full)  ncmapss: -0.50 (best other err_reg)  bearings: -1.47 (best other full)  battery: -0.81 (best other gauss_bias_aware)
+  r= 5: cmapss: -2.42 (best other full)  ncmapss: -1.25 (best other err_reg)  bearings: -4.64 (best other full)  battery: -2.44 (best other gauss_bias_aware)
+  r=10: cmapss: -5.16 (best other full)  ncmapss: -2.49 (best other err_reg)  bearings: -9.94 (best other full)  battery: -5.14 (best other gauss_bias_aware)

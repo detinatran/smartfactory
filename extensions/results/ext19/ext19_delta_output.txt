@@ -1,0 +1,30 @@
+== 0.5 delta: risk (%)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       19.37    25.94     34.27    20.07
+err_reg            19.12    19.45     32.46    17.32
+full               18.10    19.49     32.53    17.00
+gauss_bias_aware   18.68    19.47     32.75    17.32
+rpt_L              17.61    19.32     31.47    16.23
+== 1.5 delta: risk (%)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std        5.92    11.79     16.38     1.73
+err_reg             5.70     4.76     14.86     0.92
+full                4.73     5.01     15.07     1.14
+gauss_bias_aware    5.24     4.85     15.26     1.03
+rpt_L               4.13     4.50     13.71     0.36
+== pre-registered: rpt_L - full at each delta (Holm over 8)
+ds                                  cmapss                          ncmapss                         bearings                          battery
+scale                                                                                                                                        
+0.5 delta  -0.48 (19, p=6e-05, pess +0.20)  -0.17 (18, p=6e-05, pess +0.02)  -1.06 (19, p=2e-05, pess +0.67)  -0.77 (15, p=0.009, pess +0.58)
+1.5 delta  -0.60 (20, p=2e-05, pess +0.41)  -0.51 (20, p=2e-05, pess +0.01)  -1.36 (18, p=4e-05, pess +0.54)  -0.78 (20, p=2e-05, pess +0.46)
+== descriptive: rpt_L - other baselines (Holm over 24)
+ds                                       cmapss               ncmapss              bearings               battery
+scale     b                                                                                                      
+0.5 delta ensemble_std      -1.75 (20, p=5e-05)   -6.62 (20, p=5e-05)   -2.81 (19, p=5e-05)   -3.84 (20, p=5e-05)
+          err_reg           -1.50 (20, p=5e-05)    -0.14 (15, p=0.02)   -0.99 (16, p=0.003)  -1.09 (18, p=0.0006)
+          gauss_bias_aware  -1.07 (20, p=5e-05)    -0.15 (14, p=0.02)  -1.29 (18, p=0.0008)  -1.09 (18, p=0.0008)
+1.5 delta ensemble_std      -1.79 (20, p=5e-05)   -7.29 (20, p=5e-05)   -2.67 (20, p=5e-05)   -1.36 (20, p=5e-05)
+          err_reg           -1.56 (20, p=5e-05)  -0.26 (18, p=0.0002)  -1.15 (19, p=0.0002)   -0.56 (19, p=5e-05)
+          gauss_bias_aware  -1.10 (20, p=5e-05)  -0.35 (18, p=0.0001)   -1.55 (20, p=5e-05)  -0.67 (19, p=0.0003)

@@ -1,0 +1,26 @@
+== predictor: clean RMSE and optimistic rate at full coverage under faults (%), mean over seeds
+  cmapss     RMSE default 15.553 JEPA 14.378 (JEPA lower 10/10) | opt under faults default 10.80 JEPA 9.83
+  bearings   RMSE default 0.280 JEPA 0.279 (JEPA lower 5/10) | opt under faults default 26.33 JEPA 29.86
+  battery_cv RMSE default 0.094 JEPA 0.086 (JEPA lower 10/10) | opt under faults default 7.50 JEPA 6.30
+
+== risk (%), six faults, 90% matched coverage
+score       err_reg   full  gauss_bias_aware  rpt_L  rpt_auto_d  default_full  default_rpt_auto_d
+dataset                                                                                          
+cmapss         8.69   7.89              8.33   7.04        7.04          8.48                7.86
+bearings      27.76  28.06             28.01  26.53       27.06         24.26               23.76
+battery_cv     2.95   2.85              2.95   1.87        1.87          3.28                2.35
+
+-- JEPA system (rpt_auto_d) - default system (rpt_auto_d)
+  cmapss     -0.824 points, better 10/10, p=0.002
+  bearings   +3.297 points, better 1/10, p=0.0059
+  battery_cv -0.487 points, better 8/10, p=0.02
+
+-- within JEPA: rpt_auto_d - full
+  cmapss     -0.853 points, better 10/10, p=0.002
+  bearings   -1.000 points, better 9/10, p=0.0059
+  battery_cv -0.983 points, better 10/10, p=0.002
+
+-- JEPA full - default full
+  cmapss     -0.585 points, better 9/10, p=0.0059
+  bearings   +3.799 points, better 1/10, p=0.0039
+  battery_cv -0.433 points, better 8/10, p=0.064

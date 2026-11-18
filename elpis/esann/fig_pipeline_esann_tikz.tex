@@ -1,0 +1,103 @@
+% ELPIS pipeline (TikZ). Requires tikz with arrows.meta and shapes.geometric. ESANN layout: panels re-arranged to ~13 cm width (same content as the ACM figure).
+\begingroup
+\definecolor{hdr}{RGB}{31,74,52}
+\definecolor{pnl}{RGB}{248,249,247}
+\definecolor{grn}{RGB}{226,236,226}
+\definecolor{grnb}{RGB}{120,150,125}
+\definecolor{org}{RGB}{252,232,205}
+\definecolor{orgb}{RGB}{205,140,70}
+\definecolor{blu}{RGB}{226,229,247}
+\definecolor{blub}{RGB}{110,115,185}
+\definecolor{sa}{RGB}{40,90,170}\definecolor{sb}{RGB}{235,130,30}\definecolor{sc}{RGB}{50,150,60}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\footnotesize,>={Stealth[length=2.2mm]},
+  panel/.style={draw=black!35,dashed,rounded corners=4pt,fill=pnl},
+  box/.style={draw=grnb,rounded corners=3pt,fill=grn,align=center,inner sep=3pt,line width=0.6pt},
+  obox/.style={box,draw=orgb,fill=org},
+  bbox/.style={box,draw=blub,fill=blu},
+  dbox/.style={box,fill=hdr,draw=hdr,text=white,font=\footnotesize\bfseries},
+  dia/.style={draw=grnb,fill=grn,diamond,aspect=2.1,align=center,inner sep=0.3pt,line width=0.6pt,font=\scriptsize},
+  arr/.style={->,line width=0.8pt,draw=hdr},
+  jarr/.style={->,line width=0.8pt,draw=blub,dashed},
+  note/.style={font=\scriptsize\itshape,align=center,text=black!70}]
+\newcommand{\phead}[4]{%
+  \node[fill=hdr,text=white,font=\small\bfseries,rounded corners=5pt,anchor=west,inner xsep=6pt,inner ysep=3pt] at (#1+0.25,#2) {\hspace{4mm}#4};
+  \node[circle,fill=hdr,draw=white,line width=1pt,text=white,font=\normalsize\bfseries,minimum size=6.5mm,inner sep=0pt] at (#1+0.25,#2) {#3};}
+\newcommand{\sig}[5]{\draw[#4,line width=0.6pt,domain=0:#3,samples=40,smooth] plot (#1+\x,{#2+0.09*sin(\x*620+#5)+0.05*sin(\x*1500+2*#5)});}
+\newcommand{\win}[3]{%
+  \draw[black!60,line width=0.5pt] (#1,#2) rectangle ++(#3,1.05);
+  \sig{#1+0.05}{#2+0.82}{#3-0.1}{sa}{0}\sig{#1+0.05}{#2+0.55}{#3-0.1}{sb}{70}\sig{#1+0.05}{#2+0.28}{#3-0.1}{sc}{150}}
+% ---------------- panels (re-arranged) ----------------
+\draw[panel] (0,0) rectangle (5.55,-4.05);
+\draw[panel] (5.8,0) rectangle (13.0,-4.05);
+\draw[panel] (0,-4.45) rectangle (5.55,-8.5);
+\draw[panel,draw=grnb,solid,fill=grn!40] (5.8,-4.45) rectangle (13.0,-8.5);
+\draw[panel] (0,-9.1) rectangle (13.0,-12.6);
+\phead{0}{0}{1}{RUL predictor $f$ (fixed)}
+\phead{5.8}{0}{2}{ELPIS perturbation training}
+\phead{0}{-4.45}{3}{Selector training}
+\phead{0}{-9.1}{4}{Per-deployment gates (calibration units only)}
+% ---------------- panel 1 ----------------
+\node[font=\scriptsize,align=center] at (1.0,-0.65) {sensor window\\$x\in\mathbb R^{T\times C}$};
+\win{0.25}{-2.15}{1.2}
+\node[box] (ens) at (3.0,-1.62) {default ensemble\\[-1pt]{\scriptsize (GRU / TCN)}};
+\node[bbox,font=\scriptsize,text width=2.95cm] (ej) at (2.95,-3.2) {\textbf{ELPIS-J} (optional):\\JEPA-pretrained, frozen\\encoder, bias-corrected};
+\node[obox,minimum height=7mm] (fx) at (4.95,-1.62) {$f(x)$};
+\draw[arr] (1.5,-1.62) -- (ens);
+\draw[arr] (ens) -- (fx);
+\draw[jarr] (ej.east) -| node[pos=0.72,right,font=\tiny,text=blub!80!black]{pooled} (fx.south);
+\begin{scope}[shift={(0.6,0)}]
+% ---------------- panel 2 ----------------
+\node[font=\scriptsize,align=center] at (6.75,-0.65) {clean selector\\window $x$};
+\win{6.15}{-2.15}{1.2}
+\fill[green!45!black,opacity=0.25] (8.75,-1.32) rectangle (9.15,-0.42);
+\win{8.3}{-1.47}{1.25}
+\fill[green!45!black,opacity=0.25] (8.95,-2.87) rectangle (9.35,-1.97);
+\win{8.3}{-3.02}{1.25}
+\draw[arr] (7.4,-1.62) -- (8.25,-0.95);
+\draw[arr] (7.4,-1.62) -- (8.25,-2.5);
+\node[font=\scriptsize,align=center] at (10.65,-0.85) {perturbed\\copies $\tilde x$};
+\node[note] at (10.8,-1.95) {$k\le C/2$ channels,\\amplitude $1$--$8\sigma$,\\smooth onset};
+\node[obox,font=\scriptsize,text width=5.3cm] (lab) at (8.95,-3.52) {label $\tilde y=\mathbf 1\{f(\tilde x)-y>\delta\}$\\{\itshape = the predictor's own error, not ``perturbed''}};
+\draw[arr,densely dotted] (fx.east) -- (5.08,-1.62) |- node[pos=0.78,above,font=\tiny]{$f$} (lab.west);
+\end{scope}
+\begin{scope}[shift={(-11.925,-4.45)}]
+% ---------------- panel 3 ----------------
+\node[box,font=\scriptsize,text width=2.25cm] (seen) at (13.35,-1.0) {seen shifts:\\clean / dropout / drift};
+\node[obox,font=\scriptsize,text width=1.9cm] (cp) at (16.0,-1.0) {+ perturbed copies\\with labels $\tilde y$};
+\node[box,text width=4.5cm] (hgb) at (14.7,-2.45) {gradient-boosting classifier\\$s(x)\approx P\big(f(x)-y>\delta\mid x\big)$};
+\node[note] at (14.7,-3.55) {OSC: the same classifier\\trained without the copies};
+\draw[arr] (seen) -- (seen|-hgb.north);
+\draw[arr] (cp) -- (cp|-hgb.north);
+\end{scope}
+\begin{scope}[shift={(-6.3,0.15)}]
+% ---------------- key points ----------------
+\node[dbox,minimum width=5.4cm] at (15.725,-5.05) {Key points};
+\foreach \y/\t in {-5.7/{one-sided: estimates\\$P(f(x)-y>\delta)$},
+                   -6.4/{labels from the predictor's\\own errors, not outliers},
+                   -7.05/{gates use calibration\\units only},
+                   -7.7/{ELPIS-G confirmed in\\pre-registered rounds 7--10}}{
+  \node[circle,fill=hdr,text=white,inner sep=0.8pt,font=\tiny] at (13.6,\y) {\checkmark};
+  \node[anchor=west,align=left,font=\scriptsize] at (13.82,\y) {\t};}
+\end{scope}
+\begin{scope}[shift={(0,-4.5)}]
+% ---------------- panel 4 ----------------
+\node[box,font=\scriptsize,text width=2.2cm] (cal) at (1.45,-6.0) {calibration units\\of the deployment\\{\itshape (no test data)}};
+\node[dia] (dg) at (4.45,-5.45) {ELPIS-G\\$D>0$\,?};
+\node[note,anchor=north] at (4.45,-6.1) {$D$: rise in the optimistic\\rate when clean calibration\\windows are perturbed};
+\node[bbox,font=\scriptsize,minimum width=2.1cm] (use1) at (7.4,-5.1) {selector ELPIS};
+\node[box,font=\scriptsize,minimum width=2.1cm] (use0) at (7.4,-5.85) {selector OSC};
+\node[dia,draw=blub,fill=blu] (jg) at (7.4,-7.3) {ELPIS-JG\\pooled better?};
+\node[note,anchor=west] at (8.75,-7.62) {lower calibration risk of the\\selector chosen for each $f$};
+\node[dbox,text width=2.95cm,align=center] (dep) at (11.4,-5.45) {accept the $c$ lowest\\$s(x)$, abstain on rest};
+\draw[arr] (cal.east) -- ++(0.3,0) |- (dg.west);
+\draw[arr] (dg.north east) -- node[above,font=\tiny,pos=0.4]{yes} (use1.west);
+\draw[arr] (dg.south east) -- node[below,font=\tiny,pos=0.4]{no} (use0.west);
+\draw[arr] (use1.east) -- ++(0.65,0) |- ([yshift=1.5mm]dep.west);
+\draw[arr] (use0.east) -- ++(0.65,0) |- ([yshift=-1.5mm]dep.west);
+\draw[jarr] (cal.south) |- (jg.west);
+\draw[jarr] (jg.east) -- (11.4,-7.3) node[pos=0.5,above,font=\tiny,text=blub!80!black]{pooled or default $f$} -- (dep.south);
+\end{scope}
+% ---------------- row link: trained selector feeds the deployment ----------------
+\draw[arr] (2.775,-8.5) -- (2.775,-8.68) -| (dep.north);
+\end{tikzpicture}
+\endgroup

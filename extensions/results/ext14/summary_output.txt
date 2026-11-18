@@ -1,0 +1,142 @@
+consistency (ext14 ablate vs ext12 conf, max |diff| points):
+  full             {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+  err_reg          {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+  full_recon_rpt   {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+
+== rpt_L - baseline, Holm over 68
+dataset                         cmapss               ncmapss              bearings               battery
+b                                                                                                       
+ensemble_std      -1.99 (20, p=0.0001)  -7.70 (20, p=0.0001)  -2.82 (19, p=0.0001)  -1.97 (20, p=0.0001)
+mc_dropout        -2.45 (20, p=0.0001)  -8.14 (20, p=0.0001)  -2.63 (19, p=0.0001)  -2.39 (20, p=0.0001)
+deep_ens_nll      -2.02 (20, p=0.0001)  -6.31 (20, p=0.0001)  -4.17 (20, p=0.0001)  -1.58 (20, p=0.0001)
+evidential        -2.31 (20, p=0.0001)  -6.25 (20, p=0.0001)  -4.30 (20, p=0.0001)  -1.69 (20, p=0.0001)
+laplace           -2.78 (20, p=0.0001)  -8.28 (20, p=0.0001)  -2.94 (20, p=0.0001)  -2.43 (20, p=0.0001)
+tta_std           -2.21 (20, p=0.0001)  -8.16 (20, p=0.0001)  -3.45 (20, p=0.0001)  -3.12 (20, p=0.0001)
+mahalanobis       -2.70 (20, p=0.0001)  -7.05 (20, p=0.0001)  -3.70 (20, p=0.0001)  -1.60 (20, p=0.0001)
+knn_feat          -3.02 (20, p=0.0001)  -8.16 (20, p=0.0001)  -3.49 (20, p=0.0001)  -2.24 (20, p=0.0001)
+iforest           -3.96 (20, p=0.0001)  -8.16 (20, p=0.0001)  -2.84 (20, p=0.0001)  -2.38 (20, p=0.0001)
+ar_residual       -2.13 (20, p=0.0001)  -7.50 (20, p=0.0001)  -5.11 (20, p=0.0001)  -2.27 (20, p=0.0001)
+selectivenet      -3.56 (20, p=0.0001)  -7.56 (20, p=0.0001)  -4.54 (20, p=0.0001)  -2.09 (20, p=0.0001)
+cqr_lower         -0.94 (19, p=0.0001)  -5.62 (20, p=0.0001)  -1.81 (18, p=0.0002)  -1.59 (18, p=0.0002)
+symmetric         -3.50 (20, p=0.0001)  -4.73 (20, p=0.0001)  -4.09 (20, p=0.0001)  -1.49 (20, p=0.0001)
+fault_det         -2.10 (20, p=0.0001)  -7.58 (20, p=0.0001)  -4.10 (19, p=0.0001)  -2.36 (20, p=0.0001)
+err_reg           -1.79 (20, p=0.0001)  -0.25 (17, p=0.0005)  -1.03 (17, p=0.0008)   -0.55 (17, p=0.006)
+gauss_bias_aware  -1.15 (20, p=0.0001)   -0.25 (17, p=0.002)  -1.48 (19, p=0.0002)   -0.54 (16, p=0.007)
+ours_white            +0.05 (9, p=0.5)   -0.17 (15, p=0.006)  -0.87 (17, p=0.0005)  -0.48 (19, p=0.0002)
+
+significantly better: 67/68; significantly worse: 0; wins range 9-20; diff range -8.28 to 0.05
+
+== risk_matched
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.96    17.51     24.80     5.35
+mc_dropout         11.42    17.95     24.61     5.78
+deep_ens_nll       11.00    16.12     26.15     4.97
+evidential         11.29    16.06     26.28     5.08
+laplace            11.75    18.09     24.92     5.82
+tta_std            11.19    17.96     25.43     6.51
+mahalanobis        11.67    16.85     25.68     4.99
+knn_feat           11.99    17.97     25.47     5.62
+iforest            12.94    17.97     24.82     5.77
+ar_residual        11.10    17.31     27.09     5.66
+selectivenet       12.54    17.37     26.52     5.48
+cqr_lower           9.91    15.43     23.79     4.98
+symmetric          12.47    14.54     26.07     4.88
+fault_det          11.07    17.39     26.08     5.74
+err_reg            10.77    10.06     23.01     3.94
+gauss_bias_aware   10.12    10.06     23.46     3.93
+ours_white          8.93     9.98     22.85     3.87
+full                9.52    10.21     23.04     4.29
+rpt_L               8.97     9.81     21.98     3.39
+
+== pess_matched
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       32.89    19.61     34.63    17.49
+mc_dropout         33.24    19.28     34.95    17.89
+deep_ens_nll       32.90    19.36     32.31    18.30
+evidential         31.56    19.72     32.27    18.22
+laplace            32.96    18.92     34.68    17.25
+tta_std            33.12    18.83     33.50    17.70
+mahalanobis        32.50    19.14     34.10    17.97
+knn_feat           33.22    19.02     33.72    17.08
+iforest            34.54    19.35     34.93    18.08
+ar_residual        32.56    18.68     32.75    17.16
+selectivenet       34.25    19.58     31.86    18.17
+cqr_lower          33.08    20.28     35.28    18.02
+symmetric          29.45    17.44     32.63    17.55
+fault_det          32.38    19.42     34.33    17.06
+err_reg            34.36    21.59     36.34    19.46
+gauss_bias_aware   33.32    21.59     36.05    19.27
+ours_white         34.04    21.59     36.33    19.38
+full               33.69    21.56     36.05    18.91
+rpt_L              34.02    21.59     36.70    19.53
+
+== risk_frozen
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.33    15.03     24.40     5.27
+mc_dropout         11.23    17.67     24.27     5.98
+deep_ens_nll       10.81    14.88     23.60     3.59
+evidential         11.23    15.52     23.20     3.55
+laplace            11.37    14.93     24.51     4.64
+tta_std            11.22    18.01     25.23     6.32
+mahalanobis         9.33    14.17     26.56     4.50
+knn_feat           11.45    17.00     24.79     4.66
+iforest            12.38    17.59     24.41     5.88
+ar_residual         6.70    10.40     27.06     4.51
+selectivenet       12.57    17.08     24.23     5.31
+cqr_lower           9.66    14.65     22.58     3.87
+symmetric          12.48    13.53     25.26     3.14
+fault_det           8.33    14.21     25.62     5.46
+err_reg            10.83     8.40     21.83     1.42
+gauss_bias_aware   10.00     8.60     22.40     1.52
+ours_white          8.36     7.64     21.31     1.49
+full                9.39     8.98     21.38     2.33
+rpt_L               8.17     7.51     19.46     1.39
+
+== coverage_frozen
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       83.10    70.83     85.05    72.27
+mc_dropout         86.67    81.48     86.39    93.73
+deep_ens_nll       88.19    82.08     83.28    68.42
+evidential         88.95    85.43     83.71    63.61
+laplace            80.71    67.95     79.27    59.77
+tta_std            91.95    92.57     88.82    92.49
+mahalanobis        69.76    59.50     79.00    70.97
+knn_feat           83.77    83.94     79.73    68.09
+iforest            79.16    80.21     84.72    85.98
+ar_residual        56.45    43.00     44.79    67.65
+selectivenet       89.03    86.79     84.58    81.01
+cqr_lower          88.23    85.58     85.13    56.36
+symmetric          90.74    87.04     88.80    67.93
+fault_det          73.13    67.20     85.03    47.51
+err_reg            89.28    86.90     80.37    66.81
+gauss_bias_aware   89.65    86.64     81.14    67.72
+ours_white         87.60    85.44     82.96    63.61
+full               89.43    87.05     83.57    66.99
+rpt_L              87.35    85.89     82.25    68.29
+
+== clean risk_matched
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std        9.89    13.12     24.68     3.13
+mc_dropout         10.11    13.92     24.51     3.47
+deep_ens_nll        9.77    12.86     26.37     3.39
+evidential         10.17    12.95     26.53     3.38
+laplace            10.76    13.62     24.59     3.20
+tta_std             9.74    14.35     25.57     3.98
+mahalanobis        11.56    14.02     25.45     3.63
+knn_feat           10.81    14.05     25.15     3.06
+iforest            12.23    14.26     24.90     3.47
+ar_residual        11.50    13.51     25.79     3.76
+selectivenet       11.44    13.95     26.80     3.72
+cqr_lower           9.09    12.64     23.92     2.85
+symmetric          11.45    11.30     26.22     2.78
+fault_det          10.20    14.02     26.09     3.12
+err_reg             9.90     6.59     23.14     2.41
+gauss_bias_aware    9.30     6.63     23.60     2.27
+ours_white          8.81     6.55     23.06     2.54
+full                8.83     6.77     23.22     2.84
+rpt_L               8.78     6.44     22.16     2.08

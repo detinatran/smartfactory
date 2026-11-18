@@ -1,0 +1,51 @@
+runs: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'hdd4': 20, 'ncmapss': 20}
+
+== risk (%), six faults
+score     gauss_bias_aware  err_reg  err_reg_rptL   full   sens  rpt_L  rpt_sens  rpt_auto_d
+dataset                                                                                     
+cmapss                9.45     9.97          9.03   9.12   9.00   8.48      8.44        8.48
+ncmapss              11.24    11.34         10.82  11.47  11.66  10.97     10.98       10.97
+bearings             23.20    22.93         21.97  23.17  23.10  22.35     22.49       22.93
+battery               3.27     3.27          2.68   3.49   3.50   2.97      2.90        2.97
+hdd4                 17.57    17.88         17.98  17.59  17.61  17.47     17.59       17.63
+
+== clean risk (%)
+score     gauss_bias_aware  err_reg  err_reg_rptL   full   sens  rpt_L  rpt_sens  rpt_auto_d
+dataset                                                                                     
+cmapss                8.59     9.05          8.70   8.39   8.09   8.31      8.24        8.31
+ncmapss               7.53     7.54          7.12   7.86   7.95   7.33      7.34        7.33
+bearings             23.29    23.02         22.19  23.27  23.21  22.56     22.65       23.03
+battery               1.66     1.78          1.24   1.95   1.86   1.49      1.45        1.49
+hdd4                 19.36    19.66         19.30  19.07  19.03  18.68     18.79       18.96
+
+== M1: sens - full (points; Holm over 5; exploratory)
+ dataset    mean  better  n      p  p_holm
+  cmapss -0.1140      13 20 0.0296  0.1183
+ ncmapss  0.1957       3 20 0.0121  0.0604
+bearings -0.0699      11 20 0.6215  1.0000
+ battery  0.0158       8 20 0.6742  1.0000
+    hdd4  0.0199      10 20 0.9273  1.0000
+
+== M2: rpt_L - sens (points; Holm over 5; exploratory)
+ dataset    mean  better  n      p  p_holm
+  cmapss -0.5268      18 20 0.0000  0.0001
+ ncmapss -0.6928      20 20 0.0000  0.0000
+bearings -0.7410      15 20 0.0042  0.0127
+ battery -0.5304      16 20 0.0172  0.0344
+    hdd4 -0.1340      13 20 0.0696  0.0696
+
+== M3: rpt_sens - rpt_L (points; Holm over 5; exploratory)
+ dataset    mean  better  n      p  p_holm
+  cmapss -0.0386      13 20 0.3118  0.9354
+ ncmapss  0.0069      10 20 0.7285  1.0000
+bearings  0.1373       8 20 0.2024  0.8098
+ battery -0.0727       7 20 0.7562  1.0000
+    hdd4  0.1131       5 20 0.0296  0.1479
+
+== extra: sens - err_reg_rptL (points; Holm over 5; exploratory)
+ dataset    mean  better  n      p  p_holm
+  cmapss -0.0315      10 20 1.0000  1.0000
+ ncmapss  0.8452       0 20 0.0000  0.0000
+bearings  1.1300       6 20 0.0017  0.0051
+ battery  0.8257       3 20 0.0010  0.0041
+    hdd4 -0.3770      15 20 0.0049  0.0097

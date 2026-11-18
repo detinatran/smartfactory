@@ -1,0 +1,34 @@
+== risk (%), six faults, mean over seeds
+score       ensemble_std  gauss_bias_aware  err_reg   full  rpt_auto_d  repair_lconf
+dataset                                                                             
+cmapss              9.79              8.90     9.31   8.48        7.86          9.58
+ncmapss_cv         15.50              8.15     8.16   8.31        8.00         16.48
+bearings           25.70             24.35    24.15  24.26       23.76         21.42
+battery_cv          6.05              3.31     3.24   3.28        2.35          5.19
+hdd                21.27             15.41    15.41  15.55       15.55         19.88
+
+== clean risk (%)
+score       ensemble_std  gauss_bias_aware  err_reg   full  rpt_auto_d  repair_lconf
+dataset                                                                             
+cmapss              8.56              7.85     8.23   7.63        7.57          8.70
+ncmapss_cv         10.17              4.24     4.24   4.33        4.13          9.37
+bearings           25.64             24.47    24.23  24.46       23.99         25.33
+battery_cv          2.72              1.14     1.04   1.11        0.60          1.49
+hdd                23.19             18.04    18.06  18.02       18.02         21.77
+
+== predictor optimistic rate at full coverage under faults (%): original vs repaired
+score       predictor  predictor_repaired
+dataset                                  
+cmapss          10.80               10.31
+ncmapss_cv      16.23               19.85
+bearings        26.33               22.43
+battery_cv       7.50                8.70
+hdd             22.58               22.69
+
+== rpt_auto_d - repair_lconf (points; seed level; Holm over 5)
+   dataset    mean  better  n      p  p_holm
+    cmapss -1.7170      10 10 0.0020  0.0098
+ncmapss_cv -8.4801      10 10 0.0020  0.0098
+  bearings  2.3481       1 10 0.0098  0.0098
+battery_cv -2.8374      10 10 0.0020  0.0098
+       hdd -4.3302      10 10 0.0020  0.0098

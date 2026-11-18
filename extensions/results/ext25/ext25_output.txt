@@ -1,0 +1,86 @@
+consistency vs EXT22: 4680 rows, max |diff| = 0.0000 points -> OK
+
+== risk_matched (%), mean over pairs
+score     ensemble_std  pca_spe  pca_t2   eq90  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                                          
+cmapss           10.75    10.82   11.36   9.02              9.53     9.97   9.17   8.40      8.68
+ncmapss          20.14    19.77   19.72  13.26             12.72    12.76  12.82  12.48     12.54
+bearings         25.76    26.43   25.45  24.68             24.66    24.31  24.03  22.98     22.98
+battery           3.56     3.63    3.64   2.41              2.29     2.12   2.52   1.78      1.85
+hdd              21.65    19.97   20.21  18.25             15.68    15.65  15.78  16.09     15.81
+
+== risk_A (%), mean over pairs
+score     ensemble_std  pca_spe  pca_t2   eq90  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                                          
+cmapss           19.83    19.92   20.19  16.55             17.61    18.05  16.78  15.16     15.73
+ncmapss          29.29    27.41   26.73  16.75             16.79    16.49  16.64  15.63     15.79
+bearings         19.13    19.64   19.03  18.68             18.82    18.60  18.66  18.01     17.95
+battery           5.23     5.51    5.37   2.29              1.88     1.88   2.46   0.51      0.58
+hdd              78.75    74.57   75.75  66.02             63.67    63.12  64.89  65.84     64.97
+
+== risk_A_clean (%), mean over pairs
+score     ensemble_std  pca_spe  pca_t2   eq90  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                                          
+cmapss           16.46    17.38   18.02  14.83             14.98    15.80  14.83  14.44     14.54
+ncmapss          18.54    17.88   17.86  10.76              9.73     9.79   9.59   9.15      9.15
+bearings         19.78    20.07   19.64  19.50             19.46    19.17  19.36  18.65     18.62
+battery           0.20     0.22    0.21   0.02              0.03     0.06   0.04   0.00      0.01
+hdd              82.56    79.82   82.30  75.92             73.98    73.94  75.44  75.23     75.43
+
+== excess_A (%), mean over pairs
+score     ensemble_std  pca_spe  pca_t2  eq90  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                                         
+cmapss            3.37     2.54    2.17  1.72              2.63     2.26   1.95   0.73      1.20
+ncmapss          10.75     9.53    8.87  5.99              7.07     6.70   7.04   6.48      6.64
+bearings         -0.65    -0.43   -0.61 -0.82             -0.63    -0.57  -0.70  -0.64     -0.67
+battery           5.04     5.29    5.17  2.26              1.85     1.82   2.42   0.51      0.57
+hdd              -3.81    -5.25   -6.54 -9.90            -10.31   -10.82 -10.54  -9.39    -10.46
+
+== cov_A (%), mean over pairs
+score     ensemble_std  pca_spe  pca_t2   eq90  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto
+dataset                                                                                          
+cmapss           82.43    81.44   85.18  83.29             84.45    86.39  83.84  83.54     83.64
+ncmapss          80.80    81.05   85.64  83.88             85.08    84.66  84.53  84.06     84.10
+bearings         88.79    88.31   91.19  92.83             92.56    92.66  92.24  92.67     92.79
+battery          78.09    79.13   84.74  78.40             79.77    81.02  79.52  75.84     76.01
+hdd              78.05    72.15   71.72  77.79             67.90    67.64  66.82  69.52     67.19
+
+== affected share and predictor optimistic rate on A (fault / clean), %
+          share_A  pred_opt_A  pred_opt_A_clean
+dataset                                        
+cmapss      47.10       20.23             17.64
+ncmapss     46.24       28.02             18.83
+bearings    43.53       18.90             19.55
+battery     33.49        5.46              0.25
+hdd         22.88       72.73             78.85
+
+== per fault: predictor optimistic rate on A, fault - clean (points)
+scenario  stuck   bias  noise  intermittent  spike  gain
+dataset                                                 
+cmapss     5.03   5.35   2.26          2.05   1.79 -0.94
+ncmapss   11.10  18.21  10.50          2.42  10.92  1.97
+bearings   0.28  -2.41  -1.32         -0.27  -1.19 -0.04
+battery    0.30  23.79   3.30          0.88   3.00 -0.02
+hdd        0.41 -12.82 -15.11          0.35  -8.84 -0.69
+
+== F1: vs OSC on affected windows (Holm over 20)
+dataset                                   cmapss                   ncmapss                bearings                   battery                      hdd
+a        b    metric                                                                                                                                 
+rpt_L    full excess_A  -1.22 (18/20, p=0.00013)    -0.57 (15/20, p=0.011)    +0.06 (9/20, p=0.86)  -1.90 (20/20, p=3.8e-05)  +1.15 (0/20, p=3.8e-05)
+              risk_A    -1.62 (20/20, p=3.8e-05)  -1.01 (20/20, p=3.8e-05)   -0.65 (16/20, p=0.13)  -1.95 (20/20, p=3.8e-05)  +0.95 (2/20, p=0.00017)
+rpt_auto full excess_A   -0.75 (16/20, p=0.0048)    -0.40 (12/20, p=0.045)    +0.03 (9/20, p=0.86)   -1.84 (18/20, p=0.0024)     +0.08 (0/20, p=0.27)
+              risk_A    -1.05 (20/20, p=3.8e-05)   -0.85 (15/20, p=0.0059)  -0.71 (14/20, p=0.064)   -1.88 (18/20, p=0.0024)     +0.08 (0/20, p=0.27)
+
+== F2: rpt_auto vs baselines, risk on affected windows (Holm over 15)
+dataset                                             cmapss                    ncmapss                bearings                   battery                        hdd
+a        b                metric                                                                                                                                  
+rpt_auto ensemble_std     risk_A  -4.10 (20/20, p=2.9e-05)  -13.51 (20/20, p=2.9e-05)  -1.18 (13/20, p=0.013)  -4.65 (20/20, p=2.9e-05)  -13.78 (20/20, p=2.9e-05)
+         err_reg          risk_A  -2.32 (20/20, p=2.9e-05)    -0.71 (17/20, p=0.0019)  -0.65 (13/20, p=0.013)  -1.29 (19/20, p=0.00052)    +1.85 (0/20, p=2.9e-05)
+         gauss_bias_aware risk_A  -1.88 (20/20, p=2.9e-05)   -1.01 (18/20, p=0.00013)  -0.88 (15/20, p=0.006)  -1.30 (19/20, p=0.00049)    +1.30 (1/20, p=3.1e-05)
+
+== F3: rpt_auto vs new baselines, risk_matched (Holm over 15)
+dataset                                          cmapss                   ncmapss                  bearings                   battery                       hdd
+a        b       metric                                                                                                                                        
+rpt_auto eq90    risk_matched  -0.35 (18/20, p=0.00034)  -0.71 (18/20, p=3.8e-05)    -1.70 (19/20, p=4e-05)  -0.56 (19/20, p=0.00034)  -2.44 (20/20, p=2.9e-05)
+         pca_spe risk_matched  -2.14 (20/20, p=2.9e-05)  -7.23 (20/20, p=2.9e-05)  -3.45 (20/20, p=2.9e-05)  -1.78 (20/20, p=2.9e-05)  -4.16 (20/20, p=2.9e-05)
+         pca_t2  risk_matched  -2.68 (20/20, p=2.9e-05)  -7.18 (20/20, p=2.9e-05)  -2.46 (20/20, p=2.9e-05)  -1.79 (20/20, p=2.9e-05)  -4.41 (20/20, p=2.9e-05)

@@ -34,7 +34,7 @@ SCALE_FEATURES = ("rms", "peak", "p2p")  # bearing amplitude features -> log sca
 # ------------------------------------------------------------------ loading
 def load_dataset(name, data_dir):
     data_dir = Path(data_dir)
-    if name == "ncmapss":
+    if name in ("ncmapss", "ncmapss_cv"):  # ncmapss_cv (EXT32): 5-fold rotation of test engines over all 99
         df = pd.read_csv(data_dir / "ncmapss.csv")
         features = ["alt", "Mach", "TRA", "T2", "T24", "T30", "T48", "T50", "P15", "P2", "P21",
                     "P24", "Ps30", "P40", "P50", "Nf", "Nc", "Wf", "flight_seconds"]
@@ -43,6 +43,9 @@ def load_dataset(name, data_dir):
             "rul_steps": df.rul_steps.astype(float), "regime": df.Fc.astype(int).astype(str),
             "fold": np.where(df.split == "test", "test", "dev"),
         })
+        if name == "ncmapss_cv":
+            import zlib
+            frame["fold"] = ["cv%d" % (zlib.crc32(str(u).encode()) % 5) for u in df.unit_id]
         frame[features] = df[features].to_numpy()
         mode = "regime"
     elif name == "bearings":
@@ -61,7 +64,7 @@ def load_dataset(name, data_dir):
         frame["fold"] = frame.regime
         frame[features] = df[features].to_numpy()
         mode = "baseline"
-    elif name == "battery":
+    elif name in ("battery", "battery_cv"):  # battery_cv (EXT31): 5-fold rotation of test cells over all 124 cells
         df = pd.read_csv(data_dir / "battery.csv")
         df = df[df.cycle <= df.cycle_life].copy()  # label = capacity-defined end of life
         features = ["QDischarge", "QCharge", "IR", "Tavg", "Tmin", "Tmax", "chargetime"]
@@ -70,8 +73,21 @@ def load_dataset(name, data_dir):
             "rul_steps": (df.cycle_life - df.cycle).astype(float), "regime": df.policy,
             "fold": np.where(df.batch == 3, "batch3", "dev"),
         })
+        if name == "battery_cv":
+            import zlib
+            frame["fold"] = ["cv%d" % (zlib.crc32(str(c).encode()) % 5) for c in df.cell]
         frame[features] = df[features].to_numpy()
         mode = "baseline"
+    elif name in ("hdd", "hdd2", "hdd3", "hdd4"):  # EXT21 / EXT26: Backblaze failed drives (prepare_hdd.py); hdd2 = unseen models
+        df = pd.read_csv(data_dir / f"{name}.csv")
+        features = [c for c in df.columns if c.startswith("smart_")]
+        frame = pd.DataFrame({
+            "unit_name": df.serial_number.astype(str), "step": df.day.astype(int),
+            "rul_steps": df.rul_steps.astype(float), "regime": df.model.astype(str),
+            "fold": np.where(df.fold == "test", "test", "dev"),
+        })
+        frame[features] = df[features].to_numpy()
+        mode = "regime"
     else:
         raise ValueError(f"Unknown external dataset: {name}")
     frame = frame.sort_values(["unit_name", "step"]).reset_index(drop=True)
@@ -89,6 +105,10 @@ def folds_for(name, frame):
         return ["test"]
     if name == "battery":
         return ["batch3"]
+    if name in ("battery_cv", "ncmapss_cv"):
+        return ["cv0", "cv1", "cv2", "cv3", "cv4"]
+    if name in ("hdd", "hdd2", "hdd3", "hdd4"):
+        return ["test"]
     return sorted(frame.fold.unique())
 
 
@@ -98,7 +118,14 @@ def split_units(frame, name, fold, seed):
         pool = np.array(sorted(frame[frame.fold == "dev"].unit.unique()))
         evaluation = sorted(frame[frame.fold == "batch3"].unit.unique())
         fractions = (0.10, 0.20, 0.30)
-    elif name == "ncmapss":
+    elif name == "ncmapss_cv":
+        pool = np.array(sorted(frame[frame.fold != fold].unit.unique()))
+        evaluation = sorted(frame[frame.fold == fold].unit.unique())
+    elif name == "battery_cv":
+        pool = np.array(sorted(frame[frame.fold != fold].unit.unique()))
+        evaluation = sorted(frame[frame.fold == fold].unit.unique())
+        fractions = (0.10, 0.20, 0.30)
+    elif name in ("ncmapss", "hdd", "hdd2", "hdd3", "hdd4"):
         pool = np.array(sorted(frame[frame.fold == "dev"].unit.unique()))
         evaluation = sorted(frame[frame.fold == "test"].unit.unique())
     else:
@@ -164,8 +191,36 @@ class ExternalNormalizer:
 def corrupt_external(df, features, scale, scenario, seed):
     if scenario == "clean":
         return df
-    from .faults import apply_fault, parse_fault
+    from .faults import apply_fault, mask_values, parse_fault
 
+    if scenario.startswith("tbias:"):  # EXT33 targeted bias
+        _, chs, sg = scenario.split(":")
+        chans, signs = [int(c) for c in chs.split(".")], [float(x) for x in sg.split(".")]
+        out = df.copy()
+        for unit, group in out.groupby("unit", sort=True):
+            rng = np.random.default_rng(np.random.SeedSequence([seed, int(unit)]))
+            rng.choice(len(features), size=min(3, len(features)), replace=False)
+            onset = rng.uniform(0.2, 0.4)
+            pos = group.position.to_numpy()
+            hit = (pos >= onset) & (pos < onset + 0.3)
+            for j, sgn in zip(chans, signs):
+                v = group[features[j]].to_numpy(float).copy()
+                v[hit] += sgn * 3.0 * scale[j]
+                out.loc[group.index, features[j]] = v
+        return out
+    if scenario == "mask":  # EXT29 health masking
+        out = df.copy()
+        for unit, group in out.groupby("unit", sort=True):
+            rng = np.random.default_rng(np.random.SeedSequence([seed, int(unit), 99]))
+            channels = rng.choice(len(features), size=min(3, len(features)), replace=False)
+            pos = group.position.to_numpy()
+            hit = pos >= rng.uniform(0.60, 0.75)
+            for j in channels:
+                values = group[features[j]].to_numpy(float)
+                early = values[pos <= 0.30]
+                ref = np.nanmean(early) if np.isfinite(early).any() else np.nanmean(values)
+                out.loc[group.index, features[j]] = mask_values(values, hit, ref)
+        return out
     fault = parse_fault(scenario)
     if fault:
         kind, magnitude, n_channels = fault

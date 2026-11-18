@@ -1,0 +1,33 @@
+runs: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'hdd4': 20, 'ncmapss': 20}
+seeds: [np.int64(152), np.int64(153), np.int64(154), np.int64(155), np.int64(156), np.int64(157), np.int64(158), np.int64(159), np.int64(160), np.int64(161)]
+
+== risk (%), six faults
+score     ensemble_std  gauss_bias_aware  err_reg   full  rpt_L  rpt_auto  rpt_auto_d
+dataset                                                                              
+cmapss           10.40              9.45     9.97   9.12   8.48      8.76        8.48
+ncmapss          18.42             11.24    11.34  11.47  10.97     11.00       10.97
+bearings         24.63             23.20    22.93  23.17  22.35     22.58       22.93
+battery           5.00              3.27     3.27   3.49   2.97      2.97        2.97
+hdd4             22.16             17.57    17.88  17.59  17.47     17.53       17.63
+
+== CONFIRMATORY round 7: rpt_auto_d - full (Holm over 5, alpha_7 = 0.000390625)
+ dataset     mean  better  worse  n       p     pess  p_holm    sig
+  cmapss -0.64086      20      0 20 0.00000  0.38123 0.00001 better
+ ncmapss -0.49711      20      0 20 0.00000  0.00672 0.00001 better
+bearings -0.23919      12      4 20 0.07873  0.11418 0.15746       
+ battery -0.51461      17      3 20 0.00048  0.48045 0.00145       
+    hdd4  0.03830       3      5 20 0.48384 -0.03576 0.48384       
+CONFIRMED: True
+
+hdd4 non-inferiority: mean +0.038, 90% CI [-0.029, +0.109] -> NON-INFERIOR at +0.3
+
+== descriptive: rpt_L - full, rpt_auto - full, rpt_auto_d vs directional estimators
+rpt_L - full: cmapss -0.64  ncmapss -0.50  bearings -0.81  battery -0.51  hdd4 -0.11
+rpt_auto - full: cmapss -0.36  ncmapss -0.47  bearings -0.59  battery -0.51  hdd4 -0.06
+rpt_auto_d - gauss_bias_aware: cmapss -0.97  ncmapss -0.27  bearings -0.28  battery -0.30  hdd4 +0.05
+rpt_auto_d - err_reg: cmapss -1.50  ncmapss -0.37  bearings -0.01  battery -0.30  hdd4 -0.25
+
+switch share (rpt_auto_d chose rpt_L): {'battery': 1.0, 'bearings': 0.42, 'cmapss': 1.0, 'hdd4': 0.4, 'ncmapss': 1.0}
+switch share (rpt_auto R0): {'battery': 1.0, 'bearings': 0.74, 'cmapss': 0.54, 'hdd4': 0.55, 'ncmapss': 0.85}
+D by family (points): {'battery': 18.97, 'bearings': -1.68, 'cmapss': 7.28, 'hdd4': -0.59, 'ncmapss': 13.56}
+clean risk, rpt_auto_d - full: {'cmapss': -0.08, 'ncmapss': -0.54, 'bearings': -0.24, 'battery': -0.46, 'hdd4': -0.1}

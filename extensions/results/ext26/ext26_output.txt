@@ -1,0 +1,28 @@
+runs: 20; datasets: ['hdd2']
+rpt_auto choice: {'full': 14, 'rpt_L': 6}
+
+== risk (%), six faults / clean / excess / pessimistic (faults)
+                  faults  clean  excess   pess
+score                                         
+ensemble_std       20.83  22.42   -1.59  30.82
+gauss_bias_aware   15.61  17.93   -2.32  35.35
+err_reg            15.66  17.96   -2.30  35.28
+full               15.71  17.84   -2.13  35.05
+rpt_L              16.33  17.81   -1.49  34.62
+rpt_auto           15.87  17.82   -1.95  34.91
+auto3              15.96  17.81   -1.85  34.91
+
+== PRIMARY: rpt_auto - baseline (points), Holm over 3
+               b   mean  better  worse  n      p  p_holm
+            full 0.1614       0      6 20 0.0277  0.0554
+gauss_bias_aware 0.2650       5     15 20 0.0056  0.0167
+         err_reg 0.2066       9     11 20 0.1650  0.1650
+SUCCESS (not significantly worse than full, mean <= +0.3): True
+
+== descriptive
+rpt_L - full: +0.62 (0/20 better, p=1.91e-06)
+   excess rpt_L - full: +0.65
+auto3 - full: +0.25 (0/20 better, p=0.00769)
+   excess auto3 - full: +0.28
+rpt_auto - rpt_L: -0.46 (14/20 better, p=0.000982)
+   excess rpt_auto - rpt_L: -0.47

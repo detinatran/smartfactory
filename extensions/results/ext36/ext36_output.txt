@@ -1,0 +1,37 @@
+runs: {'battery': 20, 'bearings': 120, 'cmapss': 80, 'ncmapss': 20}
+
+== means per family
+          brier_P_full  brier_P_rpt  brier_Q_full  brier_Q_rpt  auc_osc  auc_rpt  chi2_osc  chi2_rpt
+dataset                                                                                             
+cmapss           9.458        9.351         9.889        8.989    0.531    0.511  2574.083  1606.840
+ncmapss          6.588        4.943         7.455        5.407    0.535    0.557  5887.438  3637.952
+bearings        26.360       22.230        26.093       22.287    0.610    0.652  4506.309  3620.381
+battery          3.282        2.094         3.632        3.573    0.978    0.994   607.835   410.202
+
+== H-est (Brier on P, x100): rpt - osc (Holm over 4)
+ dataset     mean      rel  lower  n       p  p_holm
+  cmapss -0.10714 -0.01133     13 20 0.16496 0.16496
+ ncmapss -1.64502 -0.24972     20 20 0.00000 0.00001
+bearings -4.13002 -0.15668     17 20 0.00017 0.00034
+ battery -1.18807 -0.36194     19 20 0.00001 0.00002
+
+== H-Q (Brier on Q, x100): rpt - osc (Holm over 4)
+ dataset     mean      rel  lower  n       p  p_holm
+  cmapss -0.89995 -0.09100     20 20 0.00000 0.00001
+ ncmapss -2.04724 -0.27463     20 20 0.00000 0.00001
+bearings -3.80593 -0.14586     19 20 0.00004 0.00007
+ battery -0.05883 -0.01620     11 20 0.70118 0.70118
+
+== H-cov chi2: rpt - osc (Holm over 4)
+ dataset        mean      rel  lower  n       p  p_holm
+  cmapss  -967.24337 -0.37576     20 20 0.00000 0.00001
+ ncmapss -2249.48544 -0.38208     20 20 0.00000 0.00001
+bearings  -885.92810 -0.19660     18 20 0.00944 0.00944
+ battery  -197.63250 -0.32514     17 20 0.00271 0.00542
+
+== H-cov AUC: rpt - osc (Holm over 4)
+ dataset     mean      rel  lower  n       p  p_holm
+  cmapss -0.02022 -0.03808     20 20 0.00000 0.00001
+ ncmapss  0.02224  0.04158      5 20 0.00071 0.00176
+bearings  0.04148  0.06799      2 20 0.00059 0.00176
+ battery  0.01620  0.01656      9 20 0.32998 0.32998

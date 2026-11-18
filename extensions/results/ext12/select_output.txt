@@ -1,0 +1,34 @@
+runs per dataset: {'battery': 40, 'bearings': 240, 'cmapss': 160, 'ncmapss': 40}
+consistency vs EXT10 (max |diff| points):
+  full               {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+  gauss_bias_aware   {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+  full_recon_rpt     {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+
+== dev means (risk %, 40 pairs)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.81    19.02     24.18     5.63
+full                9.25    11.83     23.16     4.35
+gauss_bias_aware    9.95    11.60     23.46     3.89
+err_reg            10.39    11.59     23.49     3.85
+rptw                9.02    11.49     23.03     3.99
+full_rpt            8.90    11.48     22.86     3.91
+rptw_L              8.74    11.37     22.40     3.69
+rpt_L               8.66    11.36     22.30     3.73
+err_reg_rpt         9.78    11.30     23.08     3.43
+gba_rpt             9.37    11.29     23.19     3.46
+full_recon_rpt      8.67    11.52     22.86     4.04
+recon_rpt_L         8.46    11.39     22.30     3.91
+
+== selection table (points; vsbest = minus min(full, gauss_bias_aware, err_reg) per dataset)
+          cand  vsfull_battery  vsfull_bearings  vsfull_cmapss  vsfull_ncmapss  vsbest_battery  vsbest_bearings  vsbest_cmapss  vsbest_ncmapss  sum_vsbest  max_pess  safe
+          rptw          -0.361           -0.127         -0.231          -0.336           0.148           -0.127         -0.231          -0.100      -0.309     0.331  True
+      full_rpt          -0.447           -0.297         -0.347          -0.344           0.062           -0.297         -0.347          -0.108      -0.689     0.382  True
+        rptw_L          -0.662           -0.755         -0.506          -0.453          -0.153           -0.755         -0.506          -0.217      -1.630     0.629  True
+         rpt_L          -0.623           -0.855         -0.589          -0.464          -0.113           -0.855         -0.589          -0.228      -1.786     0.697  True
+   err_reg_rpt          -0.922           -0.073          0.533          -0.532          -0.413           -0.073          0.533          -0.296      -0.248     0.694 False
+       gba_rpt          -0.894            0.032          0.116          -0.536          -0.385            0.032          0.116          -0.300      -0.537     0.572 False
+full_recon_rpt          -0.319           -0.294         -0.580          -0.304           0.190           -0.294         -0.580          -0.068      -0.751     0.429  True
+   recon_rpt_L          -0.441           -0.858         -0.787          -0.433           0.068           -0.858         -0.787          -0.197      -1.773     0.711  True
+
+SELECTED FINAL: rpt_L  (sum_vsbest=-1.786; best=rpt_L -1.786; tie band 0.02 -> simplest)

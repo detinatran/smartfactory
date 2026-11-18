@@ -1,0 +1,23 @@
+== risk (%), six faults, seeds 72-81
+dataset            cmapss  ncmapss  bearings  battery
+score                                                
+rpt_L                8.97     9.81     21.98     3.39
+full                 9.52    10.21     23.04     4.29
+err_reg             10.77    10.06     23.01     3.94
+err_reg_l1          10.76    10.02     23.43     3.90
+err_reg_clip        10.43     9.97     23.01     3.92
+err_reg_rptL         9.74     9.77     21.72     2.99
+err_reg_l1_rptL      9.80     9.78     22.43     3.02
+err_reg_clip_rptL    9.54     9.75     21.90     2.99
+strongest error-regression variant per dataset (conservative rule): {'cmapss': 'err_reg_clip', 'ncmapss': 'err_reg_clip', 'bearings': 'err_reg_clip', 'battery': 'err_reg_l1'}
+
+== C. RPT vs strongest error-regression variant (rpt_L - baseline, points; Holm over 4)
+dataset                       cmapss                 ncmapss                bearings                 battery
+b                                                                                                           
+err_reg_best  -1.46 (20/20, p=8e-06)  -0.17 (14/20, p=0.009)  -1.03 (17/20, p=0.002)  -0.51 (17/20, p=0.002)
+
+== C2. error-regression variants with perturbed data (rpt_L - baseline, points; Holm over 8)
+dataset                            cmapss                ncmapss              bearings               battery
+b                                                                                                           
+err_reg_l1_rptL    -0.83 (20/20, p=2e-05)    +0.03 (7/20, p=0.3)  -0.45 (12/20, p=0.3)   +0.37 (5/20, p=0.1)
+err_reg_clip_rptL  -0.57 (18/20, p=7e-05)  +0.06 (2/20, p=0.002)   +0.08 (6/20, p=0.3)  +0.40 (5/20, p=0.02)

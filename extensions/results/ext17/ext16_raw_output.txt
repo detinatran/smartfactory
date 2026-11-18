@@ -1,0 +1,22 @@
+== EXT17 bearings, physical raw-signal faults: risk (%), mean of 5 kinds; clean; excess
+                    raw  clean  excess
+score                                 
+ensemble_std      25.45  24.68    0.77
+full              23.27  23.22    0.05
+gauss_bias_aware  23.72  23.60    0.12
+err_reg           23.38  23.14    0.25
+rpt_L             22.33  22.16    0.18
+
+== EXT17 raw faults (rpt_L - baseline, points; Holm over 4)
+dataset                          bearings
+b                                        
+ensemble_std       -3.11 (20/20, p=8e-06)
+full               -0.94 (18/20, p=4e-05)
+gauss_bias_aware   -1.39 (18/20, p=4e-05)
+err_reg           -1.05 (17/20, p=0.0001)
+excess(rpt_L) - excess(full): +0.13 (8/20, p=0.11)
+-- raw_gain: ensemble_std=26.71  full=25.00  gauss_bias_aware=25.51  err_reg=25.24  rpt_L=24.09  | rpt_L-full=-0.91
+-- raw_clip: ensemble_std=26.44  full=24.30  gauss_bias_aware=24.86  err_reg=24.45  rpt_L=23.27  | rpt_L-full=-1.03
+-- raw_detach: ensemble_std=26.30  full=23.34  gauss_bias_aware=23.47  err_reg=23.31  rpt_L=22.38  | rpt_L-full=-0.96
+-- raw_noise: ensemble_std=24.12  full=22.42  gauss_bias_aware=22.98  err_reg=22.52  rpt_L=21.65  | rpt_L-full=-0.77
+-- raw_spike: ensemble_std=23.67  full=21.31  gauss_bias_aware=21.79  err_reg=21.39  rpt_L=20.27  | rpt_L-full=-1.04

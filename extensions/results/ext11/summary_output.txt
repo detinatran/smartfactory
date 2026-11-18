@@ -1,0 +1,216 @@
+ext10: runs per dataset {'battery': 20, 'bearings': 120, 'cmapss': 80, 'ncmapss': 20}
+ablate: runs per dataset {'battery': 20, 'bearings': 120, 'cmapss': 80, 'ncmapss': 20}
+sota: runs per dataset {'battery': 20, 'bearings': 120, 'cmapss': 80, 'ncmapss': 20}
+
+== consistency (EXT11 recomputed - EXT10, max |diff| in points per dataset)
+  full             {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+  full_recon       {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+  full_rpt         {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+  full_recon_rpt   {'cmapss': 0.0, 'ncmapss': 0.0, 'bearings': 0.0, 'battery': 0.0}
+CONSISTENCY_OK
+
+== A. SOTA risk_matched (%, unseen faults)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       10.48    19.59     27.05     5.25
+mc_dropout         10.79    20.06     26.65     5.65
+deep_ens_nll       10.56    18.80     28.38     4.54
+evidential         10.83    18.86     28.42     4.71
+selectivenet       11.92    19.53     28.92     5.20
+cqr_lower           9.62    17.21     25.80     4.81
+symmetric          11.89    17.33     28.59     4.62
+fault_det          10.61    18.67     27.73     5.59
+err_reg            10.03    12.28     25.43     3.43
+gauss_bias_aware    9.55    12.30     25.82     3.47
+ours_white          8.55    12.27     25.47     3.58
+full                9.05    12.42     25.80     3.79
+full_recon_rpt      8.52    12.28     25.26     3.47
+
+== A. SOTA pess_matched (%, unseen faults)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std       32.79    20.89     32.26    20.89
+mc_dropout         33.11    20.51     32.64    21.42
+deep_ens_nll       32.63    20.15     30.02    21.27
+evidential         31.31    20.33     30.13    21.51
+selectivenet       34.18    20.78     29.53    20.63
+cqr_lower          32.95    22.06     33.21    21.33
+symmetric          29.03    18.39     29.77    20.53
+fault_det          32.39    20.83     32.24    20.93
+err_reg            34.06    23.13     33.88    23.11
+gauss_bias_aware   33.31    23.13     33.54    23.00
+ours_white         33.95    23.13     33.78    22.98
+full               33.62    23.13     33.48    22.65
+full_recon_rpt     33.97    23.13     33.80    23.06
+
+== A. OURS - baseline (primary EXT11 family) (Holm over 44 tests, alpha = 0.05)
+dataset                                          cmapss                 ncmapss                 bearings                  battery
+a              b                                                                                                                 
+full_recon_rpt cqr_lower         -1.10 (20/20, p=8e-05)  -4.94 (20/20, p=8e-05)     -0.54 (16/20, p=0.5)  -1.33 (19/20, p=0.0004)
+               deep_ens_nll      -2.04 (20/20, p=8e-05)  -6.52 (20/20, p=8e-05)   -3.12 (20/20, p=8e-05)   -1.06 (20/20, p=8e-05)
+               ensemble_std      -1.95 (20/20, p=8e-05)  -7.31 (20/20, p=8e-05)  -1.80 (18/20, p=0.0004)   -1.77 (20/20, p=8e-05)
+               err_reg           -1.50 (20/20, p=8e-05)       -0.01 (6/20, p=1)       -0.17 (10/20, p=1)       +0.05 (11/20, p=1)
+               evidential        -2.31 (20/20, p=8e-05)  -6.59 (20/20, p=8e-05)   -3.17 (19/20, p=8e-05)  -1.24 (19/20, p=0.0002)
+               fault_det         -2.08 (20/20, p=8e-05)  -6.39 (20/20, p=8e-05)   -2.47 (19/20, p=8e-05)   -2.12 (20/20, p=8e-05)
+               gauss_bias_aware  -1.03 (20/20, p=8e-05)       -0.02 (5/20, p=1)     -0.56 (13/20, p=0.6)       +0.00 (13/20, p=1)
+               mc_dropout        -2.27 (20/20, p=8e-05)  -7.78 (20/20, p=8e-05)   -1.39 (17/20, p=0.007)   -2.18 (20/20, p=8e-05)
+               ours_white            -0.03 (11/20, p=1)      +0.01 (11/20, p=1)       -0.21 (13/20, p=1)     -0.11 (16/20, p=0.4)
+               selectivenet      -3.40 (20/20, p=8e-05)  -7.25 (20/20, p=8e-05)   -3.66 (20/20, p=8e-05)   -1.73 (20/20, p=8e-05)
+               symmetric         -3.37 (20/20, p=8e-05)  -5.05 (20/20, p=8e-05)   -3.33 (19/20, p=8e-05)  -1.15 (19/20, p=0.0003)
+
+== B. ablation risk_matched (%, unseen faults)
+dataset         cmapss  ncmapss  bearings  battery
+score                                             
+full              9.05    12.42     25.80     3.79
+full_recon        8.81    12.56     25.69     3.83
+full_rpt          8.80    12.21     25.23     3.38
+full_recon_rpt    8.52    12.28     25.26     3.47
+ours_copy         8.79    12.56     25.65     3.87
+ours_nobias       8.47    12.29     25.35     3.49
+ours_noonset      8.46    12.25     25.39     3.53
+ours_amp_small    8.74    12.35     25.72     3.74
+ours_amp_large    8.37    12.23     24.88     3.43
+ours_k1           8.53    12.35     25.63     3.47
+ours_khalf        8.40    12.25     25.03     3.47
+ours_x2           8.37    12.23     25.28     3.39
+ours_white        8.55    12.27     25.47     3.58
+ours_gauss_all    8.76    12.35     25.38     3.81
+ours_noseen       8.50    12.34     25.24     3.41
+ours_oracle       8.37    12.19     25.42     3.50
+
+== B. ablation - OURS (exploratory) (Holm over 44 tests, alpha = 0.05)
+dataset                                        cmapss                 ncmapss              bearings                battery
+a              b                                                                                                          
+ours_amp_large full_recon_rpt   -0.15 (15/20, p=0.08)      -0.05 (12/20, p=1)    -0.38 (14/20, p=1)     -0.04 (12/20, p=1)
+ours_amp_small full_recon_rpt    +0.21 (3/20, p=0.01)       +0.07 (8/20, p=1)  +0.47 (5/20, p=0.06)   +0.27 (1/20, p=0.02)
+ours_copy      full_recon_rpt   +0.26 (4/20, p=0.009)  +0.28 (1/20, p=0.0002)   +0.40 (4/20, p=0.2)   +0.40 (1/20, p=0.02)
+ours_gauss_all full_recon_rpt    +0.23 (3/20, p=0.02)       +0.07 (7/20, p=1)     +0.12 (8/20, p=1)  +0.34 (0/20, p=8e-05)
+ours_k1        full_recon_rpt       +0.00 (9/20, p=1)    +0.08 (3/20, p=0.02)   +0.37 (6/20, p=0.4)      +0.00 (0/20, p=1)
+ours_khalf     full_recon_rpt    -0.13 (14/20, p=0.6)      -0.03 (11/20, p=1)    -0.22 (11/20, p=1)     -0.00 (10/20, p=1)
+ours_nobias    full_recon_rpt      -0.05 (12/20, p=1)       +0.01 (8/20, p=1)     +0.09 (9/20, p=1)     +0.02 (11/20, p=1)
+ours_noonset   full_recon_rpt      -0.06 (13/20, p=1)      -0.02 (12/20, p=1)     +0.13 (9/20, p=1)     +0.06 (10/20, p=1)
+ours_noseen    full_recon_rpt      -0.03 (13/20, p=1)     +0.07 (3/20, p=0.1)     -0.01 (9/20, p=1)     -0.06 (10/20, p=1)
+ours_white     full_recon_rpt       +0.03 (9/20, p=1)       -0.01 (9/20, p=1)     +0.21 (7/20, p=1)      +0.11 (4/20, p=1)
+ours_x2        full_recon_rpt  -0.15 (17/20, p=0.009)    -0.05 (14/20, p=0.2)     +0.03 (9/20, p=1)   -0.09 (15/20, p=0.6)
+
+  oracle (upper bound, not tested): {'cmapss': -0.16, 'ncmapss': -0.08, 'bearings': 0.16, 'battery': 0.03}
+  H-B1 (ours_copy worse than OURS): [{'dataset': 'cmapss', 'mean_pts': 0.2625, 'p_holm': 0.0088, 'sig': 'a worse'}, {'dataset': 'ncmapss', 'mean_pts': 0.2831, 'p_holm': 0.0002, 'sig': 'a worse'}, {'dataset': 'bearings', 'mean_pts': 0.3965, 'p_holm': 0.2335, 'sig': ''}, {'dataset': 'battery', 'mean_pts': 0.3952, 'p_holm': 0.0154, 'sig': 'a worse'}]
+
+== C. classifier risk_matched (%, unseen faults)
+dataset         cmapss  ncmapss  bearings  battery
+score                                             
+full              9.05    12.42     25.80     3.79
+osc_lr           10.15    14.87     26.67     3.95
+osc_rf            9.75    14.36     26.24     4.16
+osc_mlp          10.70    14.96     27.03     4.61
+osc_hgbdef        9.11    12.41     25.81     3.99
+full_recon_rpt    8.52    12.28     25.26     3.47
+ours_lr           9.75    13.41     25.34     3.59
+ours_rf           9.03    13.44     26.08     4.00
+ours_mlp          9.97    13.67     26.59     4.01
+ours_hgbdef       8.49    12.24     25.51     3.46
+
+== C. classifier swap (exploratory) (Holm over 32 tests, alpha = 0.05)
+dataset                                 cmapss                 ncmapss                 bearings                 battery
+a           b                                                                                                          
+osc_hgbdef  full             +0.06 (6/20, p=1)       -0.00 (8/20, p=1)        +0.01 (9/20, p=1)       +0.19 (8/20, p=1)
+osc_lr      full         +1.10 (0/20, p=6e-05)   +2.45 (0/20, p=6e-05)    +0.87 (3/20, p=0.001)     +0.15 (4/20, p=0.6)
+osc_mlp     full         +1.65 (0/20, p=6e-05)   +2.54 (0/20, p=6e-05)    +1.23 (2/20, p=0.003)    +0.81 (3/20, p=0.01)
+osc_rf      full         +0.70 (0/20, p=6e-05)   +1.94 (0/20, p=6e-05)      +0.44 (6/20, p=0.1)    +0.37 (3/20, p=0.07)
+ours_hgbdef osc_hgbdef  -0.62 (20/20, p=6e-05)  -0.17 (16/20, p=0.008)     -0.30 (13/20, p=0.7)   -0.53 (18/20, p=0.01)
+ours_lr     osc_lr      -0.40 (19/20, p=8e-05)  -1.45 (20/20, p=6e-05)  -1.33 (19/20, p=0.0003)  -0.36 (17/20, p=0.007)
+ours_mlp    osc_mlp     -0.73 (20/20, p=6e-05)  -1.29 (20/20, p=6e-05)     -0.43 (13/20, p=0.6)  -0.60 (19/20, p=0.001)
+ours_rf     osc_rf      -0.72 (20/20, p=6e-05)  -0.92 (19/20, p=8e-05)       -0.16 (11/20, p=1)   -0.17 (17/20, p=0.05)
+
+== per fault: score - full (points)
+-- full_recon_rpt
+dataset       cmapss  ncmapss  bearings  battery
+fault                                           
+stuck          -0.20    -0.13     -0.53    -0.15
+bias           -1.02    -0.17     -0.53    -1.44
+noise          -0.78    -0.14     -0.49    -0.01
+intermittent   -0.31    -0.09     -0.42    -0.22
+spike          -0.74    -0.16     -0.39    -0.04
+gain           -0.09    -0.16     -0.47    -0.05
+-- full_rpt
+dataset       cmapss  ncmapss  bearings  battery
+fault                                           
+stuck          -0.40    -0.15     -0.55    -0.25
+bias           -0.48    -0.15     -0.54    -1.49
+noise          -0.21    -0.17     -0.55    -0.11
+intermittent    0.01    -0.26     -0.51    -0.25
+spike          -0.34    -0.18     -0.47    -0.14
+gain           -0.06    -0.31     -0.48    -0.24
+-- ours_nobias
+dataset       cmapss  ncmapss  bearings  battery
+fault                                           
+stuck          -0.21    -0.11     -0.46    -0.18
+bias           -1.15    -0.10     -0.51    -1.45
+noise          -0.80    -0.14     -0.44     0.02
+intermittent   -0.38    -0.14     -0.37    -0.13
+spike          -0.81    -0.16     -0.44     0.02
+gain           -0.09    -0.11     -0.43    -0.07
+-- ours_copy
+dataset       cmapss  ncmapss  bearings  battery
+fault                                           
+stuck           0.07     0.07     -0.15     0.03
+bias           -0.46     0.02     -0.12    -0.06
+noise          -0.44     0.07     -0.18     0.18
+intermittent   -0.21     0.22     -0.11     0.09
+spike          -0.46     0.16     -0.15     0.13
+gain           -0.07     0.31     -0.19     0.07
+-- ours_white
+dataset       cmapss  ncmapss  bearings  battery
+fault                                           
+stuck          -0.19    -0.10     -0.25    -0.08
+bias           -0.86    -0.14     -0.35    -1.00
+noise          -0.79    -0.15     -0.31     0.01
+intermittent   -0.29    -0.15     -0.19    -0.12
+spike          -0.69    -0.17     -0.20     0.00
+gain           -0.13    -0.17     -0.26    -0.08
+-- ours_oracle
+dataset       cmapss  ncmapss  bearings  battery
+fault                                           
+stuck          -0.90    -0.24     -0.35     0.26
+bias           -1.01    -0.22     -0.50    -1.86
+noise          -0.79    -0.26     -0.41    -0.07
+intermittent   -0.36    -0.19     -0.26    -0.18
+spike          -0.83    -0.28     -0.32    -0.03
+gain           -0.20    -0.18     -0.25     0.13
+
+== H-B2: mean over the five non-bias faults, minus full_recon (points)
+  ours_nobias: {'cmapss': -0.26, 'ncmapss': -0.29, 'bearings': -0.29, 'battery': -0.13}
+  full_recon_rpt: {'cmapss': -0.23, 'ncmapss': -0.3, 'bearings': -0.32, 'battery': -0.16}
+
+== clean risk_matched (%)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+full                8.25     8.00     25.93     2.51
+full_recon_rpt      8.28     7.67     25.43     2.24
+full_rpt            8.25     7.60     25.44     2.24
+ensemble_std        9.24    13.68     26.96     3.27
+mc_dropout          9.39    14.30     26.60     3.41
+deep_ens_nll        9.24    13.53     28.65     2.96
+evidential          9.44    13.84     28.65     3.16
+selectivenet       10.59    14.57     29.23     3.49
+cqr_lower           8.69    13.07     26.05     2.69
+symmetric          10.66    13.53     28.71     2.86
+fault_det           9.60    13.93     27.75     3.28
+err_reg             8.95     7.62     25.62     2.12
+gauss_bias_aware    8.44     7.70     25.99     2.10
+ours_white          8.19     7.63     25.65     2.30
+
+== frozen thresholds: risk / coverage (%)
+  full             cmapss: 8.95/89.8  ncmapss: 9.56/86.5  bearings: 24.24/82.5  battery: 2.90/77.7
+  full_recon_rpt   cmapss: 7.83/87.3  ncmapss: 7.65/84.2  bearings: 23.42/82.8  battery: 2.73/77.8
+  ensemble_std     cmapss: 9.80/82.4  ncmapss: 17.19/72.2  bearings: 25.46/80.9  battery: 4.80/72.9
+  mc_dropout       cmapss: 10.59/86.3  ncmapss: 19.90/84.9  bearings: 26.06/86.9  battery: 5.71/95.7
+  deep_ens_nll     cmapss: 10.21/87.6  ncmapss: 17.86/83.2  bearings: 26.93/83.1  battery: 3.85/68.8
+  evidential       cmapss: 10.67/89.0  ncmapss: 18.46/86.2  bearings: 27.50/84.7  battery: 4.03/62.8
+  selectivenet     cmapss: 11.89/89.4  ncmapss: 19.00/85.1  bearings: 27.13/83.6  battery: 5.48/85.6
+  cqr_lower        cmapss: 9.25/87.5  ncmapss: 16.25/85.5  bearings: 24.61/87.2  battery: 4.33/68.9
+  symmetric        cmapss: 11.86/89.1  ncmapss: 15.04/81.6  bearings: 28.65/88.8  battery: 3.95/82.0
+  fault_det        cmapss: 7.82/72.4  ncmapss: 13.71/64.5  bearings: 27.41/79.6  battery: 4.90/60.4
+  err_reg          cmapss: 9.95/90.1  ncmapss: 8.47/84.9  bearings: 24.37/83.2  battery: 1.55/78.5
+  gauss_bias_aware cmapss: 9.46/90.1  ncmapss: 8.71/84.9  bearings: 24.97/84.1  battery: 1.56/77.9
+  ours_white       cmapss: 7.90/87.4  ncmapss: 7.73/84.4  bearings: 23.04/81.5  battery: 2.64/76.2

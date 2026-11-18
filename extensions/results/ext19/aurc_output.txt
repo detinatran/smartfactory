@@ -1,0 +1,16 @@
+== normalised AURC on [0.5, 0.95] (%, six faults, seeds 72-81)
+dataset           cmapss  ncmapss  bearings  battery
+score                                               
+ensemble_std        9.84    15.45     23.21     5.27
+err_reg            10.82     3.86     20.91     2.49
+full                6.34     4.39     20.17     3.10
+gauss_bias_aware    7.63     3.99     21.49     2.36
+rpt_L               5.69     3.58     17.81     2.09
+
+== rpt_L - baseline AURC (points; Holm over 16)
+dataset                        cmapss               ncmapss             bearings               battery
+b                                                                                                     
+ensemble_std      -4.16 (20, p=3e-05)  -11.87 (20, p=3e-05)  -5.39 (20, p=3e-05)   -3.17 (20, p=3e-05)
+err_reg           -5.14 (20, p=3e-05)  -0.28 (16, p=0.0003)  -3.09 (20, p=3e-05)    -0.40 (14, p=0.05)
+full              -0.66 (20, p=3e-05)   -0.81 (20, p=3e-05)  -2.36 (19, p=3e-05)  -1.01 (18, p=0.0003)
+gauss_bias_aware  -1.94 (20, p=3e-05)   -0.41 (20, p=3e-05)  -3.68 (20, p=3e-05)     -0.27 (13, p=0.1)
