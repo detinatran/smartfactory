@@ -1,7 +1,7 @@
-"""EXT50 (EXT50_PROTOCOL.md, revised before running): RAMP-style predictor (horizon-aligned masked JEPA + gated symbolic branch). Stage I: an online encoder sees
+"""EXT50 (EXT50_PROTOCOL.md, revised before running): JEPA-style predictor (horizon-aligned masked JEPA + gated symbolic branch). Stage I: an online encoder sees
 corrupted windows (RPT perturbations or contiguous channel masks) and predicts, through a small predictor, the latent of the
 clean window produced by an EMA target encoder (cosine energy). Stage II: the encoder and a RUL head are fine-tuned on clean
-windows (unit-weighted MSE, early stopping). (Original jd feature dropped in the RAMP revision.)
+windows (unit-weighted MSE, early stopping). (Original jd feature dropped in the design revision.)
 Everything else as EXT38. Derived from EXT38 (protocol: EXT38_PROTOCOL.md): adds rpt_auto_d (use rpt_L iff the calibration diagnostic D > 0). Derived from
 EXT35 (protocol: EXT35_PROTOCOL.md): adds rpt_auto_m (switch to rpt_L only if its calibration risk is lower by > 0.01).
 Derived from EXT22 (protocol: EXT22_PROTOCOL.md): rpt_auto = per-run choice between full and rpt_L by calibration risk under
@@ -59,11 +59,11 @@ def hist_feats(x, meta, n_ch, ref_x=None):
 
 
 def _corrupt(x, rng, n_ch, flag_off, L):
-    """RAMP-style structured corruption: half the windows get the RPT perturbation, half a contiguous channel-subset
+    """JEPA-style structured corruption: half the windows get the RPT perturbation, half a contiguous channel-subset
     mask (values 0, missing flag 1)"""
     n, T, _ = x.shape
     out = x.copy()
-    pert = rng.random(n) < (0.0 if os.environ.get("RAMP_CORRUPT", "mix") == "mask" else 0.5)
+    pert = rng.random(n) < (0.0 if os.environ.get("ELPISJ_CORRUPT", "mix") == "mask" else 0.5)
     if pert.any():
         out[pert] = perturb(x[pert], n_ch, int(rng.integers(1 << 30)), **L)
     for i in np.flatnonzero(~pert):
@@ -77,8 +77,8 @@ def _corrupt(x, rng, n_ch, flag_off, L):
     return out.astype(np.float32)
 
 
-class RampRUL(torch.nn.Module):
-    """RAMP-style RUL model: causal encoder z; symbolic trend features s (per-channel slope, last-first, std) and
+class JepaRUL(torch.nn.Module):
+    """JEPA-style RUL model: causal encoder z; symbolic trend features s (per-channel slope, last-first, std) and
     observation quality q (per-channel missing share); future-latent predictor r = P([z, Es(s), Eq(q)]);
     v = F(z) + sigmoid(gamma) r; output = cap * sigmoid(H(v) + alpha * C(s)), alpha = sigmoid(G([z, Es(s), Eq(q)]))."""
 
@@ -95,7 +95,7 @@ class RampRUL(torch.nn.Module):
         self.drop = torch.nn.Dropout(dropout)
 
     def sym(self, x):
-        if os.environ.get("RAMP_NOSYM", "0") == "1":
+        if os.environ.get("ELPISJ_NOSYM", "0") == "1":
             return torch.zeros(x.shape[0], 3 * self.n_ch, device=x.device)
         v = x[:, :, : self.n_ch]
         T = v.shape[1]
@@ -139,18 +139,18 @@ def _future_index(meta, k=3):
     return fut
 
 
-def ramp_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=20, e2=40, patience=8, ema=0.99):
+def jepa_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=20, e2=40, patience=8, ema=0.99):
     tr, va = windows("fit", "clean"), windows("validation", "clean")
     cap = float(model_cfg["rul_cap"])
     L = dict(amp=(1.0, 8.0), kfrac=0.5)
-    pre_parts = os.environ.get("RAMP_PRE_PARTS", "fit").split(",")
+    pre_parts = os.environ.get("ELPISJ_PRE_PARTS", "fit").split(",")
     if pre_parts == ["fit"]:
         pre_x, pre_meta = tr.x, tr.meta
     else:  # unlabeled windows of several non-test parts for the self-supervised stage (no labels used)
         ws = [windows(pp, "clean") for pp in pre_parts]
         pre_x = np.concatenate([w_.x for w_ in ws])
         pre_meta = pd.concat([w_.meta for w_ in ws], ignore_index=True)
-    fut = torch.from_numpy(_future_index(pre_meta, k=int(os.environ.get("RAMP_K", "3")))).to(device)
+    fut = torch.from_numpy(_future_index(pre_meta, k=int(os.environ.get("ELPISJ_K", "3")))).to(device)
     wtr = torch.from_numpy(engine_weights(tr.meta.unit.to_numpy()).astype(np.float32)).to(device)
     ytr = torch.from_numpy(np.asarray(tr.y, np.float32)).to(device)
     wva = engine_weights(va.meta.unit.to_numpy())
@@ -162,7 +162,7 @@ def ramp_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=20, e2=
         base = build_model(tr.x.shape[-1], model_cfg).to(device)
         with torch.no_grad():
             d = base.features(torch.from_numpy(tr.x[:2]).to(device)).shape[-1]
-        net = RampRUL(base, n_ch, flag_off, d, cap).to(device)
+        net = JepaRUL(base, n_ch, flag_off, d, cap).to(device)
         tgt = copy.deepcopy(base)
         for p_ in tgt.parameters():
             p_.requires_grad_(False)
@@ -187,12 +187,12 @@ def ramp_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=20, e2=
                     for pt, po in zip(tgt.parameters(), net.base.parameters()):
                         pt.mul_(ema).add_(po.detach(), alpha=1 - ema)
         # Stage II: transfer all modules, supervised RUL on clean windows (target encoder discarded)
-        p2 = [p_ for n_, p_ in net.named_parameters() if not (os.environ.get("RAMP_FREEZE", "0") == "1" and n_.startswith("base."))]
-        opt2 = torch.optim.AdamW(p2, lr=float(os.environ.get("RAMP_LR2", "1e-3")), weight_decay=1e-4)
+        p2 = [p_ for n_, p_ in net.named_parameters() if not (os.environ.get("ELPISJ_FREEZE", "0") == "1" and n_.startswith("base."))]
+        opt2 = torch.optim.AdamW(p2, lr=float(os.environ.get("ELPISJ_LR2", "1e-3")), weight_decay=1e-4)
         best, stale, best_state = float("inf"), 0, None
         for ep in range(e2):
             net.train()
-            Xs = torch.from_numpy(_corrupt(tr.x, rng, n_ch, flag_off, L)).to(device) if os.environ.get("RAMP_CORR2", "0") == "1" else None
+            Xs = torch.from_numpy(_corrupt(tr.x, rng, n_ch, flag_off, L)).to(device) if os.environ.get("ELPISJ_CORR2", "0") == "1" else None
             for idx in torch.from_numpy(rng.permutation(len(tr.x))).split(128):
                 idx = idx.to(device)
                 loss = (wtr[idx] * ((net(Xc[idx]) - ytr[idx]) / cap) ** 2).mean()
@@ -213,7 +213,7 @@ def ramp_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=20, e2=
                     break
         net.load_state_dict(best_state)
         net.eval()
-        bc = os.environ.get("RAMP_BIASCAL", "0")
+        bc = os.environ.get("ELPISJ_BIASCAL", "0")
         if bc in ("1", "late"):  # post-hoc bias correction on validation units (no test data)
             with torch.no_grad():
                 pv = np.concatenate([net(torch.from_numpy(va.x[i:i + 1024]).to(device)).cpu().numpy() for i in range(0, len(va.x), 1024)])
@@ -244,10 +244,10 @@ def process(run, raw, ext_dir, device, passes, extra_scenarios):
             return selector_features(type("W", (), {"x": w_x, "meta": meta})(), ens, cfg["rul_cap"], None)
     delta, seed = float(cfg["risk_delta"]), cfg["seed"]
     globals_box = {}
-    models = ramp_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=int(os.environ.get("EXT50_E1", "20")))
+    models = jepa_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=int(os.environ.get("EXT50_E1", "20")))
     # EXT61 (exploratory): validation-only alignment with / pooling of the run's default ensemble
-    pmatch = os.environ.get("RAMP_PMATCH", "0") == "1"
-    hybrid = os.environ.get("RAMP_HYBRID", "0") == "1"
+    pmatch = os.environ.get("ELPISJ_PMATCH", "0") == "1"
+    hybrid = os.environ.get("ELPISJ_HYBRID", "0") == "1"
     if pmatch or hybrid:
         dmods = []
         for m in range(cfg["ensemble_size"]):
@@ -255,7 +255,7 @@ def process(run, raw, ext_dir, device, passes, extra_scenarios):
             dn = build_model(ck["input_dim"], model_cfg)
             dn.load_state_dict(ck["state_dict"])
             dmods.append(dn.to(device).eval())
-        if pmatch:  # shift RAMP so its validation optimistic share equals the default ensemble's (no test data)
+        if pmatch:  # shift ELPIS-J so its validation optimistic share equals the default ensemble's (no test data)
             va = windows("validation", "clean")
             yv, wv = va.meta.rul_raw.to_numpy(), engine_weights(va.meta.unit.to_numpy())
             pdv = predict_details(dmods, va.x, device)[0].mean(1)
@@ -269,7 +269,7 @@ def process(run, raw, ext_dir, device, passes, extra_scenarios):
             for net in models:
                 net.offset.add_(hi)
             print(f"pmatch target={target:.4f} shift={hi:+.4f} got={share(prv - hi):.4f}", flush=True)
-        if hybrid:  # pooled ensemble: default members + RAMP members
+        if hybrid:  # pooled ensemble: default members + ELPIS-J members
             models = dmods + models
 
     pass

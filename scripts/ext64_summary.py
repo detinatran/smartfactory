@@ -1,5 +1,5 @@
 """EXT64 analysis (EXT64_PROTOCOL.md, exploratory, fresh seeds 252-281): predictor gate (default vs pooled
-default+RAMP-V13 ensemble, chosen per deployment by the calibration risk of the selector ELPIS-G picks) vs ELPIS-G on the
+default+ELPIS-J-V13 ensemble, chosen per deployment by the calibration risk of the selector ELPIS-G picks) vs ELPIS-G on the
 default predictor. usage: ext64_summary.py DEFAULT.csv.gz HYBRID.csv.gz OUTDIR [SEED_LO SEED_HI]"""
 import sys
 from pathlib import Path

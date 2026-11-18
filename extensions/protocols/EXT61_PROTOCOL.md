@@ -1,21 +1,21 @@
-# EXT61: sửa RAMP trên vòng bi, hiệu chỉnh mức lạc quan và ensemble gộp (THĂM DÒ / PHÁT TRIỂN, không tiêu α). Chốt ngày 2026-11-17, TRƯỚC khi chạy
+# EXT61: sửa ELPIS-J trên vòng bi, hiệu chỉnh mức lạc quan và ensemble gộp (THĂM DÒ / PHÁT TRIỂN, không tiêu α). Chốt ngày 2026-11-17, TRƯỚC khi chạy
 
-**Lý do:** ở vòng 10 (seed 222–251), trên vòng bi hệ thống RAMP-V13 + ELPIS-G có kết quả như sau so với hệ thống mặc định + ELPIS-G:
+**Lý do:** ở vòng 10 (seed 222–251), trên vòng bi hệ thống ELPIS-J-V13 + ELPIS-G có kết quả như sau so với hệ thống mặc định + ELPIS-G:
 - risk lạc quan cao hơn +1.99 điểm (không có ý nghĩa);
 - lỗi bi quan ít hơn 5.89 điểm;
 - RMSE tốt hơn (0.265 so với 0.275).
 
-Như vậy, phần RAMP thua có thể chủ yếu do điểm làm việc lệch về phía lạc quan, chứ không do predictor kém. Bias correction bằng trung bình (V13) chưa đủ, vì phân phối phần dư bị lệch.
+Như vậy, phần ELPIS-J thua có thể chủ yếu do điểm làm việc lệch về phía lạc quan, chứ không do predictor kém. Bias correction bằng trung bình (V13) chưa đủ, vì phân phối phần dư bị lệch.
 
 ## Biến thể
 Tất cả dùng `scripts/ext50.py`, chỉ khác biến môi trường. Mọi hiệu chỉnh chỉ dùng tập validation, không đụng tới test.
 
-**V16 (hiệu chỉnh mức lạc quan):** `RAMP_FREEZE=1`, `RAMP_PMATCH=1`, không bias correction trung bình.
-- Dịch toàn bộ dự đoán RAMP đi một hằng số, sao cho tỷ lệ lạc quan có trọng số (err > δ) trên validation sạch bằng đúng tỷ lệ đó của ensemble mặc định của cùng run.
-- Đây là so sánh ở cùng điểm làm việc: khi RAMP lạc quan đúng bằng predictor mặc định, độ chính xác cao hơn của nó có thành risk thấp hơn không?
+**V16 (hiệu chỉnh mức lạc quan):** `ELPISJ_FREEZE=1`, `ELPISJ_PMATCH=1`, không bias correction trung bình.
+- Dịch toàn bộ dự đoán ELPIS-J đi một hằng số, sao cho tỷ lệ lạc quan có trọng số (err > δ) trên validation sạch bằng đúng tỷ lệ đó của ensemble mặc định của cùng run.
+- Đây là so sánh ở cùng điểm làm việc: khi ELPIS-J lạc quan đúng bằng predictor mặc định, độ chính xác cao hơn của nó có thành risk thấp hơn không?
 
-**V17 (đổi cách làm, ensemble gộp):** `RAMP_FREEZE=1`, `RAMP_BIASCAL=1`, `RAMP_HYBRID=1`.
-- Gộp 5 thành viên mặc định của run với 5 thành viên RAMP-V13, thành ensemble 10 thành viên.
+**V17 (đổi cách làm, ensemble gộp):** `ELPISJ_FREEZE=1`, `ELPISJ_BIASCAL=1`, `ELPISJ_HYBRID=1`.
+- Gộp 5 thành viên mặc định của run với 5 thành viên ELPIS-J-V13, thành ensemble 10 thành viên.
 - Selector (OSC và ELPIS) được train trên ensemble gộp này.
 
 ## Dữ liệu

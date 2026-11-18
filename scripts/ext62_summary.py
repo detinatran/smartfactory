@@ -1,5 +1,5 @@
-"""EXT62 analysis (EXT62_PROTOCOL.md, exploratory): pooled default+RAMP-V13 ensemble vs default and RAMP-V13 (EXT59),
-seeds 222-251, seed level. usage: ext62_summary.py HYBRID.csv.gz EXT59_DEFAULT.csv.gz EXT59_RAMP.csv.gz OUTDIR"""
+"""EXT62 analysis (EXT62_PROTOCOL.md, exploratory): pooled default+ELPIS-J-V13 ensemble vs default and ELPIS-J-V13 (EXT59),
+seeds 222-251, seed level. usage: ext62_summary.py HYBRID.csv.gz EXT59_DEFAULT.csv.gz EXT59_ELPISJ.csv.gz OUTDIR"""
 import sys
 from pathlib import Path
 import numpy as np
@@ -42,13 +42,13 @@ def holm(p):
     return adj
 
 
-S = {k: load(f) for k, f in dict(hybrid=fh, default=fd, ramp=fr).items()}
+S = {k: load(f) for k, f in dict(hybrid=fh, default=fd, elpisj=fr).items()}
 say("complete seeds: " + str({k: v.drop_duplicates(["dataset", "seed"]).groupby("dataset").size().to_dict() for k, v in S.items()}))
 W = {k: pool(v, FA, "risk_matched", ["full", "rpt_auto_d"]) for k, v in S.items()}
 P = {k: pool(v, FA, "pess_matched", ["full", "rpt_auto_d"]) for k, v in S.items()}
 RM = {k: pool(v, ["clean"], "rmse_full", ["predictor"]).predictor / 100 for k, v in S.items()}
 rng = np.random.default_rng(0)
-for ref in ("default", "ramp"):
+for ref in ("default", "elpisj"):
     rows = []
     for ds in DS:
         a = W["hybrid"].loc[ds].rpt_auto_d

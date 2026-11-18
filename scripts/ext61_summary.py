@@ -1,5 +1,5 @@
-"""EXT61 analysis (protocol: EXT61_PROTOCOL.md): bearing RAMP variants V16 (optimism-matched) and V17 (pooled
-default+RAMP-V13 ensemble) vs default (EXT40) and V13 (EXT56), seeds 162-171. usage: ext61_summary.py [FILES...]"""
+"""EXT61 analysis (protocol: EXT61_PROTOCOL.md): bearing ELPIS-J variants V16 (optimism-matched) and V17 (pooled
+default+ELPIS-J-V13 ensemble) vs default (EXT40) and V13 (EXT56), seeds 162-171. usage: ext61_summary.py [FILES...]"""
 import sys
 import pandas as pd
 from scipy import stats

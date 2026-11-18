@@ -1,8 +1,8 @@
-# EXT51: RAMP không có pretrain JEPA (Stage I = 0 epoch); thăm dò; seed 162–171; 300 run
+# EXT51: ELPIS-J không có pretrain JEPA (Stage I = 0 epoch); thăm dò; seed 162–171; 300 run
 
 Risk RPT-D đo dưới 6 loại lỗi, coverage 90% (%), trung bình trên 10 seed.
 
-| Họ | Mặc định (2 giai đoạn) | RAMP bỏ JEPA | RAMP đầy đủ | Phần do JEPA (đầy đủ − bỏ JEPA) |
+| Họ | Mặc định (2 giai đoạn) | ELPIS-J bỏ JEPA | ELPIS-J đầy đủ | Phần do JEPA (đầy đủ − bỏ JEPA) |
 |---|---|---|---|---|
 | C-MAPSS | 7.87 | 7.20 | 7.04 | −0.16 (6/10, n.s.) |
 | Pin | 2.35 | 2.75 | 1.87 | **−0.88** (9/10, p = 0.004) |

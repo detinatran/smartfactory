@@ -1,4 +1,4 @@
-"""EXT52 analysis: RAMP variants on bearings vs RAMP (EXT50), RAMP-noJEPA (EXT51) and default (EXT40). usage: ext52_summary.py VARIANT_FILES..."""
+"""EXT52 analysis: ELPIS-J variants on bearings vs ELPIS-J (EXT50), ELPIS-J-noJEPA (EXT51) and default (EXT40). usage: ext52_summary.py VARIANT_FILES..."""
 import sys
 import numpy as np
 import pandas as pd
@@ -21,7 +21,7 @@ def pool(d, scen, col, sc):
     return (s.v / s.w).groupby("seed").mean()
 
 
-src = {"default": R + "ext40/all_ext40.csv.gz", "RAMP": R + "ext50/all_ext50.csv.gz", "RAMP-noJEPA": R + "ext51/all_ext51.csv.gz"}
+src = {"default": R + "ext40/all_ext40.csv.gz", "ELPIS-J": R + "ext50/all_ext50.csv.gz", "ELPIS-J-noJEPA": R + "ext51/all_ext51.csv.gz"}
 for f in sys.argv[1:]:
     src[f.split("_")[-1].split(".")[0]] = f
 rows = {}

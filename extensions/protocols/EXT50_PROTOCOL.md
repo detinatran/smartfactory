@@ -32,8 +32,8 @@ Mỗi thành viên của ensemble (3 thành viên, backbone GRU/TCN giống vòn
 
 Mọi kết quả đều được báo cáo.
 
-## SỬA THIẾT KẾ TRƯỚC KHI CHẠY (ngày 2026-11-16, sau khi đọc tài liệu thiết kế RAMP; chưa có kết quả nào ngoài một lần chạy thử kỹ thuật trên 1 run)
-Người dùng cung cấp tài liệu thiết kế nội bộ (RAMP, chưa công bố). Thiết kế được sửa cho sát cấu trúc của RAMP như sau.
+## SỬA THIẾT KẾ TRƯỚC KHI CHẠY (ngày 2026-11-16, sau khi đọc tài liệu thiết kế JEPA nội bộ; chưa có kết quả nào ngoài một lần chạy thử kỹ thuật trên 1 run)
+Người dùng cung cấp tài liệu thiết kế nội bộ (chưa công bố). Thiết kế được sửa cho sát cấu trúc trong tài liệu đó như sau.
 
 **Stage I: masked JEPA căn theo horizon.**
 - Context: window hiện tại bị hỏng, theo cùng cơ chế làm hỏng như trên.
@@ -54,4 +54,4 @@ Người dùng cung cấp tài liệu thiết kế nội bộ (RAMP, chưa công
 - **Vận hành, ngày 2026-11-16:** EXT50 bị tạm dừng sau 69 run vì GPU quá tải khi chạy song song với vòng 9. Một CSV có thể chưa ghi xong đã được chuyển vào `runs/ext50_quarantine`. EXT50 sẽ tự chạy lại sau vòng 9; các CSV đã xong được bỏ qua.
 
 ## Kết quả, ngày 2026-11-17 (thăm dò)
-RAMP tốt hơn trên C-MAPSS (−0.82) và pin (−0.49), nhưng kém hơn nhiều trên vòng bi (+3.30). Trên predictor RAMP, RPT-D vẫn tốt hơn OSC ở cả 3 họ. Chi tiết xem FINDINGS.md.
+ELPIS-J tốt hơn trên C-MAPSS (−0.82) và pin (−0.49), nhưng kém hơn nhiều trên vòng bi (+3.30). Trên predictor ELPIS-J, RPT-D vẫn tốt hơn OSC ở cả 3 họ. Chi tiết xem FINDINGS.md.

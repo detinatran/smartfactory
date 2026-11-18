@@ -1,6 +1,6 @@
-# EXT51: đối chứng cho EXT50. Giữ nguyên kiến trúc RAMP nhưng bỏ pretrain JEPA (THĂM DÒ). Chốt ngày 2026-11-16, TRƯỚC khi chạy
+# EXT51: đối chứng cho EXT50. Giữ nguyên kiến trúc ELPIS-J nhưng bỏ pretrain JEPA (THĂM DÒ). Chốt ngày 2026-11-16, TRƯỚC khi chạy
 
-**Câu hỏi:** lợi ích của predictor RAMP trong EXT50 đến từ pretrain JEPA ở Stage I, hay chỉ đến từ kiến trúc (nhánh symbolic có cổng, điều kiện chất lượng quan sát, head fusion)?
+**Câu hỏi:** lợi ích của predictor ELPIS-J trong EXT50 đến từ pretrain JEPA ở Stage I, hay chỉ đến từ kiến trúc (nhánh symbolic có cổng, điều kiện chất lượng quan sát, head fusion)?
 
 ## Thiết kế
 - `scripts/ext50.py` với `EXT50_E1=0`: bỏ Stage I, các module đều khởi tạo ngẫu nhiên.

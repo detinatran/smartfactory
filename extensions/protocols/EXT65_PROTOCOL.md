@@ -10,7 +10,7 @@
 ## Hệ thống (cố định, giống EXT64)
 - ELPIS-JG chọn, cho mỗi deployment, giữa:
   - predictor mặc định;
-  - predictor gộp (mặc định + ELPIS-J). Dùng `ext50.py` với `RAMP_FREEZE=1`, `RAMP_BIASCAL=1`, `RAMP_HYBRID=1`.
+  - predictor gộp (mặc định + ELPIS-J). Dùng `ext50.py` với `ELPISJ_FREEZE=1`, `ELPISJ_BIASCAL=1`, `ELPISJ_HYBRID=1`.
 - Tiêu chí chọn: risk calibration của selector mà ELPIS-G chọn cho từng predictor. Khi bằng nhau thì dùng predictor mặc định.
 - Phân tích bằng `scripts/ext64_summary.py`, không sửa.
 

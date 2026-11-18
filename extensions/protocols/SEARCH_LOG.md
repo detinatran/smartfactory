@@ -67,8 +67,8 @@ Tác hại trên ổ cứng đến từ cỡ tập selector, không phải từ 
 ## Vòng 9 (EXT48), ngày 2026-11-17: XÁC NHẬN
 Excess trên window bị ảnh hưởng của RPT-D giảm có ý nghĩa ở mức seed trên C-MAPSS, N-CMAPSS và pin.
 
-## EXT50 (thăm dò): predictor kiểu RAMP
-Tốt hơn trên C-MAPSS và pin, kém hơn trên vòng bi. Trên RAMP, RPT-D vẫn có ích.
+## EXT50 (thăm dò): predictor kiểu ELPIS-J
+Tốt hơn trên C-MAPSS và pin, kém hơn trên vòng bi. Trên ELPIS-J, RPT-D vẫn có ích.
 
 ## Vòng 10 (EXT59), ngày 2026-11-17: XÁC NHẬN
-Trên predictor RAMP-V13 (JEPA), ELPIS-G tốt hơn OSC ở cả 3 họ, kiểm định ở mức seed.
+Trên predictor ELPIS-J-V13 (JEPA), ELPIS-G tốt hơn OSC ở cả 3 họ, kiểm định ở mức seed.

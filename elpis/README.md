@@ -39,8 +39,11 @@ affiliations are placeholders.
 | **ELPIS** | `rpt_L` | EXT12 |
 | ELPIS-CAL (calibration-risk switch) | `rpt_auto` | EXT22 |
 | **ELPIS-G** (diagnostic gate, recommended) | `rpt_auto_d` | EXT38 |
-| ELPIS-J (JEPA-pretrained predictor) | `RAMP_*` options of `scripts/ext50.py` (final: `RAMP_FREEZE=1 RAMP_BIASCAL=1`) | EXT50–EXT59 |
-| ELPIS-JG (default vs pooled predictor) | `RAMP_HYBRID=1` + `scripts/ext64_summary.py` | EXT64–EXT65 |
+| ELPIS-J (JEPA-pretrained predictor) | `ELPISJ_*` options of `scripts/ext50.py` (final: `ELPISJ_FREEZE=1 ELPISJ_BIASCAL=1`) | EXT50–EXT59 |
+| ELPIS-JG (default vs pooled predictor) | `ELPISJ_HYBRID=1` + `scripts/ext64_summary.py` | EXT64–EXT65 |
+
+In the protocols and findings, "ELPIS-J" names the whole family of JEPA-style predictors tried in `scripts/ext50.py`
+(variants V1–V17); the ELPIS-J of the paper is variant V13 (`ELPISJ_FREEZE=1 ELPISJ_BIASCAL=1`).
 
 The perturbation generator is `perturb()` in `scripts/ext11_ablate.py` (ELPIS: `kfrac=0.5`, `amp=(1, 8)`, two copies); the selector features, seen shifts and
 evaluation faults are in `scripts/ext10_rpt.py` and `src/selective_rul/faults.py`.
@@ -80,7 +83,7 @@ uv run python scripts/run_external.py --data-dir data/external/processed --out r
 uv run python scripts/ext38.py --runs runs/conf162_ext --out out/ext40 --device cuda --shard 0/6
 
 # 3. ELPIS-J / pooled predictor (exploratory)
-RAMP_FREEZE=1 RAMP_BIASCAL=1 RAMP_HYBRID=1 \
+ELPISJ_FREEZE=1 ELPISJ_BIASCAL=1 ELPISJ_HYBRID=1 \
 uv run python scripts/ext50.py --runs runs/conf162_ext --out out/ext64_hybrid --device cuda --shard 0/6
 
 # 4. summaries (each round has its own *_summary.py; inputs are the concatenated CSVs of step 2/3)

@@ -1,4 +1,4 @@
-# EXT64: cổng chọn predictor (mặc định hay gộp mặc định + RAMP-V13) theo risk calibration, kiểm trên seed mới 252–281 (THĂM DÒ, không tiêu α vì ngân sách đã hết; đặt trước đầy đủ). Chốt ngày 2026-11-18, TRƯỚC khi eval bất kỳ run nào của seed 252–281
+# EXT64: cổng chọn predictor (mặc định hay gộp mặc định + ELPIS-J-V13) theo risk calibration, kiểm trên seed mới 252–281 (THĂM DÒ, không tiêu α vì ngân sách đã hết; đặt trước đầy đủ). Chốt ngày 2026-11-18, TRƯỚC khi eval bất kỳ run nào của seed 252–281
 
 ## Nguồn gốc (post hoc, ghi rõ)
 Quy tắc này được tìm ra sau khi đã xem dữ liệu EXT61 (seed 162–171) và EXT62 (seed 222–251). Kết quả trên các seed đó, cổng so với ELPIS-G trên predictor mặc định:
@@ -16,7 +16,7 @@ Lỗi bi quan cũng thấp hơn ở mọi trường hợp. Vì đây là kết q
 Với mỗi deployment, tức mỗi (họ, backbone, seed, fold):
 1. Có hai predictor:
    - **mặc định:** ensemble của run;
-   - **gộp:** các thành viên mặc định cộng các thành viên RAMP-V13. Dùng `ext50.py` với `RAMP_FREEZE=1`, `RAMP_BIASCAL=1`, `RAMP_HYBRID=1`.
+   - **gộp:** các thành viên mặc định cộng các thành viên ELPIS-J-V13. Dùng `ext50.py` với `ELPISJ_FREEZE=1`, `ELPISJ_BIASCAL=1`, `ELPISJ_HYBRID=1`.
 2. Với mỗi predictor, ELPIS-G (`rpt_auto_d`) chọn selector như bình thường (`full` hoặc `rpt_L` theo D).
 3. **Cổng:** dùng predictor gộp nếu risk calibration của selector được chọn (`calrisk_rpt_L` nếu chọn `rpt_L`, ngược lại `calrisk_full`; đo trên unit calibration dưới các shift đã thấy) thấp hơn hẳn risk đó của predictor mặc định. Nếu không, dùng predictor mặc định; khi bằng nhau cũng dùng mặc định.
 

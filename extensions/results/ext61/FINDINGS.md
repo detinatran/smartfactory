@@ -1,4 +1,4 @@
-# EXT61 (thăm dò): sửa RAMP trên vòng bi, gồm V16 (hiệu chỉnh mức lạc quan) và V17 (ensemble gộp mặc định + RAMP-V13)
+# EXT61 (thăm dò): sửa ELPIS-J trên vòng bi, gồm V16 (hiệu chỉnh mức lạc quan) và V17 (ensemble gộp mặc định + ELPIS-J-V13)
 
 Vòng bi, seed 162–171. Số liệu đầy đủ ở `summary.txt`.
 

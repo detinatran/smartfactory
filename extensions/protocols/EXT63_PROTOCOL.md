@@ -1,19 +1,19 @@
 # EXT63: pretrain JEPA trên mọi điều kiện vòng bi, kết hợp predictor gộp (THĂM DÒ / PHÁT TRIỂN, không tiêu α). Chốt ngày 2026-11-17, TRƯỚC khi chạy
 
 **Lý do:**
-- Ở EXT62, trên vòng bi, predictor gộp (mặc định + RAMP-V13) hòa về điểm với predictor mặc định (+0.35), nhưng không đạt biên không kém.
+- Ở EXT62, trên vòng bi, predictor gộp (mặc định + ELPIS-J-V13) hòa về điểm với predictor mặc định (+0.35), nhưng không đạt biên không kém.
 - Giả thuyết: pretrain JEPA thiếu dữ liệu. Fold vòng bi là leave-one-condition-out trên FEMTO và XJTU-SY gộp, nên fit đã chứa 5 điều kiện khác nhưng chỉ có khoảng 12–15 unit.
 
 **Ghi chú về lần thử trước:** V1 (EXT52) đã pretrain trên fit, selector và calibration, nhưng encoder không đóng băng, không hiệu chỉnh độ lệch, không gộp. Kết quả +3.62.
 
 ## Biến thể
-Dùng `scripts/ext50.py`. Cả hai có chung `RAMP_FREEZE=1`, `RAMP_BIASCAL=1`, `RAMP_HYBRID=1`.
+Dùng `scripts/ext50.py`. Cả hai có chung `ELPISJ_FREEZE=1`, `ELPISJ_BIASCAL=1`, `ELPISJ_HYBRID=1`.
 
-**V18:** `RAMP_PRE_PARTS=fit,validation,selector,calibration`.
+**V18:** `ELPISJ_PRE_PARTS=fit,validation,selector,calibration`.
 - Stage I tự giám sát trên mọi unit không thuộc test, tức đủ 5 điều kiện train.
 - Không dùng nhãn trong Stage I, không dùng dữ liệu test.
 
-**V19:** `RAMP_PRE_PARTS=fit,validation,selector,calibration,evaluation`.
+**V19:** `ELPISJ_PRE_PARTS=fit,validation,selector,calibration,evaluation`.
 - Thêm các window sạch, không nhãn, của điều kiện test.
 - Đây là tự giám sát lúc test (transductive). Mô hình thấy input sạch, kể cả input tương lai, của chính các unit test, chỉ không thấy nhãn. Window có lỗi không bao giờ được dùng.
 - Kết quả của V19 là **cận trên lạc quan**, không phải một quy trình triển khai thực tế, và sẽ được ghi rõ như vậy.

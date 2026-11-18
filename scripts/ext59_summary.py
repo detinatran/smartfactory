@@ -1,5 +1,5 @@
 """EXT59 analysis (EXT59_PROTOCOL.md), confirmation round 10, seed level.
-usage: ext59_summary.py ALL_EXT59_RAMP.csv.gz [ALL_EXT59_DEFAULT.csv.gz] OUTDIR"""
+usage: ext59_summary.py ALL_EXT59_ELPISJ.csv.gz [ALL_EXT59_DEFAULT.csv.gz] OUTDIR"""
 import sys
 from pathlib import Path
 import numpy as np
@@ -39,7 +39,7 @@ def pool(d, scen, col, scores):
 
 
 R = load(fr)
-say(f"complete seeds (RAMP): {R.drop_duplicates(['dataset','seed']).groupby('dataset').size().to_dict()}")
+say(f"complete seeds (ELPIS-J): {R.drop_duplicates(['dataset','seed']).groupby('dataset').size().to_dict()}")
 W = pool(R, FA, "risk_matched", ["full", "rpt_auto_d"]); P = pool(R, FA, "pess_matched", ["full", "rpt_auto_d"])
 rows = []
 for ds in DS:
@@ -52,7 +52,7 @@ for r, i in enumerate(np.argsort(p)):
     run = max(run, (len(p) - r) * p[i]); adj[i] = min(1.0, run)
 t["p_holm"] = adj
 t["sig"] = np.where(t.p_holm < A10, np.where(t["mean"] < 0, "better", "WORSE"), "")
-say(f"\n== CONFIRMATORY round 10: ELPIS-G - OSC on the RAMP-V13 predictor (seed level, Holm over 3, alpha_10={A10})")
+say(f"\n== CONFIRMATORY round 10: ELPIS-G - OSC on the ELPIS-J-V13 predictor (seed level, Holm over 3, alpha_10={A10})")
 say(t.round(6).to_string(index=False))
 okc = (t.sig == "better").any() and not (t.sig == "WORSE").any() and (t["mean"] <= 0.3).all() and (t.pess <= 1.0).all()
 say(f"CONFIRMED: {bool(okc)}")
@@ -63,10 +63,10 @@ if fd:
     D = load(fd)
     WD = pool(D, FA, "risk_matched", ["full", "rpt_auto_d"])
     rm = lambda d: pool(d, ["clean"], "rmse_full", ["predictor"]).predictor / 100
-    say("\n== secondary: RAMP-V13 system vs default system (same seeds), ELPIS-G risk under faults")
+    say("\n== secondary: ELPIS-J-V13 system vs default system (same seeds), ELPIS-G risk under faults")
     for ds in DS:
         a, b = W.loc[ds].rpt_auto_d, WD.loc[ds].rpt_auto_d.reindex(W.loc[ds].index)
         dif = (a - b).dropna()
-        say(f"  {ds:10s} RAMP {a.mean():.2f} default {b.mean():.2f} diff {dif.mean():+.3f} (RAMP better {int((dif<0).sum())}/{len(dif)}, p={stats.wilcoxon(dif).pvalue:.2g}) | RMSE RAMP {rm(R).loc[ds].mean():.3f} default {rm(D).loc[ds].mean():.3f}")
+        say(f"  {ds:10s} ELPIS-J {a.mean():.2f} default {b.mean():.2f} diff {dif.mean():+.3f} (ELPIS-J better {int((dif<0).sum())}/{len(dif)}, p={stats.wilcoxon(dif).pvalue:.2g}) | RMSE ELPIS-J {rm(R).loc[ds].mean():.3f} default {rm(D).loc[ds].mean():.3f}")
 (out / "ext59_output.txt").write_text("\n".join(L) + "\n")
 print("EXT59_SUMMARY_DONE")

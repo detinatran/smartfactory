@@ -1,6 +1,6 @@
-complete seeds (RAMP): {'battery_cv': 30, 'bearings': 30, 'cmapss': 30}
+complete seeds (ELPIS-J): {'battery_cv': 30, 'bearings': 30, 'cmapss': 30}
 
-== CONFIRMATORY round 10: ELPIS-G - OSC on the RAMP-V13 predictor (seed level, Holm over 3, alpha_10=4.8828125e-05)
+== CONFIRMATORY round 10: ELPIS-G - OSC on the ELPIS-J-V13 predictor (seed level, Holm over 3, alpha_10=4.8828125e-05)
    dataset       osc   elpis_g      mean  better  n   p     pess  p_holm    sig
     cmapss  9.163178  8.351699 -0.811479      30 30 0.0 0.473861     0.0 better
 battery_cv  3.038341  1.899557 -1.138784      30 30 0.0 0.358162     0.0 better
@@ -8,7 +8,7 @@ battery_cv  3.038341  1.899557 -1.138784      30 30 0.0 0.358162     0.0 better
 CONFIRMED: True
 switch share: {'battery_cv': 1.0, 'bearings': 0.7, 'cmapss': 1.0}
 
-== secondary: RAMP-V13 system vs default system (same seeds), ELPIS-G risk under faults
-  cmapss     RAMP 8.35 default 8.95 diff -0.595 (RAMP better 24/30, p=8.9e-05) | RMSE RAMP 14.442 default 15.853
-  battery_cv RAMP 1.90 default 2.35 diff -0.452 (RAMP better 21/30, p=0.0016) | RMSE RAMP 0.085 default 0.092
-  bearings   RAMP 24.49 default 22.50 diff +1.988 (RAMP better 15/30, p=0.15) | RMSE RAMP 0.265 default 0.275
+== secondary: ELPIS-J-V13 system vs default system (same seeds), ELPIS-G risk under faults
+  cmapss     ELPIS-J 8.35 default 8.95 diff -0.595 (ELPIS-J better 24/30, p=8.9e-05) | RMSE ELPIS-J 14.442 default 15.853
+  battery_cv ELPIS-J 1.90 default 2.35 diff -0.452 (ELPIS-J better 21/30, p=0.0016) | RMSE ELPIS-J 0.085 default 0.092
+  bearings   ELPIS-J 24.49 default 22.50 diff +1.988 (ELPIS-J better 15/30, p=0.15) | RMSE ELPIS-J 0.265 default 0.275
