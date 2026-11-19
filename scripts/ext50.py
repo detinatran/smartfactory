@@ -139,6 +139,32 @@ def _future_index(meta, k=3):
     return fut
 
 
+def sigreg(z, gen, n_slices=256, t_max=3.0, n_points=17):
+    """SIGReg (LeJEPA): sliced Epps-Pulley statistic of embeddings z [N, d] against N(0, 1), mean over random unit directions."""
+    A = torch.randn(z.shape[1], n_slices, device=z.device, generator=gen)
+    A = A / A.norm(dim=0, keepdim=True)
+    t = torch.linspace(0, t_max, n_points, device=z.device)
+    phi = torch.exp(-t ** 2 / 2)
+    dt = t_max / (n_points - 1)
+    w = torch.full((n_points,), 2 * dt, device=z.device)
+    w[[0, -1]] = dt
+    xt = (z @ A).unsqueeze(-1) * t
+    err = (xt.cos().mean(0) - phi) ** 2 + xt.sin().mean(0) ** 2
+    return ((err @ (w * phi)) * z.shape[0]).mean()
+
+
+def _emb_diag(net, x, device):
+    """collapse diagnostics of the encoder on clean validation windows: effective rank, mean per-dim std, SIGReg"""
+    with torch.no_grad():
+        z = torch.cat([net.base.features(torch.from_numpy(x[i:i + 1024]).to(device)) for i in range(0, len(x), 1024)])
+        zc = z - z.mean(0)
+        s = torch.linalg.svdvals(zc)
+        p = s / s.sum().clamp_min(1e-12)
+        er = float(torch.exp(-(p * torch.log(p.clamp_min(1e-12))).sum()))
+        g = torch.Generator(device=z.device).manual_seed(0)
+        return dict(emb_effrank=er, emb_std=float(z.std(0).mean()), emb_sigreg=float(sigreg(z, g)))
+
+
 def jepa_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=20, e2=40, patience=8, ema=0.99):
     tr, va = windows("fit", "clean"), windows("validation", "clean")
     cap = float(model_cfg["rul_cap"])
@@ -171,11 +197,22 @@ def jepa_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=20, e2=
         # Stage I: horizon-aligned masked JEPA (context: corrupted window; target: EMA latent of a later clean window)
         opt = torch.optim.AdamW([p_ for n_, p_ in net.named_parameters() if not n_.startswith(("F.", "H.", "G.", "C.", "gamma"))],
                                 lr=1e-3, weight_decay=1e-4)
+        ssl, lam = os.environ.get("ELPISJ_SSL", "ema"), float(os.environ.get("ELPISJ_SIGREG_LAMBDA", "0.05"))
+        gen, step = torch.Generator(device=device), 0
         for ep in range(e1):
             net.train()
             xcor = torch.from_numpy(_corrupt(pre_x, rng, n_ch, flag_off, L)).to(device)
             for idx in torch.from_numpy(rng.permutation(len(pre_x))).split(128):
                 idx = idx.to(device)
+                if ssl == "sigreg":  # EXT66 (LeWM-style): end-to-end, no EMA/stop-grad; MSE prediction + lambda * SIGReg
+                    z_, _, _, r = net.parts(xcor[idx])
+                    t = net.base.features(Xp[fut[idx]])
+                    step += 1
+                    loss = (1 - lam) * ((r - t) ** 2).mean() + lam * sigreg(torch.cat([z_, t]), gen.manual_seed(ms * 100000 + step))
+                    opt.zero_grad(set_to_none=True)
+                    loss.backward()
+                    opt.step()
+                    continue
                 r = net.parts(xcor[idx])[3]
                 with torch.no_grad():
                     t = tgt.features(Xp[fut[idx]])
@@ -220,6 +257,7 @@ def jepa_train(windows, model_cfg, device, seed, n_ch, flag_off, cfg, e1=20, e2=
             yv = np.asarray(va.y)
             m = np.ones(len(yv), bool) if bc == "1" else (yv <= 0.3 * cap)  # "late": end-of-life windows only
             net.offset.fill_(float((wva[m] * (pv[m] - yv[m])).sum() / max(wva[m].sum(), 1e-12)))
+        net.diag = _emb_diag(net, va.x, device)
         models.append(net)
     return models
 
@@ -406,7 +444,9 @@ def process(run, raw, ext_dir, device, passes, extra_scenarios):
     meta = dict(dataset=cfg.get("dataset", "cmapss"), model=cfg["model"], seed=seed,
                 fold=cfg.get("fold", cfg.get("subset")), delta=delta, n_channels=n_ch,
                 robust=bool(cfg.get("robust_predictor", False)), choice2=globals_box.get("choice2"),
-                choice3=globals_box.get("choice3"), choice_m=globals_box.get("choice_m"), choice_d=globals_box.get("choice_d"), D=globals_box.get("D"), **{f"calrisk_{k}": v for k, v in cr.items()})
+                choice3=globals_box.get("choice3"), choice_m=globals_box.get("choice_m"), choice_d=globals_box.get("choice_d"), D=globals_box.get("D"),
+                ssl=os.environ.get("ELPISJ_SSL", "ema"), **{k: float(np.mean([m_.diag[k] for m_ in models if hasattr(m_, "diag")]))
+                                                           for k in ("emb_effrank", "emb_std", "emb_sigreg")}, **{f"calrisk_{k}": v for k, v in cr.items()})
     for k, v in reversed(list(meta.items())):
         out.insert(0, k, v)
     return out

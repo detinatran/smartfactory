@@ -1,0 +1,66 @@
+complete seeds V20: {'battery_cv': 10, 'bearings': 10, 'cmapss': 10}
+complete seeds V13r: {'battery_cv': 10, 'bearings': 10, 'cmapss': 10}
+complete seeds V13(EXT56): {'battery_cv': 10, 'bearings': 10, 'cmapss': 10}
+
+== means per family
+dataset                 battery_cv  bearings   cmapss
+V20        elpis_g           4.417    25.782    6.541
+           osc               5.018    26.342    7.325
+           pess_g            8.576    30.662   36.015
+           opt_all          10.483    29.090    9.327
+           rmse              0.093     0.262   14.423
+           emb_effrank      20.443    20.367   31.234
+           emb_std           0.588     0.516    0.588
+           emb_sigreg      143.328   235.812  116.302
+V13r       elpis_g           1.922    24.919    7.436
+           osc               3.000    25.623    8.416
+           pess_g            8.687    30.634   34.715
+           opt_all           6.313    28.059   10.401
+           rmse              0.087     0.266   14.399
+           emb_effrank       8.876    15.607   11.250
+           emb_std           2.193     1.736    3.309
+           emb_sigreg      486.907   491.405  382.430
+V13(EXT56) elpis_g           1.937    24.841    7.445
+           osc               3.005    25.596    8.452
+           pess_g            8.656    30.604   34.741
+           opt_all           6.341    28.028   10.414
+           rmse              0.087     0.265   14.400
+
+== PRIMARY: ELPIS-G risk under six faults, 90% matched coverage, V20 - V13r (seed level, Wilcoxon, 10 seeds)
+   dataset      metric      v20     v13r      diff  lower  n      p
+    cmapss     elpis_g   6.5409   7.4358   -0.8950     10 10 0.0020
+    cmapss         osc   7.3254   8.4163   -1.0908     10 10 0.0020
+    cmapss      pess_g  36.0153  34.7155    1.2998      0 10 0.0020
+    cmapss     opt_all   9.3265  10.4011   -1.0746     10 10 0.0020
+    cmapss        rmse  14.4232  14.3994    0.0238      5 10 0.7695
+    cmapss emb_effrank  31.2342  11.2495   19.9846      0 10 0.0020
+    cmapss     emb_std   0.5879   3.3090   -2.7210     10 10 0.0020
+    cmapss  emb_sigreg 116.3022 382.4298 -266.1276     10 10 0.0020
+battery_cv     elpis_g   4.4172   1.9224    2.4948      0 10 0.0020
+battery_cv         osc   5.0177   3.0000    2.0177      0 10 0.0020
+battery_cv      pess_g   8.5759   8.6869   -0.1110      4 10 0.9219
+battery_cv     opt_all  10.4829   6.3131    4.1697      0 10 0.0020
+battery_cv        rmse   0.0926   0.0867    0.0059      1 10 0.0039
+battery_cv emb_effrank  20.4433   8.8761   11.5672      0 10 0.0020
+battery_cv     emb_std   0.5884   2.1929   -1.6045     10 10 0.0020
+battery_cv  emb_sigreg 143.3284 486.9072 -343.5788     10 10 0.0020
+  bearings     elpis_g  25.7818  24.9192    0.8626      3 10 0.2324
+  bearings         osc  26.3416  25.6233    0.7184      4 10 0.4922
+  bearings      pess_g  30.6620  30.6337    0.0284      4 10 1.0000
+  bearings     opt_all  29.0903  28.0587    1.0316      4 10 0.1602
+  bearings        rmse   0.2616   0.2655   -0.0039      8 10 0.0273
+  bearings emb_effrank  20.3673  15.6072    4.7602      0 10 0.0020
+  bearings     emb_std   0.5156   1.7364   -1.2208     10 10 0.0020
+  bearings  emb_sigreg 235.8116 491.4055 -255.5938     10 10 0.0020
+
+== inside V20: ELPIS-G - OSC (seed level)
+  cmapss     -0.785 (better 10/10, p=0.002)
+  battery_cv -0.600 (better 10/10, p=0.002)
+  bearings   -0.560 (better 8/10, p=0.0078)
+
+== cross-check: V13r - V13 of EXT56, ELPIS-G risk (should be near 0)
+  cmapss     -0.009
+  battery_cv -0.014
+  bearings   +0.079
+
+PROMISING (mean ELPIS-G diff < 0 on >= 2 families and <= +0.3 on all): False

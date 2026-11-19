@@ -2,7 +2,7 @@
 
 These experiments go beyond the paper. They are **not** used in the paper's tables, and the paper's results are unchanged.
 
-## ELPIS rounds (EXT11–EXT65)
+## ELPIS rounds (EXT11–EXT67)
 
 These rounds develop EXT10 into **ELPIS** and test it; see [`../elpis/README.md`](../elpis/README.md) for the method,
 the pipeline figure, the ESANN paper and the mapping between code names and paper names. Ten rounds were confirmatory
@@ -45,6 +45,8 @@ protocol (EXT42 is a post-hoc cost analysis; EXT57 results are in `results/ext57
 | EXT61–EXT63 | Pooled predictor (default + ELPIS-J); more JEPA pretraining data (not helpful) |
 | EXT64 | ELPIS-JG gate on fresh seeds 252–281: wins on C-MAPSS and batteries, ties on bearings |
 | EXT65 | Independent bearing replication of ELPIS-JG on 60 fresh seeds 282–341: tie (mean −0.56, p = 0.11) |
+| EXT66 | ELPIS-J pretrained LeWorldModel-style (end-to-end, MSE + 0.05·SIGReg) vs the EMA teacher: the EMA teacher partially collapses the embedding (effective rank 9–16 vs 20–31), but SIGReg lowers ELPIS-G risk only on C-MAPSS (−0.90; batteries +2.49, bearings +0.86); not adopted |
+| EXT67 | Calibration gate between ELPIS-J V13 (EMA) and V20 (SIGReg), replicated on seeds 222–251: ELPIS-G risk −1.03 (C-MAPSS), +0.03 (batteries), −1.20 (bearings); pre-registered criterion met, at the cost of +1.2 to +1.7 points of pessimistic error |
 
 ## Headline: randomized-perturbation training of the selector (EXT10), confirmed on fresh seeds
 

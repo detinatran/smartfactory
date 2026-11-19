@@ -24,6 +24,7 @@
 \newcommand{\AUTOD}{\textsc{elpis-g}}
 \newcommand{\EJ}{\textsc{elpis-j}}
 \newcommand{\EJG}{\textsc{elpis-jg}}
+\newcommand{\EJS}{\textsc{elpis-js}}
 \newcommand{\s}{$^{\ast}$}
 \begin{document}
 \title{Supplementary Material:\\ Error-Labelled Perturbation Training for Selective RUL Prediction under Sensor Faults}
@@ -291,7 +292,7 @@ The gain over \OSC{} holds on new test units, on fault types designed after the 
 \FloatBarrier
 \subsection{Gates and predictors}\label{sec:frozen}
 \begin{table}[!htbp]
-\caption{Gates and predictors. Top (round 8, seeds 162--191, mean over 30 seeds): each selector minus \OSC{} (points; negative is better) and the share of deployments in which \AUTOD{} uses \RPT. Bottom: risk (\%) of \AUTOD{} on three predictors, seeds 222--251, and \EJG{} against \AUTOD{} on the default predictor on fresh seeds 252--281 and, for bearings, 282--341 (exploratory). \EJ: JEPA-pretrained predictor; pooled: default plus \EJ{} members.}
+\caption{Gates and predictors. Top (round 8, seeds 162--191, mean over 30 seeds): each selector minus \OSC{} (points; negative is better) and the share of deployments in which \AUTOD{} uses \RPT. Bottom: risk (\%) of \AUTOD{} on three predictors, seeds 222--251, and \EJG{} against \AUTOD{} on the default predictor on fresh seeds 252--281 and, for bearings, 282--341 (exploratory). \EJ: JEPA-pretrained predictor; pooled: default plus \EJ{} members; \EJS: \EJ{} pretrained end-to-end with SIGReg instead of an EMA teacher; gate: \EJ{} or \EJS{} per deployment by calibration risk (exploratory).}
 \label{tab:deploy}
 \centering\footnotesize
 \setlength{\tabcolsep}{3pt}
@@ -308,7 +309,9 @@ The gain over \OSC{} holds on new test units, on fault types designed after the 
 \multicolumn{6}{l}{\emph{Predictors, risk of \AUTOD{} (\%)}}\\
 Default & 8.95 & -- & \textbf{22.50} & 2.35 & --\\
 \EJ & 8.35 & -- & 24.49 & 1.90 & --\\
-Pooled & \textbf{8.29} & -- & 22.86 & \textbf{1.68} & --\\
+Pooled & 8.29 & -- & 22.86 & \textbf{1.68} & --\\
+\EJS{} (SIGReg) & \textbf{7.14} & -- & 24.12 & 3.79 & --\\
+Gate \EJ{} / \EJS & 7.32 & -- & 23.29 & 1.93 & --\\
 \multicolumn{6}{l}{\quad RMSE (default / \EJ{} / pooled): C-MAPSS 15.9 / 14.4 / 14.6; bearings .275 / .265 / .258;}\\
 \multicolumn{6}{l}{\quad batteries .092 / .085 / .083.}\\
 \midrule
@@ -320,7 +323,7 @@ Difference (90\% CI) & -- & -- & \multicolumn{3}{l}{$-0.56$ $[-0.97,-0.14]$; 28 
 \bottomrule
 \end{tabular}}
 \end{table}
-Plain \RPT{} hurts on real hard drives, and \AUTOD{} removes the harm while keeping the full gain on C-MAPSS, N-CMAPSS and batteries (Table~\ref{tab:deploy}, top; Sec.~\ref{sec:hdd}). On bearings, where $D$ is near zero, it keeps less than half of the gain. The pretrained predictor \EJ{} is more accurate and lowers risk on C-MAPSS and batteries but is more optimistic on bearings; pooling it with the default members, and choosing between the default and the pooled predictor per deployment by calibration risk (\EJG), lowered risk on C-MAPSS and batteries on fresh seeds and was non-inferior on bearings (exploratory). On bearings a pre-registered replication on 60 further fresh seeds gave a mean of $-0.56$ points (90\% interval $[-0.97,-0.14]$) but only 28 of 60 seeds improved (Wilcoxon $p=0.11$), so we report a tie: the average gain is carried by a minority of deployments, not a typical one. Frozen thresholds, maintenance simulations and expected cost are in Appendix~\ref{app:detail}: at every fixed coverage from 50 to 95\% \AUTOD{} accepts fewer optimistic errors than \OSC, and counting both error types it is cheaper already at equal costs.
+Plain \RPT{} hurts on real hard drives, and \AUTOD{} removes the harm while keeping the full gain on C-MAPSS, N-CMAPSS and batteries (Table~\ref{tab:deploy}, top; Sec.~\ref{sec:hdd}). On bearings, where $D$ is near zero, it keeps less than half of the gain. The pretrained predictor \EJ{} is more accurate and lowers risk on C-MAPSS and batteries but is more optimistic on bearings; pooling it with the default members, and choosing between the default and the pooled predictor per deployment by calibration risk (\EJG), lowered risk on C-MAPSS and batteries on fresh seeds and was non-inferior on bearings (exploratory). On bearings a pre-registered replication on 60 further fresh seeds gave a mean of $-0.56$ points (90\% interval $[-0.97,-0.14]$) but only 28 of 60 seeds improved (Wilcoxon $p=0.11$), so we report a tie: the average gain is carried by a minority of deployments, not a typical one. \EJ{} guards against representation collapse only with its EMA teacher and stop-gradient, and its embedding is partially collapsed: on clean validation windows of seeds 162--171 its effective rank~\cite{roy2007effective} is 11, 9 and 16 on C-MAPSS, batteries and bearings. Training it end-to-end with the SIGReg regulariser of LeJEPA~\cite{balestriero2025lejepa} instead, as in LeWorldModel~\cite{maes2026leworldmodel} (\EJS: latent-prediction MSE plus $0.05\,$SIGReg, all else unchanged), raises the effective rank to 31, 20 and 20, but changes the risk of \AUTOD{} by $-0.90$, $+2.49$ and $+0.86$ points against \EJ: on batteries the frozen-encoder head, trained on clean windows, turns more optimistic under faults. Choosing per deployment between \EJ{} and \EJS{} by the rule of \EJG{} was then tested against a pre-registered criterion on seeds 222--251, which were not used to design it (exploratory). Against \EJ{} it lowered risk by 1.03 points on C-MAPSS (30 of 30 seeds) and 1.20 on bearings (21 of 30, $p=0.002$), tied on batteries ($+0.03$; \EJS{} was chosen in 17\% of battery deployments), and raised the pessimistic-error rate by 1.2--1.7 points on C-MAPSS and bearings; on bearings the default predictor remains better. \AUTOD{} also beats \OSC{} on \EJS{} ($-0.71$, $-0.65$, $-0.75$ points; 30, 30 and 27 of 30 seeds). Frozen thresholds, maintenance simulations and expected cost are in Appendix~\ref{app:detail}: at every fixed coverage from 50 to 95\% \AUTOD{} accepts fewer optimistic errors than \OSC, and counting both error types it is cheaper already at equal costs.
 
 \FloatBarrier
 \subsection{How much of the gain is fault-specific?}\label{sec:excess}
@@ -531,6 +534,7 @@ Sensitivity features do not replace perturbed copies & exploratory\\
 Lower risk at every coverage; expected cost & post hoc\\
 Natural battery jumps & exploratory, replicated (pre-reg. secondary, round 9)\\
 $D$ as a family-level gate (decision accuracy, robust and conservative predictors) & exploratory\\
+Gate between \EJ{} and its SIGReg variant \EJS{} lowers risk on C-MAPSS and bearings (pessimistic error higher) & exploratory, pre-reg. criterion on seeds not used to design it\\
 \bottomrule
 \end{tabular}\end{adjustbox}
 \end{table}

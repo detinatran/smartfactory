@@ -40,11 +40,11 @@
 \node[font=\scriptsize,align=center] at (1.0,-0.65) {sensor window\\$x\in\mathbb R^{T\times C}$};
 \win{0.25}{-2.15}{1.2}
 \node[box] (ens) at (3.0,-1.62) {default ensemble\\[-1pt]{\scriptsize (GRU / TCN)}};
-\node[bbox,font=\scriptsize,text width=2.95cm] (ej) at (2.95,-3.2) {\textbf{ELPIS-J} (optional):\\JEPA-pretrained, frozen\\encoder, bias-corrected};
+\node[bbox,font=\scriptsize,text width=2.95cm] (ej) at (2.95,-3.2) {\textbf{ELPIS-J} (optional):\\JEPA-pretrained (EMA\\or SIGReg), frozen encoder};
 \node[obox,minimum height=7mm] (fx) at (4.95,-1.62) {$f(x)$};
 \draw[arr] (1.5,-1.62) -- (ens);
 \draw[arr] (ens) -- (fx);
-\draw[jarr] (ej.east) -| node[pos=0.72,right,font=\tiny,text=blub!80!black]{pooled} (fx.south);
+\draw[jarr] (ej.east) -| node[pos=0.72,right,font=\tiny,text=blub!80!black]{alternative} (fx.south);
 \begin{scope}[shift={(0.6,0)}]
 % ---------------- panel 2 ----------------
 \node[font=\scriptsize,align=center] at (6.75,-0.65) {clean selector\\window $x$};
@@ -86,7 +86,7 @@
 \node[note,anchor=north] at (4.45,-6.1) {$D$: rise in the optimistic\\rate when clean calibration\\windows are perturbed};
 \node[bbox,font=\scriptsize,minimum width=2.1cm] (use1) at (7.4,-5.1) {selector ELPIS};
 \node[box,font=\scriptsize,minimum width=2.1cm] (use0) at (7.4,-5.85) {selector OSC};
-\node[dia,draw=blub,fill=blu] (jg) at (7.4,-7.3) {ELPIS-JG\\pooled better?};
+\node[dia,draw=blub,fill=blu] (jg) at (7.4,-7.3) {predictor gate:\\other $f$ better?};
 \node[note,anchor=west] at (8.75,-7.62) {lower calibration risk of the\\selector chosen for each $f$};
 \node[dbox,text width=2.95cm,align=center] (dep) at (11.4,-5.45) {accept the $c$ lowest\\$s(x)$, abstain on rest};
 \draw[arr] (cal.east) -- ++(0.3,0) |- (dg.west);
@@ -95,7 +95,7 @@
 \draw[arr] (use1.east) -- ++(0.65,0) |- ([yshift=1.5mm]dep.west);
 \draw[arr] (use0.east) -- ++(0.65,0) |- ([yshift=-1.5mm]dep.west);
 \draw[jarr] (cal.south) |- (jg.west);
-\draw[jarr] (jg.east) -- (11.4,-7.3) node[pos=0.5,above,font=\tiny,text=blub!80!black]{pooled or default $f$} -- (dep.south);
+\draw[jarr] (jg.east) -- (11.4,-7.3) node[pos=0.5,above,font=\tiny,text=blub!80!black]{chosen $f$} -- (dep.south);
 \end{scope}
 % ---------------- row link: trained selector feeds the deployment ----------------
 \draw[arr] (2.775,-8.5) -- (2.775,-8.68) -| (dep.north);

@@ -1,0 +1,31 @@
+runs matched: 900; complete seeds: {'battery_cv': 30, 'bearings': 30, 'cmapss': 30}
+
+== PRIMARY: ELPIS-G risk, gate - V13 (seed level, Wilcoxon two-sided, 90% bootstrap CI upper bound)
+   dataset       a       b    diff  ci90_hi  lower  n      p  better  noninferior
+    cmapss  7.3219  8.3517 -1.0298  -0.8899     30 30 0.0000    True         True
+battery_cv  1.9309  1.8996  0.0314   0.0770     14 30 0.4123   False         True
+  bearings 23.2935 24.4898 -1.1963  -0.6618     21 30 0.0022    True         True
+GATE IMPROVES ELPIS-J (better on >= 2 families, non-inferior on all 3): True
+
+== secondary
+-- V20 - V13, ELPIS-G risk
+   dataset       a       b    diff  ci90_hi  lower  n      p
+    cmapss  7.1398  8.3517 -1.2119  -1.0816     30 30 0.0000
+battery_cv  3.7879  1.8996  1.8884   2.0846      0 30 0.0000
+  bearings 24.1167 24.4898 -0.3731   0.3526     17 30 0.4522
+-- gate - V13, pessimistic
+   dataset       a       b   diff  ci90_hi  lower  n      p
+    cmapss 34.3678 33.1232 1.2446   1.3995      0 30 0.0000
+battery_cv  8.5178  8.3214 0.1964   0.3452     11 30 0.0404
+  bearings 31.7391 30.0714 1.6677   2.2611      5 30 0.0000
+-- gate - V13, clean RMSE
+   dataset       a       b    diff  ci90_hi  lower  n      p
+    cmapss 14.3857 14.4422 -0.0565  -0.0078     18 30 0.1048
+battery_cv  0.0848  0.0846  0.0002   0.0007     13 30 0.5692
+  bearings  0.2612  0.2654 -0.0042  -0.0024     21 30 0.0011
+-- V20: ELPIS-G - OSC
+   dataset       a       b    diff  ci90_hi  lower  n   p
+    cmapss  7.1398  7.8523 -0.7125  -0.6313     30 30 0.0
+battery_cv  3.7879  4.4332 -0.6453  -0.5933     30 30 0.0
+  bearings 24.1167 24.8639 -0.7473  -0.5723     27 30 0.0
+-- share of deployments using V20: {'battery_cv': 0.173, 'bearings': 0.458, 'cmapss': 0.646}

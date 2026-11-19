@@ -43,7 +43,9 @@ affiliations are placeholders.
 | ELPIS-JG (default vs pooled predictor) | `ELPISJ_HYBRID=1` + `scripts/ext64_summary.py` | EXT64–EXT65 |
 
 In the protocols and findings, "ELPIS-J" names the whole family of JEPA-style predictors tried in `scripts/ext50.py`
-(variants V1–V17); the ELPIS-J of the paper is variant V13 (`ELPISJ_FREEZE=1 ELPISJ_BIASCAL=1`).
+(variants V1–V17, and V20 in EXT66); the ELPIS-J of the paper is variant V13 (`ELPISJ_FREEZE=1 ELPISJ_BIASCAL=1`).
+V20 (`ELPISJ_SSL=sigreg`, EXT66) replaces the EMA teacher by end-to-end training with SIGReg (LeJEPA / LeWorldModel);
+it was not adopted (see `extensions/results/ext66/FINDINGS.md`).
 
 The perturbation generator is `perturb()` in `scripts/ext11_ablate.py` (ELPIS: `kfrac=0.5`, `amp=(1, 8)`, two copies); the selector features, seen shifts and
 evaluation faults are in `scripts/ext10_rpt.py` and `src/selective_rul/faults.py`.
@@ -68,6 +70,10 @@ Ten confirmatory rounds were pre-registered with α-spending (α_j = 0.05/2^j, f
   data are plentiful there; ELPIS-G never switches on hard drives.
 - Exploratory: ELPIS-JG lowers risk on C-MAPSS and batteries (−0.58, −0.54) and ties on bearings (−0.56 on 60 fresh
   seeds, 28/60 improved, p = 0.11).
+- Exploratory (EXT66–EXT67): the EMA teacher of ELPIS-J partially collapses its embedding (effective rank 9–16); a
+  SIGReg variant trained end-to-end (LeJEPA / LeWorldModel) lifts it to 20–31. A calibration gate between the two
+  variants lowers ELPIS-G risk against ELPIS-J by 1.03 (C-MAPSS) and 1.20 (bearings) points and ties on batteries on
+  30 seeds not used to design it, at 1.2–1.7 points more pessimistic error; on bearings the default predictor stays better.
 
 ## Reproducing
 

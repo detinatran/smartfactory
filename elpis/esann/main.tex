@@ -64,7 +64,7 @@ Under sensor faults, dispersion-based abstention misses optimistic remaining-use
 \begin{figure}[t]
 \centering
 \resizebox{\textwidth}{!}{\input{fig_pipeline_esann_tikz}}
-\caption{Pipeline. Perturbed copies are labelled by whether the \emph{same} predictor becomes optimistic, not by whether they were perturbed; \OSC{} is the classifier without the copies. Dashed (exploratory): pooling with the JEPA-pretrained \EJ{} and the gate \EJG. No test data are used.}
+\caption{Pipeline. Perturbed copies are labelled by whether the \emph{same} predictor becomes optimistic, not by whether they were perturbed; \OSC{} is the classifier without the copies. Dashed (exploratory): JEPA-pretrained predictors and a calibration gate between predictors. No test data are used.}
 \label{fig:method}
 \end{figure}
 
@@ -194,15 +194,15 @@ Patch-Transformer backbone~\cite{nie2023time} & $-0.51$\s & $-0.49$\s & $-1.69$\
 
 
 
-\emph{Baselines (Table~\ref{tab:sota}).} \RPT{} is significantly better in 67 of 68 pre-registered comparisons and never worse; the only non-significant one is sparse white-noise training on C-MAPSS ($+0.05$, not shown), itself a variant of our approach. Against the 14 uncertainty, selective and anomaly baselines it lowers risk by 0.9--8.3 points. Anomaly scores do no better than the spread.
+\emph{Baselines (Table~\ref{tab:sota}).} \RPT{} is significantly better in 67 of 68 pre-registered comparisons and never worse; the exception is a white-noise variant of our approach on C-MAPSS ($+0.05$). Against the 14 uncertainty, selective and anomaly baselines it lowers risk by 0.9--8.3 points.
 
 
 
-\emph{Ablation and robustness (Table~\ref{tab:abl}).} The labels are the method: outlier labels on the same windows are 1.6--5.2 points worse, and extra unperturbed data or per-channel sensitivity features leave risk at \OSC's level. Amplitude matters and gradient boosting is the best selector model. Training on the six test faults (oracle) is not better than \RPT, consistent with Prop.~\ref{prop:transfer}: post hoc, \RPT{} lowers the Brier score of $\hat\eta$ by 16--36\% on held-out windows under seen shifts, whereas a domain-classifier estimate of coverage shows no consistent change.
+\emph{Ablation and robustness (Table~\ref{tab:abl}).} The labels are the method: outlier labels on the same windows are 1.6--5.2 points worse, and extra unperturbed data or per-channel sensitivity features leave risk at \OSC's level. Training on the six test faults (oracle) is not better than \RPT, consistent with Prop.~\ref{prop:transfer}: post hoc, \RPT{} lowers the Brier score of $\hat\eta$ by 16--36\% on held-out windows under seen shifts, whereas a domain-classifier estimate of coverage shows no consistent change.
 
-\emph{When it hurts: real hard drives.} On 612 test drives, plain \RPT{} is worse than \OSC{} ($+0.36$ points, 0 of 20 pairs; $+0.62$ on four unseen drive models). The cause is the amount of selector data: with 15 instead of 296 drive selector units \RPT{} helps ($-0.6$ to $-1.0$), and shrinking the benchmark selector sets enlarges its gain (batteries: $-0.93$, $-1.79$, $-2.37$ with all, half and a quarter of the units). \RPT{} thus regularises scarce selector data.
+\emph{When it hurts: real hard drives.} On 612 test drives, plain \RPT{} is worse than \OSC{} ($+0.36$ points, 0 of 20 pairs; $+0.62$ on four unseen drive models). The cause is the amount of selector data: with 15 instead of 296 drive selector units \RPT{} helps ($-0.6$ to $-1.0$), and shrinking the benchmark selector sets enlarges its gain (batteries: $-0.93$, $-1.79$, $-2.37$ with all, half and a quarter of the units).
 
-\emph{Predictor choice (exploratory).} \EJG{} lowered risk further on C-MAPSS and batteries ($-0.58$, $-0.54$ points; 29 and 30 of 30 fresh seeds) and tied on bearings (mean $-0.56$ on 60 further fresh seeds, 28 of 60 improved, $p=0.11$).
+\emph{JEPA predictor (exploratory).} The EMA teacher of \EJ~\cite{assran2023ijepa} partially collapses its embedding (effective rank 9--16); end-to-end training with SIGReg~\cite{balestriero2025lejepa,maes2026leworldmodel} lifts it to 20--31, and \AUTOD{} still beats \OSC{} on it. A calibration gate between the two variants lowered risk against \EJ{} by 1.03 and 1.20 points on C-MAPSS and bearings and tied on batteries (30 unused seeds), at 1.2--1.7 points more pessimistic error; the default predictor stays better on bearings.
 
 %=======================================================================
 \section{Conclusion}

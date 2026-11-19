@@ -72,3 +72,9 @@ Tốt hơn trên C-MAPSS và pin, kém hơn trên vòng bi. Trên ELPIS-J, RPT-D
 
 ## Vòng 10 (EXT59), ngày 2026-11-17: XÁC NHẬN
 Trên predictor ELPIS-J-V13 (JEPA), ELPIS-G tốt hơn OSC ở cả 3 họ, kiểm định ở mức seed.
+
+## EXT66 (thăm dò): ELPIS-J pretrain theo LeWorldModel (end-to-end + SIGReg, λ = 0.05)
+Không đạt. Risk ELPIS-G so với V13: C-MAPSS −0.90, pin +2.49, vòng bi +0.86. EMA teacher của V13 làm sụp một phần biểu diễn (effective rank 9–16 so với 20–31 khi có SIGReg), nhưng chữa sụp không làm risk thấp hơn. ELPIS-G vẫn tốt hơn OSC trên predictor mới ở cả 3 họ. V13 giữ nguyên.
+
+## EXT67 (thăm dò): cổng calibration V13/V20 cho ELPIS-J, seed 222–251
+Đạt tiêu chí đặt trước. Risk ELPIS-G so với V13: C-MAPSS −1.03 (30/30), pin +0.03 (không kém), vòng bi −1.20 (21/30, p = 0.002). Cái giá: lỗi bi quan +1.2 đến +1.7 trên C-MAPSS và vòng bi. Không tiêu α.
