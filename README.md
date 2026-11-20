@@ -14,11 +14,12 @@ The regenerated tables are byte-identical to the paper's.
 
 ## Follow-up: ELPIS (error-labelled perturbation training)
 
-[`elpis/`](elpis/README.md) contains the follow-up method **ELPIS** and its gated version **ELPIS-G**: the selector is
-additionally trained on randomly perturbed copies of its windows, each labelled by whether the fixed predictor becomes
-optimistic on it, and a calibration-only diagnostic decides per deployment whether to use it. It was confirmed in ten
-pre-registered rounds with α-spending; the 6-page ESANN paper, its supplement and LaTeX sources are in
-[`elpis/esann/`](elpis/esann/).
+[`elpis/`](elpis/README.md) contains the follow-up method **ELPIS**: the selector is additionally trained on randomly
+perturbed copies of its windows, each labelled by whether the fixed predictor becomes optimistic on it. It was tested in
+ten pre-registered rounds with α-spending: ELPIS itself in rounds 1–3 (round 1 with a
+precursor), calibration-risk switches in rounds 4–6, and a gated variant **ELPIS-G**, which uses a calibration-only
+diagnostic to decide per deployment whether to apply it, in rounds 7–10. The 6-page ESANN paper, its
+supplement and LaTeX sources are in [`elpis/esann/`](elpis/esann/).
 
 ![ELPIS pipeline](elpis/figures/pipeline.png)
 

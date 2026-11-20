@@ -7,14 +7,16 @@ predictor fixed and changes only how the **selector** is trained:
   not by whether it was perturbed;
 - the gradient-boosting selector is trained on these copies together with the seen shifts (clean, dropout, drift).
 
-A calibration-only gate, **ELPIS-G**, decides per deployment whether to use ELPIS: it perturbs the deployment's clean
-calibration windows and uses ELPIS only if the predictor's optimistic rate rises (`D > 0`).
+ELPIS is the method of the paper. A pre-registered gated variant, **ELPIS-G**, decides per deployment whether to use
+ELPIS: it perturbs the deployment's clean calibration windows and uses ELPIS only if the predictor's optimistic rate rises
+(`D > 0`), otherwise OSC. ELPIS-G was the variant tested in confirmatory rounds 7–10. It avoids the harm of ELPIS on real
+hard drives but gives up part of the gain on bearings, so the paper reports ELPIS and treats ELPIS-G as a variant.
 
 ![ELPIS pipeline](figures/pipeline.png)
 
 *Pipeline. (1) A fixed ensemble predictor. (2) Error-labelled perturbation training. (3) A gradient-boosting classifier
-estimates `P(f(x) − y > δ | x)`; OSC is the same classifier without the perturbed copies. (4) Per-deployment gates using
-calibration units only. Dashed (exploratory): ELPIS-J, a JEPA-pretrained predictor whose members can be pooled with the
+estimates `P(f(x) − y > δ | x)`; OSC is the same classifier without the perturbed copies. (4) Abstention with a threshold
+fixed on clean calibration units (the gated variant ELPIS-G additionally switches to OSC when `D ≤ 0`). Dashed (exploratory): ELPIS-J, a JEPA-pretrained predictor whose members can be pooled with the
 default ones, and ELPIS-JG, which picks the default or the pooled predictor by calibration risk.
 Source: [`figures/pipeline.pdf`](figures/pipeline.pdf), TikZ in [`figures/fig_pipeline_tikz.tex`](figures/fig_pipeline_tikz.tex).*
 
@@ -36,9 +38,9 @@ affiliations are placeholders.
 |---|---|---|
 | OSC (one-sided classifier, main paper) | `full` | main paper |
 | ELPIS-R (round-1 variant) | `full_recon_rpt` | EXT10 |
-| **ELPIS** | `rpt_L` | EXT12 |
+| **ELPIS** (method of the paper) | `rpt_L` | EXT12 |
 | ELPIS-CAL (calibration-risk switch) | `rpt_auto` | EXT22 |
-| **ELPIS-G** (diagnostic gate, recommended) | `rpt_auto_d` | EXT38 |
+| ELPIS-G (pre-registered gated variant, rounds 7–10) | `rpt_auto_d` | EXT38 |
 | ELPIS-J (JEPA-pretrained predictor) | `ELPISJ_*` options of `scripts/ext50.py` (final: `ELPISJ_FREEZE=1 ELPISJ_BIASCAL=1`) | EXT50–EXT59 |
 | ELPIS-JG (default vs pooled predictor) | `ELPISJ_HYBRID=1` + `scripts/ext64_summary.py` | EXT64–EXT65 |
 
@@ -56,18 +58,25 @@ Risk = optimistic-error rate (%) among accepted windows at 90% matched coverage,
 Ten confirmatory rounds were pre-registered with α-spending (α_j = 0.05/2^j, family-wise error < 0.05); see
 [`../extensions/protocols/SEARCH_LOG.md`](../extensions/protocols/SEARCH_LOG.md).
 
-| Round 8 (30 fresh seeds 162–191, seed-level test) | C-MAPSS | N-CMAPSS | Bearings | Batteries |
-|---|---|---|---|---|
-| Risk, OSC | 8.78 | 8.14 | 24.39 | 3.31 |
-| Risk, ELPIS-G | **8.14** | **7.86** | **23.77** | **2.27** |
-| Seeds improved (of 30) | 30 | 30 | 27 | 30 |
+| Round 8 (30 fresh seeds 162–191, seed-level) | C-MAPSS | N-CMAPSS | Bearings | Batteries | Hard drives |
+|---|---|---|---|---|---|
+| Risk, OSC | 8.78 | 8.14 | 24.39 | 3.31 | 15.56 |
+| Risk, ELPIS | **8.14** | **7.86** | **22.96** | **2.27** | 15.98 |
+| Seeds where ELPIS beats OSC (of 30) | 30 | 30 | 28 | 30 | 0 |
+| Risk, ELPIS-G (tested variant) | 8.14 | 7.86 | 23.77 | 2.27 | 15.56 |
+| Seeds where ELPIS-G beats OSC (of 30) | 30 | 30 | 27 | 30 | 0 (equal) |
+
+The confirmatory test of round 8 was ELPIS-G vs OSC; the ELPIS rows are descriptive on the same seeds. ELPIS itself was
+confirmed in rounds 2 and 3 (four benchmark families).
 
 - Round 9: ELPIS-G removes 0.71–2.04 points of fault-induced excess risk on the windows a fault changes (C-MAPSS,
   N-CMAPSS, batteries; 30/30 seeds).
-- Round 10: ELPIS-G also beats OSC on the JEPA-pretrained predictor ELPIS-J (−0.81, −1.03, −1.14 points).
+- Round 10 (JEPA-pretrained predictor ELPIS-J, seeds 222–251): ELPIS beats OSC in 30/30 seeds on C-MAPSS, bearings and
+  batteries (−0.81, −1.37, −1.14 points; exploratory, same seeds); the confirmed variant ELPIS-G gives −0.81, −1.03, −1.14.
 - ELPIS is significantly better than 16 external baselines on all four benchmark families (EXT14, 68 Holm-corrected tests).
-- Negative result: on real hard-drive failures (Backblaze) plain ELPIS is worse than OSC (+0.36 points), because selector
-  data are plentiful there; ELPIS-G never switches on hard drives.
+- Negative result: on real hard-drive failures (Backblaze) ELPIS is worse than OSC (+0.41 points, 30/30 seeds in round 8),
+  because selector data are plentiful there; ELPIS-G never switches on hard drives and equals OSC. Use ELPIS when
+  selector data are scarce.
 - Exploratory: ELPIS-JG lowers risk on C-MAPSS and batteries (−0.58, −0.54) and ties on bearings (−0.56 on 60 fresh
   seeds, 28/60 improved, p = 0.11).
 - Exploratory (EXT66–EXT67): the EMA teacher of ELPIS-J partially collapses its embedding (effective rank 9–16); a
