@@ -1,0 +1,46 @@
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   3%|▎         | 10/339 [00:00<00:04, 74.63it/s]Loading weights:   5%|▌         | 18/339 [00:00<00:05, 54.18it/s]Loading weights:   7%|▋         | 24/339 [00:00<00:07, 40.76it/s]Loading weights:  10%|█         | 35/339 [00:00<00:05, 55.37it/s]Loading weights:  12%|█▏        | 42/339 [00:00<00:06, 47.09it/s]Loading weights:  14%|█▍        | 48/339 [00:01<00:07, 40.53it/s]Loading weights:  17%|█▋        | 59/339 [00:01<00:05, 53.53it/s]Loading weights:  19%|█▉        | 66/339 [00:01<00:06, 39.78it/s]Loading weights:  21%|██        | 72/339 [00:01<00:06, 39.85it/s]Loading weights:  24%|██▍       | 83/339 [00:01<00:05, 50.98it/s]Loading weights:  26%|██▋       | 89/339 [00:01<00:05, 45.12it/s]Loading weights:  28%|██▊       | 95/339 [00:02<00:06, 36.90it/s]Loading weights:  32%|███▏      | 108/339 [00:02<00:05, 45.65it/s]Loading weights:  33%|███▎      | 113/339 [00:02<00:04, 45.21it/s]Loading weights:  36%|███▌      | 121/339 [00:02<00:04, 46.84it/s]Loading weights:  37%|███▋      | 126/339 [00:02<00:04, 44.96it/s]Loading weights:  39%|███▊      | 131/339 [00:02<00:05, 40.62it/s]Loading weights:  40%|████      | 137/339 [00:03<00:04, 40.50it/s]Loading weights:  42%|████▏     | 144/339 [00:03<00:05, 37.08it/s]Loading weights:  46%|████▌     | 155/339 [00:03<00:04, 42.93it/s]Loading weights:  48%|████▊     | 162/339 [00:03<00:03, 46.56it/s]Loading weights:  49%|████▉     | 167/339 [00:03<00:04, 41.98it/s]Loading weights:  51%|█████▏    | 174/339 [00:03<00:03, 44.97it/s]Loading weights:  53%|█████▎    | 179/339 [00:04<00:03, 41.84it/s]Loading weights:  55%|█████▍    | 186/339 [00:04<00:03, 46.80it/s]Loading weights:  57%|█████▋    | 192/339 [00:04<00:03, 37.29it/s]Loading weights:  60%|█████▉    | 202/339 [00:04<00:03, 40.33it/s]Loading weights:  62%|██████▏   | 210/339 [00:04<00:02, 44.64it/s]Loading weights:  63%|██████▎   | 215/339 [00:04<00:03, 36.57it/s]Loading weights:  67%|██████▋   | 226/339 [00:05<00:02, 45.26it/s]Loading weights:  68%|██████▊   | 231/339 [00:05<00:02, 41.30it/s]Loading weights:  70%|███████   | 238/339 [00:05<00:02, 34.75it/s]Loading weights:  74%|███████▎  | 250/339 [00:05<00:02, 39.43it/s]Loading weights:  76%|███████▌  | 258/339 [00:05<00:01, 45.48it/s]Loading weights:  78%|███████▊  | 264/339 [00:06<00:02, 37.14it/s]Loading weights:  81%|████████  | 274/339 [00:06<00:01, 34.92it/s]Loading weights:  85%|████████▍ | 288/339 [00:06<00:01, 39.19it/s]Loading weights:  88%|████████▊ | 299/339 [00:07<00:00, 42.23it/s]Loading weights:  90%|█████████ | 306/339 [00:07<00:00, 45.59it/s]Loading weights:  92%|█████████▏| 311/339 [00:07<00:00, 42.08it/s]Loading weights:  93%|█████████▎| 316/339 [00:07<00:00, 42.49it/s]Loading weights:  96%|█████████▌| 324/339 [00:07<00:00, 39.42it/s]Loading weights: 100%|██████████| 339/339 [00:07<00:00, 43.81it/s]
+# 1 SOP        ours=True  author=True  | correct=conveyor_1_run('forward', 13) | ours=conveyor_1_run('forward', 13)
+# 2 SOP        ours=False author=True  | correct=RFID_read_workpiece_info() | ours=conveyor_1_run('forward', 13)
+# 3 SOP        ours=True  author=True  | correct=conveyor_1_run('forward', 8) | ours=conveyor_1_run('forward', 8)
+# 4 SOP        ours=False author=False | correct=release_holder_H2() | ours=conveyor_1_run('forward', 13)
+# 5 SOP        ours=False author=False | correct=conveyor_1_run('forward', 2) | ours=conveyor_1_run('forward', 8); release_holder_H2();
+# 6 SOP        ours=False author=True  | correct=conveyor_2_run('forward', 13) | ours=conveyor_1_run('forward', 13)
+# 7 SOP        ours=True  author=True  | correct=transport_robot_request() | ours=transport_robot_request()
+# 8 SOP        ours=True  author=False | correct=switch_actuate('divert') | ours=switch_actuate('divert')
+# 9 SOP        ours=False author=False | correct=conveyor_2_run('forward', 8) | ours=conveyor_1_run('forward', 13)
+#10 SOP        ours=False author=False | correct=release_holder_H1() | ours=conveyor_1_run('forward', 13)
+#11 SOP        ours=False author=False | correct=conveyor_4_run('forward', 8) | ours=emergency_stop()
+#12 Unexpected ours=False author=False | correct=alert_to_supervisor('conveyor C1 failure') | ours=emergency_stop()
+#13 Unexpected ours=False author=False | correct=alert_to_supervisor('reading failure') | ours=alert_to_supervisor('Workpiece information retrieval failed')
+#14 Unexpected ours=False author=False | correct=alert_to_supervisor('Holder H2 failure') | ours=release_holder_H2()
+#15 Unexpected ours=True  author=False | correct=alert_to_supervisor('Holder H1 failure') | ours=alert_to_supervisor('Holder H1 failure')
+#16 Unexpected ours=False author=False | correct=alert_to_supervisor('conveyor C2 failure') | ours=emergency_stop()
+#17 Unexpected ours=False author=False | correct=alert_to_supervisor('conveyor C2 failure') | ours=alert_to_supervisor('Switch failure')
+#18 Unexpected ours=False author=False | correct=alert_to_supervisor('conveyor C4 failure') | ours=emergency_stop()
+#19 Unexpected ours=False author=False | correct=alert_to_supervisor('Communication failure') | ours=transport_robot_request()
+#20 Unexpected ours=False author=False | correct=alert_to_supervisor('Electrical failure') | ours=emergency_stop()
+#21 Unexpected ours=False author=False | correct=alert_to_supervisor('Timeout') | ours=conveyor_1_run('forward', 13)
+#22 Unexpected ours=False author=False | correct=alert_to_supervisor('Timeout') | ours=request_inspection_service()
+{
+ "all": {
+  "n": 22,
+  "ours_exact": 0.22727272727272727,
+  "author_exact": 0.22727272727272727,
+  "author_score5": 0.5454545454545454,
+  "gpt4o_exact": 0.5
+ },
+ "SOP": {
+  "n": 11,
+  "ours_exact": 0.36363636363636365,
+  "author_exact": 0.45454545454545453,
+  "author_score5": 0.45454545454545453,
+  "gpt4o_exact": 1.0
+ },
+ "Unexpected": {
+  "n": 11,
+  "ours_exact": 0.09090909090909091,
+  "author_exact": 0.0,
+  "author_score5": 0.6363636363636364,
+  "gpt4o_exact": 0.0
+ }
+}
